@@ -1,0 +1,3 @@
+# venv folder
+/src/venv
+/src/__pycache__

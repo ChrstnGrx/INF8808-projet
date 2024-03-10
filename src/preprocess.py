@@ -1,0 +1,58 @@
+'''
+    Contains some functions to preprocess the data used in the visualisation.
+'''
+import pandas as pd
+
+import conversions
+import constants
+
+def drop_columns(dataframe):
+    return dataframe.drop(columns=['country', 'ethnicity', 'semer'])
+
+def fix_errors(dataframe):
+    return dataframe.rename(columns={'impuslive': 'impulsive'})
+
+def convert_scores(dataframe):
+    for conversion in conversions.CONVERSIONS:
+        dataframe[conversion] = dataframe[conversion].map(conversions.CONVERSIONS[conversion])
+    return dataframe
+
+def is_consumer(cl):
+    if cl == "CL0" or cl == "CL1" or cl == "CL2" or cl == "CL3":
+        return False
+    if cl == "CL4" or cl == "CL5" or cl == "CL6":
+        return True
+    return False
+
+def is_sober(classes):
+    for cl in classes:
+        if cl == "CL2" or cl == "CL3" or cl == "CL4" or cl == "CL5" or cl == "CL6":
+            return False
+    return True
+
+def personality_per_drug(dataframe):
+    size = dataframe.id.count()
+
+    columns = constants.DRUGS + ["sober"]
+    df = pd.DataFrame(0, index=constants.PERSONNALITY, columns=columns)
+    df_size = pd.DataFrame(0, index=["size"], columns=columns)
+
+    for i in range(0, size):
+        if is_sober(dataframe.loc[i]):
+                df_size["sober"] += 1
+                for personality in constants.PERSONNALITY:
+                    df["sober"][personality] += dataframe[personality][i]
+        else:
+            for drug in constants.DRUGS:
+                if is_consumer(dataframe[drug][i]):
+                    df_size[drug] += 1
+                    for personality in constants.PERSONNALITY:
+                        df[drug][personality] += dataframe[personality][i]
+
+    for c in columns:
+        for personality in constants.PERSONNALITY:
+            df[c][personality] /= df_size[c]
+
+    return df.transpose()
+
+
