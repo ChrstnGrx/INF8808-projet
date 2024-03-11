@@ -18,6 +18,7 @@ from ucimlrepo import fetch_ucirepo
 import pandas as pd
 
 import preprocess
+import chord
 
 app = dash.Dash(__name__)
 app.title = 'PROJET | INF8808'
@@ -29,10 +30,11 @@ dataframe = preprocess.fix_errors(dataframe)
 # dataframe = preprocess.convert_scores(dataframe)
 
 personality_per_drug_df = preprocess.personality_per_drug(dataframe)
-print(personality_per_drug_df)
+#print(personality_per_drug_df)
 
 drug_corr_df = preprocess.drug_correlation(dataframe)
 print(drug_corr_df)
+chord.create_chord_diagram(drug_corr_df)
 
 app.layout = html.Div(className='content', children=[
     html.Header(children=[

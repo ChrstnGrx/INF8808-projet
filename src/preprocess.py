@@ -61,12 +61,18 @@ def drug_correlation(dataframe):
     df = pd.DataFrame(0, index=constants.DRUGS, columns=constants.DRUGS)
 
     for i in range(0, size):
+        finished_drugs = []
         for drug1 in constants.DRUGS:
             if is_consumer(dataframe[drug1][i]):
                 for drug2 in constants.DRUGS:
-                    if drug1 != drug2:
+                    if drug1 != drug2 and drug2 not in finished_drugs:
                         if is_consumer(dataframe[drug2][i]):
                             df[drug1][drug2] += 1
+            finished_drugs.append(drug1)
+
+    df = df.stack().reset_index()
+    df.columns = ['source', 'target', 'weight']
+    df = df[df.weight != 0].reset_index(drop=True)
 
     return df
 
