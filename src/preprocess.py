@@ -55,4 +55,19 @@ def personality_per_drug(dataframe):
 
     return df.transpose()
 
+def drug_correlation(dataframe):
+    size = dataframe.id.count()
+
+    df = pd.DataFrame(0, index=constants.DRUGS, columns=constants.DRUGS)
+
+    for i in range(0, size):
+        for drug1 in constants.DRUGS:
+            if is_consumer(dataframe[drug1][i]):
+                for drug2 in constants.DRUGS:
+                    if drug1 != drug2:
+                        if is_consumer(dataframe[drug2][i]):
+                            df[drug1][drug2] += 1
+
+    return df
+
 

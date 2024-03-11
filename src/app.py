@@ -31,6 +31,9 @@ dataframe = preprocess.fix_errors(dataframe)
 personality_per_drug_df = preprocess.personality_per_drug(dataframe)
 print(personality_per_drug_df)
 
+drug_corr_df = preprocess.drug_correlation(dataframe)
+print(drug_corr_df)
+
 app.layout = html.Div(className='content', children=[
     html.Header(children=[
         html.H1('Projet')
