@@ -18,7 +18,8 @@ from ucimlrepo import fetch_ucirepo
 import pandas as pd
 
 import preprocess
-import chord
+# import chord
+import colors
 
 app = dash.Dash(__name__)
 app.title = 'PROJET | INF8808'
@@ -34,7 +35,7 @@ personality_per_drug_df = preprocess.personality_per_drug(dataframe)
 
 drug_corr_df = preprocess.drug_correlation(dataframe)
 print(drug_corr_df)
-chord.create_chord_diagram(drug_corr_df)
+#chord.create_chord_diagram(drug_corr_df)
 
 app.layout = html.Div(className='content', children=[
     html.Header(children=[
@@ -57,3 +58,19 @@ app.layout = html.Div(className='content', children=[
         }
     )
 ])
+
+for group in colors.GROUPS:
+    app.layout.children.append(
+        html.Div(className='color-container', style={'display': 'inline-block'}, children=[
+            html.H2(group),
+            html.Div(style={'background-color': colors.MAIN_COLORS[group], 'height': '50px', 'width': '100px'}, children=colors.MAIN_COLORS[group]),
+            html.Div(style={'height': '20px', 'width': '100px'}),
+            html.Div(className='color-list', children=[
+                html.Div(style={'background-color': color, 'height': '50px', 'width': '100px'}, children=color) for color in colors.TRIADS[group]
+            ]),
+            html.Div(style={'height': '20px', 'width': '100px'}),
+            html.Div(className='color-list', children=[
+                html.Div(style={'background-color': color, 'height': '50px', 'width': '100px'}, children=color) for color in colors.SHADES[group]
+            ]),
+        ])
+    )

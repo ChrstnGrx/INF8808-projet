@@ -7,7 +7,7 @@ import conversions
 import constants
 
 def drop_columns(dataframe):
-    return dataframe.drop(columns=['country', 'ethnicity', 'semer'])
+    return dataframe.drop(columns=['country', 'ethnicity', 'semer', 'caff', 'choc'])
 
 def fix_errors(dataframe):
     return dataframe.rename(columns={'impuslive': 'impulsive'})
