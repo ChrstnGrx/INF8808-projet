@@ -1,0 +1,128 @@
+/* Styles to center the text inside the dropdown */
+.Select-control .Select-value {
+  display: flex;
+  justify-content: center;
+}
+
+/* Centering placeholder text */
+.Select-placeholder {
+  text-align: center;
+  width: 100%;
+}
+
+/* Centering dropdown text */
+.Select-value-label {
+  text-align: center;
+  width: 100%;
+}
+
+/* Centering menu options */
+.VirtualizedSelectOption {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+
+/* Adjust your selector-dropdown class */
+.selector-dropdown {
+width: 275px;
+margin-bottom: 10px;
+margin-top: 10px;
+text-align: center; /* This centers the placeholder */
+}
+
+
+/* ----------------------------- */
+
+
+.header-title {
+  text-align: center;
+  margin: 20px;
+}
+
+.page-button {
+  margin: 10px;
+  display: block;
+}
+
+.profil-susceptible-container {
+  border: 1px solid black;
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0px 0px 10px #aaa;
+}
+
+.selectors {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.selector {
+  text-align: center;
+  font-weight: bold;
+}
+
+.selector-dropdown {
+  width: 275px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.graph-container {
+  display: flex;
+}
+
+.graph-box {
+  flex: 1;
+  margin: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.graph-title {
+  text-align: center;
+  font-size: 140%;
+}
+
+.graphs-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.selector-label {
+  margin-bottom: 10px;
+}
+
+#education-dropdown {
+  width: 300px;
+  margin-top: 10px;
+}
+
+.back-button {
+  padding: 10px 20px;
+  background-color: white;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px 0;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  position: relative;
+  left: 10px; 
+  top: 10px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #f8f9fa;
+}
+
+.back-button::before {
+  content: '← ';
+  display: inline;
+}
