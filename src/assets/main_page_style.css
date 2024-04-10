@@ -104,6 +104,32 @@ text-align: center; /* This centers the placeholder */
 
 
 /* ----------------------------- */
+
+.forward-button {
+  padding: 10px 20px;
+  background-color: white;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  position: fixed; /* or 'absolute' if you don’t need it to stick during scrolling */
+  right: 10px; /* Adjust based on layout */
+  top: 10px;
+}
+
+.forward-button:hover {
+  background-color: #f8f9fa;
+}
+
+.forward-button::after {
+  content: ' →'; /* Adjust if you want a different icon/text */
+}
+
+/* ----------------------------- */
+
 .rectangle-container {
   display: flex;
   flex-direction: column;
@@ -144,14 +170,18 @@ text-align: center; /* This centers the placeholder */
   margin: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  padding: 20px;
+  padding: 15px;
   background-color: white;
   border: 2px solid ;
+  width: 200px; /* Fixed width */
+  height: auto; /* Height adjusts to content */
+  aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
 }
 
 .image-box img {
-  height: 200px;
-  width: 200px;
+  height: 100%; /* Make image height responsive to container size */
+  width: 100%; /* Make image width responsive to container size */
+  object-fit: contain; /* Ensure the image covers the area without losing aspect ratio */
 }
 
 .image-label {
@@ -159,28 +189,28 @@ text-align: center; /* This centers the placeholder */
   margin-top: 5px;
 }
 
-
-
-
-.forward-button {
-  padding: 10px 20px;
-  background-color: white;
-  color: #000;
-  border: 1px solid #000;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  position: fixed; /* or 'absolute' if you don’t need it to stick during scrolling */
-  right: 10px; /* Adjust based on layout */
-  top: 10px;
+/* ----------------------------- */
+.graph-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start; /* Ensure items align at the start of the container */
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px #aaa;
+  padding: 20px;
 }
 
-.forward-button:hover {
-  background-color: #f8f9fa;
+.graph-box {
+  display: flex;
+  width: calc(50% - 20px); /* Adjust width to account for padding */
+  height: calc(50% - 20px); /* Adjust height to account for padding */
+  padding: 10px;
+  box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
-.forward-button::after {
-  content: ' →'; /* Adjust if you want a different icon/text */
+/* Additional styling for the graphs themselves, if needed */
+.graph-box .dash-graph {
+  width: 100%;
+  height: 100%;
 }

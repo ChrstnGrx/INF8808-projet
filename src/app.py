@@ -73,6 +73,8 @@ main_page_layout = html.Div([
             id='image-selector',
             options=drug_options,
             value=default_value,  # default value
+            placeholder="Sélectionnez une drogue ...",
+
             # Center the dropdown and add margin
             style={'width': '300px', 'margin': '0 auto 10px'}
         ),
