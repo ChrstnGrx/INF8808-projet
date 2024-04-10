@@ -1,107 +1,3 @@
-/* Styles to center the text inside the dropdown */
-.Select-control .Select-value {
-  display: flex;
-  justify-content: center;
-}
-
-/* Centering placeholder text */
-.Select-placeholder {
-  text-align: center;
-  width: 100%;
-}
-
-/* Centering dropdown text */
-.Select-value-label {
-  text-align: center;
-  width: 100%;
-}
-
-/* Centering menu options */
-.VirtualizedSelectOption {
-  text-align: center;
-  justify-content: center;
-  display: flex;
-}
-
-/* Adjust your selector-dropdown class */
-.selector-dropdown {
-width: 275px;
-margin-bottom: 10px;
-margin-top: 10px;
-text-align: center; /* This centers the placeholder */
-}
-
-
-/* ----------------------------- */
-
-
-.header-title {
-  text-align: center;
-  margin: 20px;
-}
-
-.page-button {
-  margin: 10px;
-  display: block;
-}
-
-.profil-susceptible-container {
-  border: 1px solid black;
-  width: 80%;
-  margin: 20px auto;
-  padding: 20px;
-  box-shadow: 0px 0px 10px #aaa;
-}
-
-.selectors {
-  display: flex;
-  justify-content: space-around;
-  padding: 20px;
-}
-
-.selector {
-  text-align: center;
-  font-weight: bold;
-}
-
-.selector-dropdown {
-  width: 275px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.graph-container {
-  display: flex;
-}
-
-.graph-box {
-  flex: 1;
-  margin: 10px;
-  border: 1px solid #ccc;
-  text-align: center;
-}
-
-.graph-title {
-  text-align: center;
-  font-size: 140%;
-}
-
-.graphs-container {
-  display: flex;
-  flex-direction: row;
-}
-
-.selector-label {
-  margin-bottom: 10px;
-}
-
-#education-dropdown {
-  width: 300px;
-  margin-top: 10px;
-}
-
-
 
 /* ----------------------------- */
 
@@ -190,27 +86,72 @@ text-align: center; /* This centers the placeholder */
 }
 
 /* ----------------------------- */
-.graph-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-start; /* Ensure items align at the start of the container */
-  margin: 20px auto;
-  border: 1px solid #ccc;
-  box-shadow: 0px 0px 10px #aaa;
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 50px;
+  margin: 20px;
+}
+
+
+
+
+.box-1, .box-2 {
+  text-align: center;
   padding: 20px;
-}
-
-.graph-box {
+  border: 1px solid;
   display: flex;
-  width: calc(50% - 20px); /* Adjust width to account for padding */
-  height: calc(50% - 20px); /* Adjust height to account for padding */
-  padding: 10px;
-  box-sizing: border-box; /* Include padding in the element's total width and height */
+  flex-direction: column;
+  align-items: center;
+  min-height: 160px;
 }
 
-/* Additional styling for the graphs themselves, if needed */
-.graph-box .dash-graph {
-  width: 100%;
+.rectangle-1, .rectangle-2 {
+  border: 1px solid;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.image-box-gateway-drug {
+  margin: 10px;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.centered-flexbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+  padding: 20px;
+  max-height: 100%;
+  overflow: auto;  /* Use auto if you want scrollbars when content overflows */
+}
+
+.centered-content {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid;
+}
+
+.image-box {
+  margin: 10px;
+}
+
+.image-label {
+  color: grey;
+  border: 1px solid grey;
+  padding: 5px;
+  display: inline-block;
+}
+
+/* Additional styles, such as for the dropdown, can also be added here */
+.dropdown-full-width {
+  width: 100%;
 }

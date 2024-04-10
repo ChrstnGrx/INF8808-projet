@@ -137,81 +137,102 @@ main_page_layout = html.Div([
     # Grid with adjusted box styles and rectangles in the second column 
     html.Div(
         className='grid-container',
-        style={
-            'display': 'grid',
-            'grid-template-columns': '1fr 2fr',  # Adjusted column sizes to make second column wider
-            'grid-template-rows': '1fr 1fr',
-            'grid-gap': '50px',
-            'margin': '20px'
-        },
         children=[
             # html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid'}, children='Box 1'),
             html.Div(
-                style={'text-align': 'center', 'padding': '20px', 'border': '1px solid', 'display': 'flex', 'flex-direction': 'column'},
+                className='box-1',
+                style={'text-align': 'center', 'padding': '20px', 'border': '1px solid', 'display': 'flex', 'flex-direction': 'column', 'align-items': 'center','min-height': '160px'},
                 children=[
                     dcc.Dropdown(
                         id='image-selector',
                         options=drug_options,  # Assuming this is defined somewhere in your code
                         placeholder="Sélectionnez une drogue ...",
-                        style={'width': '100%', 'margin': '0 10px 10px 10px'}  # Adjusted width to 100% and added margin
+                        # style={'width': '100%', 'margin': '0 20px 10px 10px'}  # Adjusted width to 100% and added margin
+                        style={'width': '100%'}  # Adjusting width and margin
                     ),
                     html.Div(
                         className='image-box',
                         children=[
                             html.Img(src='/assets/icons/gateway-drugs.png'),
-                            html.Label('Attention : Ceci s\'agit d\'une drogue passerelle', className='image-label')
+                            html.Label('Attention : Ceci s\'agit d\'une drogue passerelle', className='image-label', style={'color': 'grey', 'border': '1px solid grey', 'padding': '5px', 'display': 'inline-block'})
                         ],
                         style={'margin': '10px'}
                     )
                 ]
             ),
-            html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid', 'height': '100px'}, children='Rectangle 1'),  # Made this a rectangle
-            html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid'}, children='Box 3'),
-            html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid', 'height': '100px'}, children='Rectangle 2')  # Made this a rectangle
-    ]),
-
-
-    html.Div(style={
-        'display': 'grid',
-        'gridTemplateAreas': '''
-            "a b"
-            "c b"
-            "d d"
-            ''',
-        'gridTemplateColumns': '1fr 2fr',
-        'gridTemplateRows': 'auto 1fr auto',
-        'gap': '1rem',
-        'padding': '1rem',
-        'height': 'calc(100vh - 2rem)',  # Adjust for padding
-        'boxSizing': 'border-box',
-    }, children=[
-        html.Div('Content 1', style={
-            'gridArea': 'a',
-            'border': '1px solid black',
-            'padding': '1rem',
-        }),
-        html.Div('Content 2', style={
-            'gridArea': 'b',
-            'border': '1px solid black',
-            'padding': '1rem',
-        }),
-        html.Div(id='chord-diagram-container', style={
-            'gridArea': 'c',
-            'border': '1px solid black',
-            'padding': '1rem',
-            'overflow': 'hidden',  # Prevents content from overflowing
-        }, children=[
-            # Graph takes the full space available
-            dcc.Graph(id='chord-diagram',
-                      config={'responsive': False, 'staticPlot': True, 'displayModeBar': False})
-            # Note: You don't need to set height to 100% if config is responsive
+            # html.Div(style={'border': '1px solid', 'padding': '20px', 'height': '100%', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}, children='Rectangle 1'),  # Made this a rectangle
+            html.Div(className='rectangle-1',
+                     style={'border': '1px solid','height': '100%', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center', 
+                            'max-height': '100%', # Add a max-height to ensure it respects the grid area
+                            'overflow': 'auto',
+                            }, children=
+                     dcc.Graph(id='graph-2', figure={}, config={'staticPlot': True})
+                     ),
+            html.Div(className='box-2',
+                     style={'text-align': 'center', 'padding': '20px', 'border': '1px solid'}, children=
+                     dcc.Graph(id='graph-3',
+                               figure={},  
+                               config={'responsive': True}           
+                    )),
+            html.Div(className='rectangle-2',
+                     style={
+                    'text-align': 'center', 
+                    'padding': '20px', 
+                    'border': '1px solid', 
+                    'display': 'flex', 
+                    'justify-content': 'center', 
+                    'align-items': 'center'
+                },
+                children=dcc.Graph(
+                    id='graph-4', 
+                    figure={}, 
+                    config={'responsive': True}  # Make the graph responsive to its container
+                )
+            )
         ]),
-        html.Div('Content 4', style={
-            'gridArea': 'd',
-            'border': '1px solid black',
-            'padding': '1rem',
-        }),
-    ]),
+
+
+    # html.Div(style={
+    #     'display': 'grid',
+    #     'gridTemplateAreas': '''
+    #         "a b"
+    #         "c b"
+    #         "d d"
+    #         ''',
+    #     'gridTemplateColumns': '1fr 2fr',
+    #     'gridTemplateRows': 'auto 1fr auto',
+    #     'gap': '1rem',
+    #     'padding': '1rem',
+    #     'height': 'calc(100vh - 2rem)',  # Adjust for padding
+    #     'boxSizing': 'border-box',
+    # }, children=[
+    #     html.Div('Content 1', style={
+    #         'gridArea': 'a',
+    #         'border': '1px solid black',
+    #         'padding': '1rem',
+    #     }),
+    #     html.Div('Content 2', style={
+    #         'gridArea': 'b',
+    #         'border': '1px solid black',
+    #         'padding': '1rem',
+    #     }),
+    #     html.Div(id='chord-diagram-container', style={
+    #         'gridArea': 'c',
+    #         'border': '1px solid black',
+    #         'padding': '1rem',
+    #         'overflow': 'hidden',  # Prevents content from overflowing
+    #     }, children=[
+    #         # Graph takes the full space available
+    #         dcc.Graph(id='chord-diagram',
+    #                   config={'responsive': False, 'staticPlot': True, 'displayModeBar': False})
+    #         # Note: You don't need to set height to 100% if config is responsive
+    #     ]),
+    #     html.Div('Content 4', style={
+    #         'gridArea': 'd',
+    #         'border': '1px solid black',
+    #         'padding': '1rem',
+    #     }),
+    # ]),
 
     # html.Div(className='viz-container', children=[
     #     html.Div(className='profil-susceptible-container',
