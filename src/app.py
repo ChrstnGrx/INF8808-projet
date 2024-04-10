@@ -14,6 +14,7 @@ from dash import dcc, html
 from dash import page_registry, no_update
 from dash.dependencies import Input, Output, State
 from ucimlrepo import fetch_ucirepo
+from chord_v2 import create_chord_diagram, create_legend, active_palette
 
 
 import pandas as pd
@@ -22,7 +23,7 @@ import preprocess
 # import chord
 import colors
 
-external_stylesheets = ['main_page_style.css','second_page_style.css']
+external_stylesheets = ['main_page_style.css', 'second_page_style.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.title = 'PROJET | INF8808'
@@ -43,7 +44,8 @@ drug_options, default_value = preprocess.generate_drogue_options(dataframe)
 app.layout = html.Div([
     # This component will interact with the browser's URL
     dcc.Location(id='url', refresh=False),
-    html.Button("Second page", id="forward-button", className="forward-button"),
+    html.Button("Second page", id="forward-button",
+                className="forward-button"),
     # This div will contain the content that changes when we navigate between pages
     html.Div(id='page-content')
 ])
@@ -66,13 +68,18 @@ main_page_layout = html.Div([
             ])
         ])
     ]),
-    html.Div(className='Drogue-selector-container',children=[
+    html.Div(className='Drogue-selector-container', children=[
         dcc.Dropdown(
             id='image-selector',
             options=drug_options,
-            value = default_value,  # default value
-            style={'width': '300px', 'margin': '0 auto 10px'}  # Center the dropdown and add margin
+            value=default_value,  # default value
+            # Center the dropdown and add margin
+            style={'width': '300px', 'margin': '0 auto 10px'}
         ),
+    ]),
+    html.Div(id='chord-diagram-container', children=[
+        dcc.Graph(id='chord-diagram'),
+        html.Div(id='chord-diagram-legend')
     ]),
 
 
@@ -84,7 +91,7 @@ main_page_layout = html.Div([
     #         'width': '60%',  # Smaller width
     #         'margin': '0 auto',  # Centering
     #         'padding': '20px',
-    #         'box-shadow': '0px 0px 10px #aaa'}, 
+    #         'box-shadow': '0px 0px 10px #aaa'},
     #     children=[
     #         # text
     #         # Div
@@ -92,7 +99,7 @@ main_page_layout = html.Div([
     #             html.Div(className='Drogue-selector-and-similar-drugs-container',children=[
     #                 html.Img(id='image1',src='/assets/icons/diploma.svg', style={'height': '100px', 'width': 'auto'}),
     #                 html.Label('Age'),
-                    
+
     #             ]),
     #             html.Div(className='Drogue-selector-and-similar-drugs-container',children=[
     #                 html.Img(id='image2',src='/assets/icons/graduate-cap-solid.svg', style={'height': '100px', 'width': 'auto'}),
@@ -103,11 +110,11 @@ main_page_layout = html.Div([
     #                 html.Label('Gender')
     #             ])
     #         ], style={'display': 'flex', 'justify-content': 'space-around', 'padding': '20px', 'border': '1px solid #ccc', 'box-shadow': '0px 0px 10px #aaa'})
-    #     ]), 
+    #     ]),
 
 
 
-    #     html.Div(className='Drogue-info-container',children=[       
+    #     html.Div(className='Drogue-info-container',children=[
     #         html.Div(className='Drogue-selector-and-similar-drugs-container',children=[
     #             html.Div(className='Drogue-selector-container',children=[
     #                 dcc.Dropdown(
@@ -118,7 +125,7 @@ main_page_layout = html.Div([
     #                 ),
     #             ]),
     #             html.Div(className='Similar-drugs-container',children=[
-                    
+
     #             ]),
 
     #         ]),
@@ -142,7 +149,7 @@ main_page_layout = html.Div([
     #                             'title': 'Parallel Coordinates Chart'
     #                         }
     #                     }
-    #                 ),  
+    #                 ),
     #             ]),
     #         ]),
     #     ])
@@ -236,6 +243,23 @@ second_page_layout = html.Div([
         ])
     ])
 ])
+
+
+@app.callback(
+    [Output('chord-diagram', 'figure'),
+     Output('chord-diagram-legend', 'children')],
+    [Input('image-selector', 'value')]
+)
+def update_chord_diagram_and_legend(active_drug):
+    if not active_drug:
+        # Or return an empty figure and empty legend if you prefer
+        return dash.no_update, dash.no_update
+
+    # Assuming `drug_corr_df` is your DataFrame with the correlations
+    fig = create_chord_diagram(drug_corr_df, active_drug)
+    legend = create_legend(active_drug, drug_corr_df, active_palette)
+
+    return fig, legend
 
 
 @app.callback(
