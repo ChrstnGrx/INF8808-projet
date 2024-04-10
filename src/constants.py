@@ -27,6 +27,30 @@ PERSONNALITY = [
     "ss"
 ]
 
+PERSONNALITY_INFO = {
+    'escore': {
+        'french': 'Extraversion'
+    },
+    'nscore': {
+        'french': 'Neuroticisme'
+    },
+    'oscore': {
+        'french': 'Ouverture'
+    },
+    'ascore': {
+        'french': 'Agréabilité'
+    },
+    'cscore': {
+        'french': 'Conscienciosité'
+    },
+    'impulsive': {
+        'french': 'Impulsivité'
+    },
+    'ss': {
+        'french': 'Recherche de sensations'
+    }
+}
+
 DRUG_INFO = {
     'alcohol': {
         'group': 'group0',
