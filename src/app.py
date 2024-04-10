@@ -9,19 +9,22 @@
     This file is the entry point for our dash app.
 '''
 
+
+import src.preprocess as preprocess
+import plotly.express as px
+import pandas as pd
+from src.chord import create_chord_diagram, create_legend, active_palette
+from ucimlrepo import fetch_ucirepo
 import dash
 from dash import dcc, html
 from dash import page_registry, no_update
 from dash.dependencies import Input, Output, State
-from ucimlrepo import fetch_ucirepo
-from src.chord_v2 import create_chord_diagram, create_legend, active_palette
+import sys
+from pathlib import Path
 
+base_path = Path(__file__).resolve().parent.parent
+sys.path.append(str(base_path))
 
-import pandas as pd
-import plotly.express as px
-import src.preprocess as preprocess
-# import chord
-# import colors
 
 external_stylesheets = ['main_page_style.css', 'second_page_style.css']
 
@@ -68,23 +71,112 @@ main_page_layout = html.Div([
             ])
         ])
     ]),
-    html.Div(className='Drogue-selector-container', children=[
-        dcc.Dropdown(
-            id='image-selector',
-            options=drug_options,
-            value=default_value,  # default value
-            placeholder="Sélectionnez une drogue ...",
+    # html.Div(className='Drug-container', children=[
+    #     dcc.Dropdown(
+    #         id='image-selector',
+    #         options=drug_options,
+    #         value=default_value,  # default value
+    #         placeholder="Sélectionnez une drogue ...",
 
-            # Center the dropdown and add margin
-            style={'width': '300px', 'margin': '0 auto 10px'}
-        ),
+    #         # Center the dropdown and add margin
+    #         style={'width': '300px', 'margin': '0 auto 10px'}
+    #     ),
+
+    #     html.Div(className='matrix-item', id='item4', style={
+    #         'display': 'flex',
+    #         'flexDirection': 'column',
+    #         'justifyContent': 'center',  # Center vertically
+    #         'alignItems': 'center',
+    #         'height': '100vh',  # Full height of the viewport
+    #         'padding': '2%',  # Outer padding
+    #         'boxSizing': 'border-box',  # Padding is part of the width and height
+    #     }, children=[
+    #         html.Div(className='matrix-item', id='item1', style={
+    #             'display': 'flex',
+    #             'justifyContent': 'space-around',
+    #             'alignItems': 'center',
+    #             'flex': '1 0 auto',  # Take up equal space, but don't shrink
+    #             'margin': '2%',  # Margin between the rows
+    #             'padding': '2%',  # Padding inside the row
+    #         }, children=[
+    #             html.Div(className='matrix-item', id='item2',
+    #                      children='Content 1', style={'flex': '1', 'padding': '1%', 'border': '1px solid black', 'textAlign': 'center'}),
+    #             html.Div(className='matrix-item', id='item3',
+    #                      children='Content 2', style={'flex': '1', 'padding': '1%', 'border': '1px solid black', 'textAlign': 'center'}),
+    #         ]),
+    #         html.Div(className='matrix-item', id='item1-repeat', style={
+    #             'display': 'flex',
+    #             'justifyContent': 'space-around',
+    #             'alignItems': 'center',
+    #             'flex': '1 0 auto',  # Take up equal space, but don't shrink
+    #             'margin': '2%',  # Margin between the rows
+    #             'padding': '2%',  # Padding inside the row
+    #         }, children=[
+    #             html.Div(id='chord-diagram-container', style={
+    #                 'flex': '1',  # Allow the graph to grow and take up space
+    #                 'padding': '1%',  # Padding around the graph
+    #                 'border': '1px solid black',  # Border around the graph container
+    #                 'textAlign': 'center',
+    #                 'display': 'flex',
+    #                 'flexDirection': 'column',
+    #                 'justifyContent': 'center',  # Center the graph vertically inside the container
+    #             }, children=[
+    #                 # Allow the graph to grow and take up space
+    #                 dcc.Graph(id='chord-diagram', style={'flex': '1'}),
+    #                 html.Div(id='chord-diagram-legend')
+    #             ]),
+    #             html.Div(className='matrix-item', id='item3-repeat',
+    #                      children='Content 4', style={'flex': '1', 'padding': '1%', 'border': '1px solid black', 'textAlign': 'center'}),
+    #         ]),
+    #     ])
+
+
+
+
+
+
+    # ]),
+    html.Div(style={
+        'display': 'grid',
+        'gridTemplateAreas': '''
+            "a b"
+            "c b"
+            "d d"
+            ''',
+        'gridTemplateColumns': '1fr 2fr',
+        'gridTemplateRows': 'auto 1fr auto',
+        'gap': '1rem',
+        'padding': '1rem',
+        'height': 'calc(100vh - 2rem)',  # Adjust for padding
+        'boxSizing': 'border-box',
+    }, children=[
+        html.Div('Content 1', style={
+            'gridArea': 'a',
+            'border': '1px solid black',
+            'padding': '1rem',
+        }),
+        html.Div('Content 2', style={
+            'gridArea': 'b',
+            'border': '1px solid black',
+            'padding': '1rem',
+        }),
+        html.Div(id='chord-diagram-container', style={
+            'gridArea': 'c',
+            'border': '1px solid black',
+            'padding': '1rem',
+            'overflow': 'hidden',  # Prevents content from overflowing
+        }, children=[
+            # Graph takes the full space available
+            dcc.Graph(id='chord-diagram',
+                      config={'responsive': False, 'staticPlot': True, 'displayModeBar': False})
+            # Note: You don't need to set height to 100% if config is responsive
+        ]),
+        html.Div('Content 4', style={
+            'gridArea': 'd',
+            'border': '1px solid black',
+            'padding': '1rem',
+        }),
     ]),
-    html.Div(id='chord-diagram-container', children=[
-        dcc.Graph(id='chord-diagram'),
-        html.Div(id='chord-diagram-legend')
-    ]),
-
-
 
     # html.Div(className='viz-container', children=[
     #     html.Div(className='profil-susceptible-container',
@@ -113,8 +205,6 @@ main_page_layout = html.Div([
     #             ])
     #         ], style={'display': 'flex', 'justify-content': 'space-around', 'padding': '20px', 'border': '1px solid #ccc', 'box-shadow': '0px 0px 10px #aaa'})
     #     ]),
-
-
 
     #     html.Div(className='Drogue-info-container',children=[
     #         html.Div(className='Drogue-selector-and-similar-drugs-container',children=[
@@ -247,7 +337,7 @@ second_page_layout = html.Div([
 ])
 
 
-@app.callback(
+@ app.callback(
     [Output('chord-diagram', 'figure'),
      Output('chord-diagram-legend', 'children')],
     [Input('image-selector', 'value')]
@@ -264,7 +354,7 @@ def update_chord_diagram_and_legend(active_drug):
     return fig, legend
 
 
-@app.callback(
+@ app.callback(
     Output('page-content', 'children'),
     [Input('url', 'pathname')]
 )
@@ -276,7 +366,7 @@ def display_page(pathname):
         return main_page_layout  # Replace with your actual main page layout
 
 
-@app.callback(
+@ app.callback(
     Output('url', 'pathname'),
     Input('back-button', 'n_clicks'),
     prevent_initial_call=True
@@ -287,7 +377,7 @@ def go_back(n_clicks):
     return dash.no_update
 
 
-@app.callback(
+@ app.callback(
     [Output('age-graph', 'figure'),
      Output('gender-graph', 'figure'),
      Output('education-graph', 'figure')],

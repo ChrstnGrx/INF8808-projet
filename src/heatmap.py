@@ -3,6 +3,11 @@ import pandas as pd
 import numpy as np
 from ucimlrepo import fetch_ucirepo
 import src.preprocess as preprocess
+import sys
+from pathlib import Path
+
+base_path = Path(__file__).resolve().parent.parent
+sys.path.append(str(base_path))
 
 # Fetch the dataset and preprocess
 dataframe = fetch_ucirepo(id=373).data.original
