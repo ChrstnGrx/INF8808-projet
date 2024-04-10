@@ -96,7 +96,6 @@ main_page_layout = html.Div([
                     )
                 ]
             ),
-            # html.Div(style={'border': '1px solid', 'padding': '20px', 'height': '100%', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}, children='Rectangle 1'),  # Made this a rectangle
             html.Div(className='rectangle-1', children=
                      dcc.Graph(id='graph-2', figure={}, config={'staticPlot': True})
                      ),
