@@ -9,7 +9,6 @@
     This file is the entry point for our dash app.
 '''
 
-
 import src.preprocess as preprocess
 import plotly.express as px
 import pandas as pd
@@ -21,6 +20,7 @@ from dash import page_registry, no_update
 from dash.dependencies import Input, Output, State
 import sys
 from pathlib import Path
+import src.parallel_coords as pc
 
 base_path = Path(__file__).resolve().parent.parent
 sys.path.append(str(base_path))
@@ -97,7 +97,10 @@ main_page_layout = html.Div([
                 ]
             ),
             html.Div(className='rectangle-1', children=
-                     dcc.Graph(id='graph-2', figure={}, config={'staticPlot': True})
+                     dcc.Graph(
+                         id='personality_per_drug_graph', 
+                         figure=pc.get_plot(personality_per_drug_df), 
+                         config={'responsive': True})
                      ),
             html.Div(className='box-2',
                      children=
