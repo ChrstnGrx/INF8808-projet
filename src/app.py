@@ -71,6 +71,9 @@ main_page_layout = html.Div([
             ])
         ])
     ]),
+
+
+
     # html.Div(className='Drug-container', children=[
     #     dcc.Dropdown(
     #         id='image-selector',
@@ -129,13 +132,45 @@ main_page_layout = html.Div([
     #                      children='Content 4', style={'flex': '1', 'padding': '1%', 'border': '1px solid black', 'textAlign': 'center'}),
     #         ]),
     #     ])
-
-
-
-
-
-
     # ]),
+
+    # Grid with adjusted box styles and rectangles in the second column 
+    html.Div(
+        className='grid-container',
+        style={
+            'display': 'grid',
+            'grid-template-columns': '1fr 2fr',  # Adjusted column sizes to make second column wider
+            'grid-template-rows': '1fr 1fr',
+            'grid-gap': '50px',
+            'margin': '20px'
+        },
+        children=[
+            # html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid'}, children='Box 1'),
+            html.Div(
+                style={'text-align': 'center', 'padding': '20px', 'border': '1px solid', 'display': 'flex', 'flex-direction': 'column'},
+                children=[
+                    dcc.Dropdown(
+                        id='image-selector',
+                        options=drug_options,  # Assuming this is defined somewhere in your code
+                        placeholder="Sélectionnez une drogue ...",
+                        style={'width': '100%', 'margin': '0 10px 10px 10px'}  # Adjusted width to 100% and added margin
+                    ),
+                    html.Div(
+                        className='image-box',
+                        children=[
+                            html.Img(src='/assets/icons/gateway-drugs.png'),
+                            html.Label('Attention : Ceci s\'agit d\'une drogue passerelle', className='image-label')
+                        ],
+                        style={'margin': '10px'}
+                    )
+                ]
+            ),
+            html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid', 'height': '100px'}, children='Rectangle 1'),  # Made this a rectangle
+            html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid'}, children='Box 3'),
+            html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid', 'height': '100px'}, children='Rectangle 2')  # Made this a rectangle
+    ]),
+
+
     html.Div(style={
         'display': 'grid',
         'gridTemplateAreas': '''
