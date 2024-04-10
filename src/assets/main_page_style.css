@@ -1,0 +1,186 @@
+/* Styles to center the text inside the dropdown */
+.Select-control .Select-value {
+  display: flex;
+  justify-content: center;
+}
+
+/* Centering placeholder text */
+.Select-placeholder {
+  text-align: center;
+  width: 100%;
+}
+
+/* Centering dropdown text */
+.Select-value-label {
+  text-align: center;
+  width: 100%;
+}
+
+/* Centering menu options */
+.VirtualizedSelectOption {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+
+/* Adjust your selector-dropdown class */
+.selector-dropdown {
+width: 275px;
+margin-bottom: 10px;
+margin-top: 10px;
+text-align: center; /* This centers the placeholder */
+}
+
+
+/* ----------------------------- */
+
+
+.header-title {
+  text-align: center;
+  margin: 20px;
+}
+
+.page-button {
+  margin: 10px;
+  display: block;
+}
+
+.profil-susceptible-container {
+  border: 1px solid black;
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0px 0px 10px #aaa;
+}
+
+.selectors {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.selector {
+  text-align: center;
+  font-weight: bold;
+}
+
+.selector-dropdown {
+  width: 275px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.graph-container {
+  display: flex;
+}
+
+.graph-box {
+  flex: 1;
+  margin: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.graph-title {
+  text-align: center;
+  font-size: 140%;
+}
+
+.graphs-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.selector-label {
+  margin-bottom: 10px;
+}
+
+#education-dropdown {
+  width: 300px;
+  margin-top: 10px;
+}
+
+
+
+/* ----------------------------- */
+.rectangle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center children horizontally */
+  border: 1px solid black;
+  width: auto; /* Adjust width based on content */
+  max-width: 40%; /* Maximum width to limit container size */
+  box-shadow: 0px 0px 10px #aaa;
+  margin  : 40px auto; /* Center the rectangle container on the page */
+  position: relative; /* Needed for absolute positioning of the title */
+  padding : 30px; /* Reduced padding for a more compact layout */
+  /* margin: 20px auto; */
+}
+
+.title {
+  position: absolute;  /* Absolute positioning within the rectangle-container */
+  top: 0;  /* Align to the top edge */
+  left: 0;  /* Align to the left edge */
+  align-self: flex-start; /* Align the title to the start of the flex container */
+  font-size: 16px; /* Smaller font size */
+  margin: 10px;
+  z-index: 1;  /* Ensure it's above the other content */
+}
+
+
+.image-boxes {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;  /* Center the image boxes horizontally */
+  width: 100%;  /* Take full width to center content inside the parent */
+  padding: 20px 0; /* Space above and below the image boxes */
+}
+
+.image-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 20px;
+  background-color: white;
+  border: 2px solid ;
+}
+
+.image-box img {
+  height: 200px;
+  width: 200px;
+}
+
+.image-label {
+  text-align: center;
+  margin-top: 5px;
+}
+
+
+
+
+.forward-button {
+  padding: 10px 20px;
+  background-color: white;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  position: fixed; /* or 'absolute' if you don’t need it to stick during scrolling */
+  right: 10px; /* Adjust based on layout */
+  top: 10px;
+}
+
+.forward-button:hover {
+  background-color: #f8f9fa;
+}
+
+.forward-button::after {
+  content: ' →'; /* Adjust if you want a different icon/text */
+}

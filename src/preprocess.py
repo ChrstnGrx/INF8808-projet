@@ -77,3 +77,26 @@ def drug_correlation(dataframe):
     return df
 
 
+def generate_drogue_options(dataframe):
+    """
+    Generates a list of options for a dropdown selector, each representing a drug.
+    
+    Parameters:
+    - dataframe: pandas.DataFrame - A DataFrame with columns for each drug.
+    
+    Returns:
+    - options: list of dict - A list of dictionaries where each dictionary has 'label' and 'value' keys.
+    """
+    # List of drug columns, assuming the drug columns start from the 11th column in the DataFrame
+    drug_columns = dataframe.columns[11:] 
+    
+    # Generate dropdown options
+    options = [{'label': drug.capitalize(), 'value': drug} for drug in drug_columns]
+    
+    # Check if there are any options to set a default value
+    if options:
+        default_value = options[0]['value']  # First drug's name
+    else:
+        default_value = None  # No default if the list is empty
+    
+    return options, default_value
