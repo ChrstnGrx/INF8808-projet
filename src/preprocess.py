@@ -3,8 +3,8 @@
 '''
 import pandas as pd
 
-import conversions
-import constants
+import src.conversions as conversions
+import src.constants as constants
 
 
 def drop_columns(dataframe):

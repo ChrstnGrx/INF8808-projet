@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 from ucimlrepo import fetch_ucirepo
-import preprocess
+import src.preprocess as preprocess
 
 # Fetch the dataset and preprocess
 dataframe = fetch_ucirepo(id=373).data.original

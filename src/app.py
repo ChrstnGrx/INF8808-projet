@@ -14,14 +14,14 @@ from dash import dcc, html
 from dash import page_registry, no_update
 from dash.dependencies import Input, Output, State
 from ucimlrepo import fetch_ucirepo
-from chord_v2 import create_chord_diagram, create_legend, active_palette
+from src.chord_v2 import create_chord_diagram, create_legend, active_palette
 
 
 import pandas as pd
 import plotly.express as px
-import preprocess
+import src.preprocess as preprocess
 # import chord
-import colors
+# import colors
 
 external_stylesheets = ['main_page_style.css', 'second_page_style.css']
 

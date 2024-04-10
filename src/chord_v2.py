@@ -2,7 +2,7 @@ import dash
 from dash import dcc, html
 import plotly.graph_objects as go
 from ucimlrepo import fetch_ucirepo
-import preprocess
+import src.preprocess as preprocess
 
 app = dash.Dash(__name__)
 
