@@ -137,10 +137,16 @@ main_page_layout = html.Div([
     # Grid with adjusted box styles and rectangles in the second column 
     html.Div(
         className='grid-container',
+        style={
+            'display': 'grid',
+            'grid-template-columns': '1fr 2fr',  # Adjusted column sizes to make second column wider
+            'grid-template-rows': '1fr 1fr',
+            'grid-gap': '50px',
+            'margin': '20px'
+        },
         children=[
             # html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid'}, children='Box 1'),
             html.Div(
-                className='box-1',
                 style={'text-align': 'center', 'padding': '20px', 'border': '1px solid', 'display': 'flex', 'flex-direction': 'column', 'align-items': 'center','min-height': '160px'},
                 children=[
                     dcc.Dropdown(
@@ -161,21 +167,18 @@ main_page_layout = html.Div([
                 ]
             ),
             # html.Div(style={'border': '1px solid', 'padding': '20px', 'height': '100%', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}, children='Rectangle 1'),  # Made this a rectangle
-            html.Div(className='rectangle-1',
-                     style={'border': '1px solid','height': '100%', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center', 
+            html.Div(style={'border': '1px solid','height': '100%', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center', 
                             'max-height': '100%', # Add a max-height to ensure it respects the grid area
                             'overflow': 'auto',
                             }, children=
                      dcc.Graph(id='graph-2', figure={}, config={'staticPlot': True})
                      ),
-            html.Div(className='box-2',
-                     style={'text-align': 'center', 'padding': '20px', 'border': '1px solid'}, children=
+            html.Div(style={'text-align': 'center', 'padding': '20px', 'border': '1px solid'}, children=
                      dcc.Graph(id='graph-3',
                                figure={},  
                                config={'responsive': True}           
                     )),
-            html.Div(className='rectangle-2',
-                     style={
+            html.Div(style={
                     'text-align': 'center', 
                     'padding': '20px', 
                     'border': '1px solid', 
