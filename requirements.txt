@@ -8,7 +8,7 @@ brotli==1.0.9
     # via flask-compress
 click==8.1.3
     # via flask
-d3blocks==1.4.9
+# d3blocks==1.4.9
 dash==2.6.2
     # via -r requirements.linux.in
 dash-core-components==2.0.0
