@@ -37,7 +37,6 @@
   margin  : 40px auto; /* Center the rectangle container on the page */
   position: relative; /* Needed for absolute positioning of the title */
   padding : 30px; /* Reduced padding for a more compact layout */
-  /* margin: 20px auto; */
 }
 
 .title {
@@ -94,9 +93,6 @@
   margin: 20px;
 }
 
-
-
-
 .box-1, .box-2 {
   text-align: center;
   padding: 20px;
@@ -107,7 +103,8 @@
   min-height: 160px;
 }
 
-.rectangle-1, .rectangle-2 {
+/* Styles for rectangle-1 */
+.rectangle-1 {
   border: 1px solid;
   height: 100%;
   display: flex;
@@ -117,41 +114,33 @@
   overflow: auto;
 }
 
-.image-box-gateway-drug {
-  margin: 10px;
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-}
-
-.centered-flexbox {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid;
-  padding: 20px;
-  max-height: 100%;
-  overflow: auto;  /* Use auto if you want scrollbars when content overflows */
-}
-
-.centered-content {
+/* Styles for rectangle-2 */
+.rectangle-2 {
   text-align: center;
   padding: 20px;
   border: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.image-box {
-  margin: 10px;
+.dropdown-drug-selector{
+  width: 100%;
 }
 
-.image-label {
+.gateway-drug-variant{
+  margin: 10px
+}
+
+.image-label-gateway {
   color: grey;
   border: 1px solid grey;
   padding: 5px;
   display: inline-block;
-}
-
-/* Additional styles, such as for the dropdown, can also be added here */
-.dropdown-full-width {
-  width: 100%;
+  text-align: center; 
+  margin-top: 5px;
+  color: grey;
+  border: 1px solid grey;
+  padding: 5px;
+  display: inline-block;
 }
