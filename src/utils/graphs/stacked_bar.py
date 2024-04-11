@@ -17,7 +17,6 @@ def translate(my_df):
     return my_df
 
 def get_plot(my_df, selected_drug=None):
-    print(my_df)
     my_df = set_color(my_df, selected_drug)
 
     colors = [STACKED_COLORS[cl]['unselected'] for cl in STACKED_COLORS]

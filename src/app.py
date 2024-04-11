@@ -21,7 +21,7 @@ from dash.dependencies import Input, Output, State
 import sys
 from pathlib import Path
 import utils.graphs.parallel_coords as pc
-import src.stacked_bar as sb
+import utils.graphs.stacked_bar as sb
 from src.components import footer
 
 base_path = Path(__file__).resolve().parent.parent
@@ -30,15 +30,17 @@ sys.path.append(str(base_path))
 app = dash.Dash(
     __name__, 
     use_pages=True,
+    # external_stylesheets=[
+    #     'main_page_style.css', 
+    #     'second_page_style.css',
+    # ],
     external_stylesheets=[
-        'main_page_style.css', 
-        'second_page_style.css',
+        'assets/style.css',
     ],
     title='PROJET | INF8808'
 )
 
 app.layout = html.Div([
-    html.H1('Multi-page app with Dash Pages'),
     html.Div([
         html.Div(
             dcc.Link(f"{page['name']} - {page['path']}", href=page["relative_path"])
