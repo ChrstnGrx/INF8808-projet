@@ -1,7 +1,7 @@
 '''
     Contains some functions to preprocess the data used in the visualisation.
 '''
-import src.constants as constants
+import utils.constants as constants
 import src.conversions as conversions
 import pandas as pd
 import sys

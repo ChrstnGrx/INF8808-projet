@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 from ucimlrepo import fetch_ucirepo
-import src.preprocess as preprocess
+import utils.preprocess as preprocess
 import sys
 from pathlib import Path
 

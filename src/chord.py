@@ -2,7 +2,7 @@ import dash
 from dash import dcc, html
 import plotly.graph_objects as go
 from ucimlrepo import fetch_ucirepo
-import src.preprocess as preprocess
+import utils.preprocess as preprocess
 import sys
 from pathlib import Path
 

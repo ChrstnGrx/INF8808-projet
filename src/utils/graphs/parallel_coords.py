@@ -1,6 +1,6 @@
 import plotly.graph_objects as go
 import colors as c
-from constants import PERSONNALITY_INFO, DRUG_INFO
+from utils.constants import PERSONNALITY_INFO, DRUG_INFO
 from dash import html
 
 c_selected = c.GROUP4_3
