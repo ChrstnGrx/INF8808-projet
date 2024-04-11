@@ -16,7 +16,7 @@ def translate(my_df):
     my_df['class'] = my_df['class'].apply(lambda x: CONSUMPTION_CLASSES[x])
     return my_df
 
-def get_plot(my_df, selected_drug='lsd'):
+def get_plot(my_df, selected_drug=None):
     print(my_df)
     my_df = set_color(my_df, selected_drug)
 
@@ -47,7 +47,7 @@ def get_plot(my_df, selected_drug='lsd'):
     
     return fig
 
-def get_legend(selected_drug='lsd'):
+def get_legend(selected_drug=None):
     def color_box(color):
         return html.Span(style={'background-color': color, 'width': '20px', 'height': '20px'})
 

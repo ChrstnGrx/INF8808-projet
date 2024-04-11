@@ -1,6 +1,7 @@
 import plotly.graph_objects as go
 import colors as c
 from constants import PERSONNALITY_INFO, DRUG_INFO
+from dash import html
 
 c_selected = c.GROUP4_3
 c_not_selected = c.NEUTRAL_1
@@ -16,17 +17,6 @@ def set_color(my_df, selected_drug):
         color_df.color[selected_drug] = 0.5
 
     return color_df
-
-def get_legend(selected_drug):
-    colorbar = dict(thickness=20, thicknessmode='pixels', tickmode='array', ypad=80)
-    if selected_drug is not None:
-        colorbar['tickvals'] = [0.15, 0.5, 0.85]
-        colorbar['ticktext'] = ['Consommateurs des autres drogues', 'Consommateurs de ' + DRUG_INFO[selected_drug]['french'], 'Répondants sobres']
-    else:
-        colorbar['tickvals'] = [0.22, 0.77]
-        colorbar['ticktext'] = ['Consommateurs de drogues', 'Répondants sobres']
-
-    return colorbar
 
 def get_colorscale(selected_drug):
     if selected_drug is not None:
@@ -58,8 +48,29 @@ def get_plot(my_df, selected_drug=None):
 
     fig = go.Figure(
         go.Parcoords(
-            line=dict(color=my_df['color'], colorscale = get_colorscale(selected_drug), showscale = True, colorbar=get_legend(selected_drug)),
+            line=dict(color=my_df['color'], colorscale = get_colorscale(selected_drug)),
             dimensions=get_dimensions(my_df, selected_drug)
         )
     )
     return fig
+
+def get_legend(selected_drug=None):    
+    def legend_box(color, text):
+        return html.Div(children=[
+                html.Span(style={'background-color': color, 'width': '20px', 'height': '20px'}),
+                html.Span(text)
+            ], style={'display': 'flex', 'flex-direction': 'row'})
+
+
+    if selected_drug is None:
+        colors = [
+            legend_box(c_not_selected, 'Consommateurs de drogues'),
+            legend_box(c_sober, 'Répondants sobres')
+        ]
+    else :
+        colors = [
+            legend_box(c_selected, 'Consommateurs de ' + DRUG_INFO[selected_drug]['french']),
+            legend_box(c_not_selected, 'Consommateurs des autres drogues'),
+            legend_box(c_sober, 'Répondants sobres')
+        ]
+    return html.Div(children=colors)

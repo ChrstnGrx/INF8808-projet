@@ -98,15 +98,19 @@ main_page_layout = html.Div([
                     )
                 ]
             ),
-            html.Div(className='rectangle-1', children=
-                     dcc.Graph(
-                         id='personality_per_drug_graph', 
-                         figure=pc.get_plot(personality_per_drug_df), 
-                         config={'responsive': True})
-                     ),
+            html.Div(className='rectangle-1', 
+                     children=[
+                        dcc.Graph(
+                            id='personality_per_drug_graph', 
+                            figure=pc.get_plot(personality_per_drug_df), 
+                            config={'responsive': True}
+                        ),
+                        html.Div(className='legend', children=pc.get_legend())
+                    ]),
             html.Div(className='box-2',
                      children=[
-                        dcc.Graph(id='graph-3',
+                        dcc.Graph(
+                            id='graph-3',
                             figure=sb.get_plot(consumption_per_drug_df),  
                             config={'responsive': True}           
                         ),
