@@ -74,7 +74,7 @@ main_page_layout = html.Div([
         ])
     ]),
 
-    # Grid with adjusted box styles and rectangles in the second column 
+    # Grid with adjusted box styles and rectangles in the second column
     html.Div(
         className='grid-container',
         children=[
@@ -83,7 +83,7 @@ main_page_layout = html.Div([
                 children=[
                     dcc.Dropdown(
                         id='dropdown-drug',
-                        className = 'dropdown-drug-selector',
+                        className='dropdown-drug-selector',
                         options=drug_options,  # Assuming this is defined somewhere in your code
                         placeholder="Sélectionnez une drogue ...",
                         style={'width': '100%'}  # Adjusting width and margin
@@ -92,37 +92,38 @@ main_page_layout = html.Div([
                         className='image-box gateway-drug-variant',
                         children=[
                             html.Img(src='/assets/icons/gateway-drugs.png'),
-                            html.Label('Attention : Ceci s\'agit d\'une drogue passerelle', 
-                                    className='image-label-gateway', 
-                                    )],
+                            html.Label('Attention : Ceci s\'agit d\'une drogue passerelle',
+                                       className='image-label-gateway',
+                                       )],
                     )
                 ]
             ),
-            html.Div(className='rectangle-1', 
+            html.Div(className='rectangle-1',
                      children=[
-                        dcc.Graph(
-                            id='personality_per_drug_graph', 
-                            figure=pc.get_plot(personality_per_drug_df), 
-                            config={'responsive': True}
-                        ),
-                        html.Div(className='legend', children=pc.get_legend())
-                    ]),
+                         dcc.Graph(
+                             id='personality_per_drug_graph',
+                             figure=pc.get_plot(personality_per_drug_df),
+                             config={'responsive': True}
+                         ),
+                         html.Div(className='legend', children=pc.get_legend())
+                     ]),
             html.Div(className='box-2',
                      children=[
-                        dcc.Graph(
-                            id='graph-3',
-                            figure=sb.get_plot(consumption_per_drug_df),  
-                            config={'responsive': True}           
-                        ),
-                        html.Div(className='legend', children=sb.get_legend())
+                         dcc.Graph(
+                             id='graph-3',
+                             figure=sb.get_plot(consumption_per_drug_df),
+                             config={'responsive': True}
+                         ),
+                         html.Div(className='legend', children=sb.get_legend())
                      ]),
             html.Div(className='rectangle-2',
-                children=dcc.Graph(
-                    id='graph-4', 
-                    figure={}, 
-                    config={'responsive': True}  # Make the graph responsive to its container
-                )
-            )
+                     children=dcc.Graph(
+                         id='graph-4',
+                         figure={},
+                         # Make the graph responsive to its container
+                         config={'responsive': True}
+                     )
+                     )
         ]),
 
 ])
@@ -151,60 +152,62 @@ second_page_layout = html.Div([
                     placeholder="Sélectionnez une tranche d'âge...",
                 )
             ]),
-
-            html.Div(className='gender-selector selector', children=[
-                html.Label('Sexe',
-                           className='selector-label'),
-                dcc.Dropdown(
-                    id='gender-dropdown',
-                    options=[
-                        {'label': 'Homme', 'value': 'MAN'},
-                        {'label': 'Femme', 'value': 'WOMAN'},
-                    ],
-                    value='MAN',
-                    className='selector-dropdown',
-                    placeholder="Sélectionnez un sexe...",
-                )
-            ]),
-
-            html.Div(className='education-selector selector', children=[
-                html.Label('Niveau d\'éducation'),
-                dcc.Dropdown(
-                    id='education-dropdown',
-                    options=[
-                        {'label': 'Quitté l\'école avant 16 ans',
-                         'value': 'BEFORE_16'},
-                        {'label': 'Quitté l\'école à 16 ans',
-                         'value': 'AT_16'},
-                        {'label': 'Quitté l\'école à 17 ans',
-                         'value': 'AT_17'},
-                        {'label': 'Quitté l\'école à 18 ans',
-                         'value': 'AT_18'},
-                        {'label': 'Fréquenté une université, mais sans diplôme',
-                         'value': 'SOME_COLLEGE_NO_DEGREE'},
-                        {'label': 'Baccaulauréat',
-                         'value': 'UNIVERSITY_DEGREE'},
-                        {'label': 'Maîtrise',
-                         'value': 'MASTERS_DEGREE'},
-                        {'label': 'Doctorat',
-                         'value': 'DOCTORATE_DEGREE'},
-                    ],
-                    value='UNIVERSITY_DEGREE',
-                    placeholder="Sélectionnez un niveau d'éducation...",
-                )
-            ]),
         ]),
-
         html.Div(className='graphs-container', children=[
             html.Div(className='age-graph graph-box', children=[
                 html.H2('Âge', className='graph-title'),
                 # Replace with actual figure
                 dcc.Graph(id='age-graph', figure={}),
             ]),
+            html.Div(className='selectors', children=[
+                html.Div(className='gender-selector selector', children=[
+                    html.Label('Sexe',
+                               className='selector-label'),
+                    dcc.Dropdown(
+                        id='gender-dropdown',
+                        options=[
+                            {'label': 'Homme', 'value': 'MAN'},
+                            {'label': 'Femme', 'value': 'WOMAN'},
+                        ],
+                        value='MAN',
+                        className='selector-dropdown',
+                        placeholder="Sélectionnez un sexe...",
+                    )
+                ]),
+
+            ]),
             html.Div(className='gender-graph graph-box', children=[
                 html.H2('Sexe', className='graph-title'),
                 # Replace with actual figure
                 dcc.Graph(id='gender-graph', figure={}),
+            ]),
+            html.Div(className='selectors', children=[
+                html.Div(className='education-selector selector', children=[
+                    html.Label('Niveau d\'éducation'),
+                    dcc.Dropdown(
+                        id='education-dropdown',
+                        options=[
+                            {'label': 'Quitté l\'école avant 16 ans',
+                             'value': 'BEFORE_16'},
+                            {'label': 'Quitté l\'école à 16 ans',
+                             'value': 'AT_16'},
+                            {'label': 'Quitté l\'école à 17 ans',
+                             'value': 'AT_17'},
+                            {'label': 'Quitté l\'école à 18 ans',
+                             'value': 'AT_18'},
+                            {'label': 'Fréquenté une université, mais sans diplôme',
+                             'value': 'SOME_COLLEGE_NO_DEGREE'},
+                            {'label': 'Baccaulauréat',
+                             'value': 'UNIVERSITY_DEGREE'},
+                            {'label': 'Maîtrise',
+                             'value': 'MASTERS_DEGREE'},
+                            {'label': 'Doctorat',
+                             'value': 'DOCTORATE_DEGREE'},
+                        ],
+                        value='UNIVERSITY_DEGREE',
+                        placeholder="Sélectionnez un niveau d'éducation...",
+                    )
+                ]),
             ]),
             html.Div(className='education-graph graph-box', children=[
                 html.H2('Niveau d\'éducation', className='graph-title'),
