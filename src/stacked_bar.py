@@ -16,10 +16,9 @@ def translate(my_df):
     my_df['class'] = my_df['class'].apply(lambda x: CONSUMPTION_CLASSES[x])
     return my_df
 
-def get_plot(my_df, selected_drug=None):
+def get_plot(my_df, selected_drug='lsd'):
     print(my_df)
     my_df = set_color(my_df, selected_drug)
-    order = my_df.drug.unique()
 
     colors = [STACKED_COLORS[cl]['unselected'] for cl in STACKED_COLORS]
     colors.reverse()
@@ -32,6 +31,8 @@ def get_plot(my_df, selected_drug=None):
             colors = colors + selected_colors
 
     my_df = translate(my_df)
+    order = my_df.drug.unique()
+
     fig = px.bar(my_df, x='drug', y='percentage', color='color-group', color_discrete_sequence=colors, category_orders={'drug': order}, template='plotly_white', custom_data=['class'])
     
     fig.update_layout(
@@ -46,7 +47,7 @@ def get_plot(my_df, selected_drug=None):
     
     return fig
 
-def get_legend(selected_drug=None):
+def get_legend(selected_drug='lsd'):
     def color_box(color):
         return html.Span(style={'background-color': color, 'width': '20px', 'height': '20px'})
 
