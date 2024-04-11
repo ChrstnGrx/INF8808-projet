@@ -66,6 +66,29 @@ def personality_per_drug(dataframe):
 
     return df.transpose()
 
+def consumption_per_drug(dataframe):
+    count_df = pd.DataFrame(0, index=constants.DRUGS, columns=constants.CONSUMPTION_CLASSES)
+    for i in dataframe.index:
+        for drug in constants.DRUGS:
+            consumption_class = dataframe[drug][i]
+            count_df[consumption_class][drug] += 1
+
+    order = []
+    for drug in count_df.index:
+        order.append((drug, count_df['CL0'][drug]))
+    order.sort(key=lambda x: x[1], reverse=True)
+    order = [x[0] for x in order]
+
+    data = []
+    size = dataframe.id.count()
+    for drug in order:
+        for consumption_class in constants.CONSUMPTION_CLASSES:
+            percentage = count_df[consumption_class][drug] / size * 100
+            data.append([drug, consumption_class, percentage])
+    data.reverse()
+    df = pd.DataFrame(data, columns=['drug', 'class', 'percentage'])
+
+    return df
 
 def drug_correlation(dataframe):
     size = dataframe.id.count()

@@ -63,3 +63,34 @@ SHADES = {
     'group3' : [GROUP3_0, GROUP3_1, GROUP3_2, GROUP3_3, GROUP3_4, GROUP3_5, GROUP3_6],
     'group4' : [GROUP4_0, GROUP4_1, GROUP4_2, GROUP4_3, GROUP4_4, GROUP4_5, GROUP4_6]
 }
+
+STACKED_COLORS = {
+    'CL0': {
+        'selected' : SHADES['group4'][0],
+        'unselected' : SHADES['neutral'][0],
+    },
+    'CL1': {
+        'selected' : SHADES['group4'][1],
+        'unselected' : SHADES['neutral'][1],
+    },
+    'CL2': {
+        'selected' : SHADES['group4'][2],
+        'unselected' : SHADES['neutral'][2],
+    },
+    'CL3': {
+        'selected' : SHADES['group4'][3],
+        'unselected' : SHADES['neutral'][3],
+    },
+    'CL4': {
+        'selected' : SHADES['group4'][4],
+        'unselected' : SHADES['neutral'][4],
+    },
+    'CL5': {
+        'selected' : SHADES['group4'][5],
+        'unselected' : SHADES['neutral'][5],
+    },
+    'CL6': {
+        'selected' : SHADES['group4'][6],
+        'unselected' : SHADES['neutral'][6],
+    },
+}

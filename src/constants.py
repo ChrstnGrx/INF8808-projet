@@ -117,3 +117,13 @@ DRUG_INFO = {
         'french': 'substances volatiles'
     }
 }
+
+CONSUMPTION_CLASSES = {
+    'CL0': 'Jamais utilisé',
+    'CL1': 'Utilisé il y a plus de une décennie',
+    'CL2': 'Utilisé dans la dernière décennie',
+    'CL3': 'Utilisé dans la dernière année',
+    'CL4': 'Utilisé dans le dernier mois',
+    'CL5': 'Utilisé dans la dernière semaine',
+    'CL6': 'Utilisé dans le dernier jour'
+}

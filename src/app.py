@@ -21,6 +21,7 @@ from dash.dependencies import Input, Output, State
 import sys
 from pathlib import Path
 import src.parallel_coords as pc
+import src.stacked_bar as sb
 
 base_path = Path(__file__).resolve().parent.parent
 sys.path.append(str(base_path))
@@ -37,6 +38,7 @@ dataframe = preprocess.drop_columns(dataframe)
 dataframe = preprocess.fix_errors(dataframe)
 # dataframe = preprocess.convert_scores(dataframe)
 personality_per_drug_df = preprocess.personality_per_drug(dataframe)
+consumption_per_drug_df = preprocess.consumption_per_drug(dataframe)
 drug_corr_df = preprocess.drug_correlation(dataframe)
 drug_options, default_value = preprocess.generate_drogue_options(dataframe)
 
@@ -103,11 +105,13 @@ main_page_layout = html.Div([
                          config={'responsive': True})
                      ),
             html.Div(className='box-2',
-                     children=
-                     dcc.Graph(id='graph-3',
-                               figure={},  
-                               config={'responsive': True}           
-                    )),
+                     children=[
+                        dcc.Graph(id='graph-3',
+                            figure=sb.get_plot(consumption_per_drug_df),  
+                            config={'responsive': True}           
+                        ),
+                        html.Div(className='legend', children=sb.get_legend())
+                     ]),
             html.Div(className='rectangle-2',
                 children=dcc.Graph(
                     id='graph-4', 
