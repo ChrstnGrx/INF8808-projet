@@ -2,11 +2,12 @@ import dash
 from dash import dcc, html, callback
 from dash.dependencies import Input, Output
 
-from src.datasets.dataframe import personality_per_drug_df, consumption_per_drug_df
+from src.datasets.dataframe import drug_corr_df, personality_per_drug_df, consumption_per_drug_df
 from src.utils.constants import DRUG_INFO, GATEWAY_DRUGS
 
 import src.utils.graphs.parallel_coords as pc
 import src.utils.graphs.stacked_bar as sb
+import src.utils.graphs.chord_diagram as cd
 
 dash.register_page(
     __name__, 
@@ -58,6 +59,8 @@ layout = html.Div(id='drugs-page', children=[
             )
         ]
     ),
+    html.Div(id='jointly-consumed-drugs', className='chart-container'),
+
 ])
 
 @callback(
@@ -87,52 +90,17 @@ def drug_consumption_graph(drug):
 )
 def drug_consumption_legend(drug):
     return sb.get_legend(drug)
-
 @callback(
-    Output('warning', 'children'),
+    Output('jointly-consumed-drugs', 'children'),
     Input('dropdown-drug', 'value')
 )
-def warning(drug):
-    if drug is not None and drug in GATEWAY_DRUGS:
-        return html.P('Attention : Ceci s\'agit d\'une drogue passerelle!')
-    
-
-@callback(
-    Output('typical-person', 'children'),
-    Input('dropdown-drug', 'value')
-)
-def typical_person(drug):
-    if drug is not None:
+def jointly_consumed_drugs(drug):
+    if drug is not None :
         return [
-            html.H1('Profil Susceptible'),
-            html.P('Les consommateurs de cette drogue ont tendance à...'),
-            html.Div(
-                className='icons-container',
-                children=[
-                    html.Div(
-                        className='icon-container',
-                        children=[
-                            html.Img(src='/assets/icons/graduate-cap-solid.svg'),
-                            html.Label('Formation'),
-                            html.P('... avoir complété un baccalauréat.')
-                        ]
-                    ),
-                    html.Div(
-                        className='icon-container',
-                        children=[
-                            html.Img(src='/assets/icons/diploma.svg'),
-                            html.Label('Âge'),
-                            html.P('...être âgé entre 45 et 55 ans.')
-                        ]
-                    ),
-                    html.Div(
-                        className='icon-container',
-                        children=[
-                            html.Img(src='/assets/icons/man.svg'),
-                            html.Label('Genre'),
-                            html.P('...être un homme.')
-                        ]
-                    )
-                ]
-            )
+            html.H1('Drogues consommees conjointement'),
+            html.Div(id='chord-diagram-container', children=[
+                    dcc.Graph(figure=cd.create_chord_diagram(drug_corr_df, drug)),
+                    html.Div(id='chord-diagram', children=cd.create_legend(drug, drug_corr_df)),
+                ]),
         ]
+

@@ -107,8 +107,8 @@ def drug_correlation(dataframe):
 
     df = df.stack().reset_index()
     df.columns = ['source', 'target', 'weight']
-    df['weight'] = df['weight'].astype(float) / df['weight'].sum() * 100
     df = df[df.weight != 0].reset_index(drop=True)
+    df['weight'] = df['weight'].astype(float) / df['weight'].sum() * 100
 
     return df
 
