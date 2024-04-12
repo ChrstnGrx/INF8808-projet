@@ -194,8 +194,9 @@ def create_age_label(age: str):
         lower_bound, upper_bound = age.split('-')
         return f'18-{int(lower_bound) - 1}', age, f'Plus de {upper_bound} ans'
 
-def create_age_dataframe(df, selected_age):
+def create_age_dataframe(dataframe, selected_age):
     age_labels = create_age_label(selected_age)
+    df = convert_scores(dataframe)
 
     selected_columns_dataframe = df.iloc[:, 11:27]
     drugs = selected_columns_dataframe.columns
@@ -209,7 +210,7 @@ def create_age_dataframe(df, selected_age):
         # Filtrer le DataFrame pour ne garder que les lignes correspondant aux âges inférieurs à l'âge sélectionné
         df_ages_below_selected = df[df['age'] < selected_age]
         # Calculer le nombre de personnes dans les tranches d'âge inférieures qui consomment chaque drogue
-        ages_below_count = df_ages_below_selected[drugs].sum()
+        ages_below_count = df_ages_below_selected[drugs].applymap(is_consumer).sum()
         # Calculer le nombre total de personne dans le groupe
         total_below_ages = len(df_ages_below_selected)
         # Calculer la portion de personnes dans les tranches inférieures d'âge qui consomment chaque drogue
@@ -221,7 +222,7 @@ def create_age_dataframe(df, selected_age):
     # Filtrer le DataFrame pour ne garder que les lignes correspondant à l'âge sélectionné
     df_selected_age = df[df['age'] == selected_age]
     # Calculer le nombre de personnes dans la tranche d'âge sélectionnée qui consomment chaque drogue
-    selected_age_count = df_selected_age[drugs].sum()
+    selected_age_count = df_selected_age[drugs].applymap(is_consumer).sum()
     # Calculer le nombre total de personne dans le groupe
     total_selected_age = len(df_selected_age)
     # Calculer la portion de personnes dans la tranche d'âge sélectionnée qui consomment chaque drogue
@@ -236,7 +237,7 @@ def create_age_dataframe(df, selected_age):
         # Filtrer le DataFrame pour ne garder que les lignes correspondant aux âges supérieurs à l'âge sélectionné
         df_ages_above_selected = df[df['age'] > selected_age]
         # Calculer le nombre de personnes dans les tranches d'âge supérieures qui consomment chaque drogue
-        ages_above_count = df_ages_above_selected[drugs].sum()
+        ages_above_count = df_ages_above_selected[drugs].applymap(is_consumer).sum()
         # Calculer le nombre total de personne dans le groupe
         total_above_ages = len(df_ages_above_selected)
         # Calculer la portion de personnes dans les tranches supérieures d'âge qui consomment chaque drogue
@@ -272,7 +273,7 @@ def create_education_level_dataframe(df, education_dict):
     if selected_education_level != -2.43591:
         # Calculer le nombre de personnes avec les niveaux d'études inférieurs qui consomment chaque drogue
         df_below_education = df[df['education'] < selected_education_level]
-        below_education_count = df_below_education[drugs].sum()
+        below_education_count = df_below_education[drugs].applymap(is_consumer).sum()
         # Calculer le nombre total de personne dans le groupe
         total_below_education = len(df_below_education)
         # Calculer la portion de personnes dans les niveaux d'étude inférieurs qui consomment chaque drogue
@@ -281,7 +282,7 @@ def create_education_level_dataframe(df, education_dict):
         colors.append('lightgray')
 
     # Calculer le nombre de personnes avec le niveau d'étude sélectionné qui consomment chaque drogue
-    selected_education_level_count = df_selected_education_level[drugs].sum()
+    selected_education_level_count = df_selected_education_level[drugs].applymap(is_consumer).sum()
     # Calculer le nombre total de personne dans le groupe
     total_selected_age = len(df_selected_education_level)
     # Calculer la portion de personnes qui ont le niveau d'étude sélectionné qui consomment chaque drogue
@@ -292,7 +293,7 @@ def create_education_level_dataframe(df, education_dict):
     if selected_education_level != 1.98437:
         # Calculer le nombre de personnes avec les niveaux d'études supérieurs qui consomment chaque drogue
         df_above_education = df[df['education'] > selected_education_level]
-        above_education_count = df_above_education[drugs].sum()
+        above_education_count = df_above_education[drugs].applymap(is_consumer).sum()
         # Calculer le nombre total de personne dans le groupe
         total_above_education = len(df_above_education)
         # Calculer la portion de personnes dans les niveaux d'étude supérieurs qui consomment chaque drogue

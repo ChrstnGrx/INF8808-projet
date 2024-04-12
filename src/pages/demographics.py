@@ -78,7 +78,7 @@ def create_age_figure(age_range):
     if not age_range:
         return dash.no_update, dash.no_update, dash.no_update
 
-    df, colors = preprocess.create_age_dataframe(dataframe, age_range)
+    df, colors = preprocess.create_age_dataframe(dataframe.copy(), age_range)
     return clustered_barchart.cluster_by_age(df, colors)
 
 @callback(
