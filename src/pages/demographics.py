@@ -40,8 +40,7 @@ layout = html.Div(id='demographics-page', children=[
             className='selector-dropdown',
             placeholder="Sélectionnez un sexe...",
         ),
-        dcc.Graph(id='gender-graph', figure=b2bbarchart.draw_b2b_barchart(b2bbarchart_df, "MAN"), 
-                         config={'responsive': True}),
+        dcc.Graph(id='gender-graph', figure=b2bbarchart.draw_b2b_barchart(b2bbarchart_df, "MAN")),
     ]),
     html.Div(children=[
         html.Label('Niveau d\'éducation'),
