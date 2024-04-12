@@ -1,3 +1,5 @@
+/* GENERAL STYLES */
+
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -15,4 +17,46 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* PAGE : DRUGS */
+
+#warning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#warning p {
+    font-style: italic;
+}
+
+#typical-person {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-container h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icons-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    width: 120px;
+}
+
+.icon-container img {
+    height: 80px;
 }

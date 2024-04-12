@@ -23,9 +23,52 @@ layout = html.Div(id='drugs-page', children=[
         placeholder="Sélectionnez une drogue.",
     ),
     html.Div(
+        id='warning',
+        children=[
+            html.P('Attention : Ceci s\'agit d\'une drogue passerelle!')
+        ],
+    ),
+    html.Div(
+        id='typical-person',
+        children=[
+            html.H1('Profil Susceptible'),
+            html.P('Les consommateurs de cette drogue ont tendence à...'),
+            html.Div(
+                className='icons-container',
+                children=[
+                    html.Div(
+                        className='icon-container',
+                        children=[
+                            html.Img(src='/assets/icons/graduate-cap-solid.svg'),
+                            html.Label('Formation'),
+                            html.P('... avoir complété un baccalauréat.')
+                        ]
+                    ),
+                    html.Div(
+                        className='icon-container',
+                        children=[
+                            html.Img(src='/assets/icons/diploma.svg'),
+                            html.Label('Âge'),
+                            html.P('...être âgé entre 45 et 55 ans.')
+                        ]
+                    ),
+                    html.Div(
+                        className='icon-container',
+                        children=[
+                            html.Img(src='/assets/icons/man.svg'),
+                            html.Label('Genre'),
+                            html.P('...être un homme.')
+                        ]
+                    )
+                ]
+            )
+        ]
+    ),
+    html.Div(
         id='personality_per_drug', 
         className='chart-container',
         children=[
+            html.H1('Tendences pour chaque trait de personnalité selon la drogue consommée'),
             dcc.Graph(
                 id='personality_per_drug_graph',
                 className='chart',
@@ -42,6 +85,7 @@ layout = html.Div(id='drugs-page', children=[
         id='drug_consumption', 
         className='chart-container',
         children=[
+            html.H1('Fréquences de consommations pour chaque drogue'),
             dcc.Graph(
                 id='drug_consumption_graph',
                 className='chart',
