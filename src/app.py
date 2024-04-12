@@ -9,19 +9,19 @@
     This file is the entry point for our dash app.
 '''
 
-import utils.preprocess as preprocess
-import plotly.express as px
-import pandas as pd
-from src.chord import create_chord_diagram, create_legend, active_palette
-from ucimlrepo import fetch_ucirepo
+# import src.utils.preprocess as preprocess
+# import plotly.express as px
+# import pandas as pd
+# from src.chord import create_chord_diagram, create_legend, active_palette
+# from ucimlrepo import fetch_ucirepo
 import dash
 from dash import dcc, html
-from dash import page_registry, no_update
-from dash.dependencies import Input, Output, State
+# from dash import page_registry, no_update
+# from dash.dependencies import Input, Output, State
 import sys
 from pathlib import Path
-import utils.graphs.parallel_coords as pc
-import utils.graphs.stacked_bar as sb
+# import utils.graphs.parallel_coords as pc
+# import utils.graphs.stacked_bar as sb
 from src.components import footer
 
 base_path = Path(__file__).resolve().parent.parent
