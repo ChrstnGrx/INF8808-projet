@@ -140,6 +140,11 @@ class EducationLevel(Enum):
     DOCTORATE_DEGREE = {'code': 'DOCTORATE_DEGREE',
                         'text': 'Doctorat', 'value': 1.98437}
 
+GATEWAY_DRUGS = [
+    'alcohol',
+    'nicotine',
+    'cannabis',
+]
 
 CONSUMPTION_CLASSES = {
     'CL0': 'Jamais utilisé',
