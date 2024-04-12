@@ -118,6 +118,12 @@ DRUG_INFO = {
     }
 }
 
+GATEWAY_DRUGS = [
+    'alcohol',
+    'nicotine',
+    'cannabis',
+]
+
 CONSUMPTION_CLASSES = {
     'CL0': 'Jamais utilisé',
     'CL1': 'Utilisé il y a plus de une décennie',
