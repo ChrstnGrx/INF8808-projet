@@ -1,6 +1,6 @@
-from colors import STACKED_COLORS
+from src.colors import STACKED_COLORS
 import plotly.express as px
-from utils.constants import DRUG_INFO, CONSUMPTION_CLASSES
+from src.utils.constants import DRUG_INFO, CONSUMPTION_CLASSES
 from dash import html
 import numpy as np
 
