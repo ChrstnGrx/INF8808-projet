@@ -15,5 +15,5 @@ b2bbarchart_df = preprocess.b2b_barchart(dataframe.copy())
 
 df = preprocess.convert_scores(dataframe.copy().copy())
 cluster_by_age_df, age_df_colors = preprocess.create_age_dataframe(df.copy(), '18-24')
-cluster_by_education_df, education_df_colors = preprocess.create_education_level_dataframe(df.copy(), EducationLevel.UNIVERSITY_DEGREE.copy())
+cluster_by_education_df, education_df_colors = preprocess.create_education_level_dataframe(df.copy(), EducationLevel.UNIVERSITY_DEGREE)
 drug_corr_df = preprocess.drug_correlation(dataframe.copy())
