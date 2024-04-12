@@ -10,4 +10,5 @@ dataframe = preprocess.fix_errors(dataframe)
 personality_per_drug_df = preprocess.personality_per_drug(dataframe)
 
 consumption_per_drug_df = preprocess.consumption_per_drug(dataframe)
+b2bbarchart_df = preprocess.b2b_barchart(dataframe)
 

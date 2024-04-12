@@ -1,6 +1,8 @@
 import dash
 from dash import dcc, html, callback
 from dash.dependencies import Input, Output
+import src.utils.graphs.b2bbarchart as b2bbarchart
+from src.datasets.dataframe import b2bbarchart_df
 
 dash.register_page(
     __name__, 
@@ -37,7 +39,9 @@ layout = html.Div(id='demographics-page', children=[
             value='MAN',
             className='selector-dropdown',
             placeholder="Sélectionnez un sexe...",
-        )
+        ),
+        dcc.Graph(id='gender-graph', figure=b2bbarchart.draw_b2b_barchart(b2bbarchart_df, "MAN"), 
+                         config={'responsive': True}),
     ]),
     html.Div(children=[
         html.Label('Niveau d\'éducation'),
@@ -58,5 +62,12 @@ layout = html.Div(id='demographics-page', children=[
         )
     ]),
 ])
+
+@callback(
+    Output('gender-graph', 'figure'),
+    Input('dropdown-gender', 'value')
+)
+def personality_per_drug_graph(gender):
+    return b2bbarchart.draw_b2b_barchart(b2bbarchart_df, gender)
 
 

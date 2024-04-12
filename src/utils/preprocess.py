@@ -137,3 +137,51 @@ def generate_drogue_options(dataframe):
         default_value = None  # No default if the list is empty
 
     return options, default_value
+
+def categorize_gender(value):
+    return "Femme" if value < 0 else "Homme"
+
+def b2b_barchart_sanitizing(dataframe):
+    '''
+        Creates the dataframe for the bar chart.
+
+        Args:
+            dataframe: The dataframe to use
+    '''
+    dataframe['gender_category'] = dataframe['gender'].apply(categorize_gender)
+    drugs = ['alcohol', 'amphet', 'amyl', 'benzos', 'cannabis', 'coke', 'crack', 'ecstasy',
+            'heroin', 'ketamine', 'legalh', 'lsd', 'meth', 'mushrooms', 'nicotine', 'vsa']
+    for drug in drugs:
+        dataframe[drug] = dataframe[drug].apply(is_consumer)
+
+    # pick only the columns we need
+    melted_df = pd.melt(dataframe, id_vars=['gender_category'], value_vars=[f'{drug}' for drug in drugs])
+
+    # Group by gender and drug consumption variable, then count occurrences
+    result_df = melted_df.groupby(['gender_category', 'variable'])['value'].sum().reset_index()
+
+    # Rename the 'value' column to 'count'
+    result_df.rename(columns={'value': 'count'}, inplace=True)
+
+    return result_df
+
+def gender_portion(dataframe):
+    total_counts = dataframe.groupby('gender_category')['count'].transform('sum')
+    # Calculating portion for each variable
+    dataframe['percentage'] = ((100*dataframe['count']) / total_counts).round(1)
+    dataframe = dataframe.pivot(index='variable', columns='gender_category', values='percentage').reset_index()
+    return dataframe
+    
+def b2b_barchart(dataframe):
+    '''
+        Creates the horizontal back to back barchart.
+
+        Args:
+            dataframe: The dataframe to use to create the barchart
+
+        Returns:
+            The barchart figure
+    '''
+    dataframe = b2b_barchart_sanitizing(dataframe)
+    dataframe = gender_portion(dataframe)
+    return dataframe
