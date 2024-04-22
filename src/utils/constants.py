@@ -1,3 +1,5 @@
+from enum import Enum
+
 DRUGS = [
     "alcohol",
     "amphet",
@@ -117,6 +119,32 @@ DRUG_INFO = {
         'french': 'substances volatiles'
     }
 }
+
+class EducationLevel(Enum):
+    BEFORE_16 = {'code': 'BEFORE_16',
+                 'text': 'Quitté l\'école avant 16 ans', 'value': -2.43591}
+    AT_16 = {'code': 'AT_16',
+             'text': 'Quitté l\'école à 16 ans', 'value': -1.73790}
+    AT_17 = {'code': 'AT_17',
+             'text': 'Quitté l\'école à 17 ans', 'value': -1.43719}
+    AT_18 = {'code': 'AT_18',
+             'text': 'Quitté l\'école à 18 ans', 'value': -1.22751}
+    SOME_COLLEGE_NO_DEGREE = {'code': 'SOME_COLLEGE_NO_DEGREE',
+                              'text': 'Fréquenté une université, mais sans diplôme', 'value': -0.61113}
+    PROF_DIPLOMA_CERTIFICATE = {'code': 'PROF_DIPLOMA_CERTIFICATE',
+                                'text': 'Diplôme ou certificat professionnel', 'value': -0.05921}
+    UNIVERSITY_DEGREE = {'code': 'UNIVERSITY_DEGREE',
+                         'text': 'Baccaulauréat', 'value': 0.45468}
+    MASTER_DEGREE = {'code': 'MASTER_DEGREE',
+                     'text': 'Maîtrise', 'value': 1.16365}
+    DOCTORATE_DEGREE = {'code': 'DOCTORATE_DEGREE',
+                        'text': 'Doctorat', 'value': 1.98437}
+
+GATEWAY_DRUGS = [
+    'alcohol',
+    'nicotine',
+    'cannabis',
+]
 
 CONSUMPTION_CLASSES = {
     'CL0': 'Jamais utilisé',

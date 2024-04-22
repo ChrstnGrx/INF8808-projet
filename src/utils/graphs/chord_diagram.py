@@ -1,20 +1,9 @@
 import dash
-from dash import dcc, html
+from dash import html
 import plotly.graph_objects as go
-from ucimlrepo import fetch_ucirepo
-import utils.preprocess as preprocess
-import sys
-from pathlib import Path
 
-base_path = Path(__file__).resolve().parent.parent
-sys.path.append(str(base_path))
+import math 
 
-app = dash.Dash(__name__)
-
-dataframe = fetch_ucirepo(id=373).data.original
-dataframe = preprocess.drop_columns(dataframe)
-dataframe = preprocess.fix_errors(dataframe)
-drug_corr_df = preprocess.drug_correlation(dataframe)
 
 active_palette = ['#81d4fa', '#29b6f6', '#039be5',
                   '#0288d1', '#0277bd', '#01579b', '#004ba0']
@@ -38,22 +27,20 @@ french_drug_names = {
     'heroin': 'Héroïne',
 }
 
-
-def activate_drug_palette(df, drug, active_palette):
-    drug = 'alcohol'
+def activate_drug_palette(df, drug):
     colors = {}
     weights = df['weight'].astype(float)
     max_weight = weights.max()
     for index, row in df.iterrows():
         is_active = drug in (row['source'], row['target'])
         if is_active:
-            weight_normalized = float(row['weight'] / max_weight)
+            weight_normalized = row['weight'] / max_weight
             color_index = int(weight_normalized * (len(active_palette) - 1))
             colors[index] = active_palette[color_index]
     return colors
 
 
-def create_legend(active_drug, df, active_palette):
+def create_legend(active_drug, df):
     legend_categories = determine_legend_categories(
         df, active_drug, active_palette)
     legend_texts = ["Extrêmement faible", "Très faible", "Faible",
@@ -95,7 +82,7 @@ def create_chord_diagram(df, active_drug):
         hoverinfo='none',
     ))
 
-    colors = activate_drug_palette(df, active_drug, active_palette)
+    colors = activate_drug_palette(df, active_drug)
 
     for i, row in df.iterrows():
         source_idx = drug_indices[row['source']]
@@ -156,49 +143,22 @@ def create_chord_diagram(df, active_drug):
 
     return fig
 
+def get_legend(drug_corr_df, drug):
+    legend = create_legend(drug, drug_corr_df, active_palette)
+    return legend
 
-active_drug = 'alcohol'
-fig = create_chord_diagram(drug_corr_df, active_drug)
-
-max_weight = drug_corr_df['weight'].max()
-
-# Function to determine the legend categories to include based on active connections
-
+def get_plot(drug_corr_df,drug):
+    fig = create_chord_diagram(drug_corr_df, drug)
+    return fig
 
 def determine_legend_categories(df, active_drug, active_palette):
     connection_weights = df[(df['source'] == active_drug) | (
         df['target'] == active_drug)]['weight']
-    normalized_weights = connection_weights / max_weight
+    normalized_weights = connection_weights / df['weight'].max()
     categories_present = set()
     for weight in normalized_weights:
-        color_index = int(weight * (len(active_palette) - 1))
-        categories_present.add(color_index)
+        if not math.isnan(weight):
+            color_index = int(weight * (len(active_palette) - 1))
+            categories_present.add(color_index)
     return sorted(categories_present)
 
-
-legend_categories = determine_legend_categories(
-    drug_corr_df, active_drug, active_palette)
-legend_texts = ["Extrêmement faible", "Très faible", "Faible",
-                "Moyenne", "Élevée", "Très élevée", "Extrêmement élevée"]
-
-# Create the legend HTML dynamically based on the categories present
-legend = html.Div([
-    html.H3("Indice de consommation conjointe", style={
-            'textAlign': 'center', 'textDecoration': 'underline'}),
-    html.Ul([html.Li(style={'color': active_palette[i]}, children=legend_texts[i])
-             for i in legend_categories], style={'listStyleType': 'none', 'padding': '0', 'textAlign': 'center', 'fontWeight': 'bold'})
-], style={'border': '5px groove #000', 'borderRadius': '1.5%', 'padding': '1.5%', 'marginTop': '0', 'backgroundColor': 'rgba(0, 0, 0, 0.02)'})
-
-# Ajouter la légende à la mise en page de l'application, à droite du graphique
-app.layout = html.Div([
-    dcc.Location(id='url', refresh=False),
-    html.Div([
-        dcc.Graph(figure=fig,
-                  style={'display': 'flex'},
-                  config={'staticPlot': True}),
-        html.Div(legend, style={'display': 'flex',
-                 'verticalAlign': 'top'})
-    ], style={'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center', 'justifyContent': 'space-evenly'})
-])
-if __name__ == '__main__':
-    app.run_server(debug=True)

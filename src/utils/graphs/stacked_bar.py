@@ -1,6 +1,6 @@
-from colors import STACKED_COLORS
+from src.colors import STACKED_COLORS
 import plotly.express as px
-from constants import DRUG_INFO, CONSUMPTION_CLASSES
+from src.utils.constants import DRUG_INFO, CONSUMPTION_CLASSES
 from dash import html
 import numpy as np
 
@@ -17,7 +17,6 @@ def translate(my_df):
     return my_df
 
 def get_plot(my_df, selected_drug=None):
-    print(my_df)
     my_df = set_color(my_df, selected_drug)
 
     colors = [STACKED_COLORS[cl]['unselected'] for cl in STACKED_COLORS]

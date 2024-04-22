@@ -1,4 +1,4 @@
 # venv folder
-venv
+/src/venv
 __pycache__
 .venv
