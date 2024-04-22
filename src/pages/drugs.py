@@ -10,30 +10,34 @@ import src.utils.graphs.stacked_bar as sb
 import src.utils.graphs.chord_diagram as cd
 
 dash.register_page(
-    __name__, 
+    __name__,
     path='/',
     redirect_from=['/drugs'],
-    title='Drugs Analysis',)
+    title='Analyse des drogues',)
 
-drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug} for drug in DRUG_INFO]
+drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug}
+                for drug in DRUG_INFO]
 
 layout = html.Div(id='drugs-page', children=[
+    html.Button('Analyse démographique',
+                id='forward-button', n_clicks=0),
     dcc.Dropdown(
         id='dropdown-drug',
         options=drug_options,
-        placeholder="Sélectionnez une drogue.",
+        placeholder="Veuillez sélectionner une drogue...",
     ),
     html.Div(id='warning'),
     html.Div(id='typical-person'),
     html.Div(
-        id='personality_per_drug', 
+        id='personality_per_drug',
         className='chart-container',
         children=[
-            html.H1('Tendances pour chaque trait de personnalité selon la drogue consommée'),
+            html.H1(
+                'Tendances pour chaque trait de personnalité selon la drogue consommée'),
             dcc.Graph(
                 id='personality_per_drug_graph',
                 className='chart',
-                figure=pc.get_plot(personality_per_drug_df), 
+                figure=pc.get_plot(personality_per_drug_df),
             ),
             html.Div(
                 id='personality_per_drug_legend',
@@ -43,14 +47,14 @@ layout = html.Div(id='drugs-page', children=[
         ]
     ),
     html.Div(
-        id='drug_consumption', 
+        id='drug_consumption',
         className='chart-container',
         children=[
             html.H1('Fréquences de consommations pour chaque drogue'),
             dcc.Graph(
                 id='drug_consumption_graph',
                 className='chart',
-                figure=sb.get_plot(consumption_per_drug_df), 
+                figure=sb.get_plot(consumption_per_drug_df),
             ),
             html.Div(
                 id='drug_consumption_legend',
@@ -63,12 +67,24 @@ layout = html.Div(id='drugs-page', children=[
 
 ])
 
+
+@callback(
+    Output('url-forward', 'pathname'),
+    Input('forward-button', 'n_clicks'),
+    prevent_initial_call=True
+)
+def navigate_to_demographics(n_clicks):
+    if n_clicks > 0:
+        return '/demographics'
+
+
 @callback(
     Output('personality_per_drug_graph', 'figure'),
     Input('dropdown-drug', 'value')
 )
 def personality_per_drug_graph(drug):
     return pc.get_plot(personality_per_drug_df, drug)
+
 
 @callback(
     Output('personality_per_drug_legend', 'children'),
@@ -77,6 +93,7 @@ def personality_per_drug_graph(drug):
 def personality_per_drug_legend(drug):
     return pc.get_legend(drug)
 
+
 @callback(
     Output('drug_consumption_graph', 'figure'),
     Input('dropdown-drug', 'value')
@@ -84,25 +101,30 @@ def personality_per_drug_legend(drug):
 def drug_consumption_graph(drug):
     return sb.get_plot(consumption_per_drug_df, drug)
 
+
 @callback(
     Output('drug_consumption_legend', 'children'),
     Input('dropdown-drug', 'value')
 )
 def drug_consumption_legend(drug):
     return sb.get_legend(drug)
+
+
 @callback(
     Output('jointly-consumed-drugs', 'children'),
     Input('dropdown-drug', 'value')
 )
 def jointly_consumed_drugs(drug):
-    if drug is not None :
+    if drug is not None:
         return [
             html.H1('Drogues consommees conjointement'),
             html.Div(id='chord-diagram-container', children=[
-                    dcc.Graph(figure=cd.create_chord_diagram(drug_corr_df, drug)),
-                    html.Div(id='chord-diagram', children=cd.create_legend(drug, drug_corr_df)),
-                ]),
+                dcc.Graph(figure=cd.create_chord_diagram(drug_corr_df, drug)),
+                html.Div(id='chord-diagram',
+                         children=cd.create_legend(drug, drug_corr_df)),
+            ]),
         ]
+
 
 @callback(
     Output('warning', 'children'),
@@ -111,7 +133,7 @@ def jointly_consumed_drugs(drug):
 def warning(drug):
     if drug is not None and drug in GATEWAY_DRUGS:
         return html.P('Attention : Ceci s\'agit d\'une drogue passerelle!')
-    
+
 
 @callback(
     Output('typical-person', 'children'),
@@ -128,7 +150,8 @@ def typical_person(drug):
                     html.Div(
                         className='icon-container',
                         children=[
-                            html.Img(src='/assets/icons/graduate-cap-solid.svg'),
+                            html.Img(
+                                src='/assets/icons/graduate-cap-solid.svg'),
                             html.Label('Formation'),
                             html.P('... avoir complété un baccalauréat.')
                         ]

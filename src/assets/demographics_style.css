@@ -101,7 +101,7 @@ text-align: center; /* This centers the placeholder */
   margin-top: 10px;
 }
 
-.back-button {
+#back-button {
   padding: 10px 20px;
   background-color: white;
   color: #000;
@@ -118,11 +118,11 @@ text-align: center; /* This centers the placeholder */
   cursor: pointer;
 }
 
-.back-button:hover {
+#back-button:hover {
   background-color: #f8f9fa;
 }
 
-.back-button::before {
+#back-button::before {
   content: '← ';
   display: inline;
 }

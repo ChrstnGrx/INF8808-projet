@@ -16,26 +16,31 @@ dataframe = preprocess.drop_columns(dataframe)
 dataframe = preprocess.fix_errors(dataframe)
 drug_corr_df = preprocess.drug_correlation(dataframe)
 
-active_palette = ['#81d4fa', '#29b6f6', '#039be5',
-                  '#0288d1', '#0277bd', '#01579b', '#004ba0']
+active_palette = ['#81d4fa',
+                  '#29b6f6',
+                  '#039be5',
+                  '#0288d1',
+                  '#0277bd',
+                  '#01579b',
+                  '#004ba0']
 
 french_drug_names = {
-    'nicotine': 'Nicotine',
-    'vsa': 'Solvants volatils',
-    'alcohol': 'Alcool',
-    'amphet': 'Amphétamines',
-    'amyl': 'Amyl nitrite',
-    'benzos': 'Benzodiazépines',
-    'cannabis': 'Cannabis',
-    'coke': 'Cocaïne',
-    'crack': 'Crack',
-    'ecstasy': 'Ecstasy',
-    'ketamine': 'Kétamine',
-    'legalh': 'Drogues légales',
-    'lsd': 'LSD',
-    'meth': 'Méthamphétamines',
-    'mushrooms': 'Champignons magiques',
-    'heroin': 'Héroïne',
+    'nicotine':     'Nicotine',
+    'vsa':          'Solvants volatils',
+    'alcohol':      'Alcool',
+    'amphet':       'Amphétamines',
+    'amyl':         'Amyl nitrite',
+    'benzos':       'Benzodiazépines',
+    'cannabis':     'Cannabis',
+    'coke':         'Cocaïne',
+    'crack':        'Crack',
+    'ecstasy':      'Ecstasy',
+    'ketamine':     'Kétamine',
+    'legalh':       'Drogues légales',
+    'lsd':          'LSD',
+    'meth':         'Méthamphétamines',
+    'mushrooms':    'Champignons magiques',
+    'heroin':       'Héroïne',
 }
 
 
@@ -56,14 +61,8 @@ def activate_drug_palette(df, drug, active_palette):
 def create_legend(active_drug, df, active_palette):
     legend_categories = determine_legend_categories(
         df, active_drug, active_palette)
-    legend_texts = ["Extrêmement faible", "Très faible", "Faible",
-                    "Moyenne", "Élevée", "Très élevée", "Extrêmement élevée"]
-
-    # Generating the legend as a list of html.Li components
     legend_items = [html.Li(style={'color': active_palette[i]}, children=legend_texts[i])
                     for i in legend_categories]
-
-    # Wrapping the items in a ul and div structure
     legend_component = html.Div([
         html.H3("Indice de consommation conjointe", style={
                 'textAlign': 'center', 'textDecoration': 'underline'}),
@@ -77,9 +76,6 @@ def create_legend(active_drug, df, active_palette):
 def create_chord_diagram(df, active_drug):
     drugs = sorted(set(df['source'].unique()) | set(df['target'].unique()))
     n = len(drugs)
-
-    connected_drugs = df[df['source'] == active_drug]['target'].tolist(
-    ) + df[df['target'] == active_drug]['source'].tolist()
 
     drug_indices = {drug: idx for idx, drug in enumerate(drugs)}
     df['weight'] = df['weight'].astype(
@@ -112,18 +108,15 @@ def create_chord_diagram(df, active_drug):
                 hoverinfo='none',
             ))
 
-    # Filters for connected drugs only
     connected_drugs = set(df[df['source'] == active_drug]['target'].tolist()) | set(
         df[df['target'] == active_drug]['source'].tolist()) | {active_drug}
 
-    # Update drug_indices to include only connected drugs
     drug_indices = {drug: idx for idx,
                     drug in enumerate(sorted(connected_drugs))}
-    n = len(drug_indices)  # Update 'n' based on connected drugs
+    n = len(drug_indices)
 
-    # Update the tick values and text for the angular axis
     tickvals = [idx * 360 / n for idx,
-                drug in enumerate(sorted(connected_drugs))]
+                _ in enumerate(sorted(connected_drugs))]
     ticktext = [french_drug_names.get(drug, drug)
                 for drug in sorted(connected_drugs)]
 
@@ -162,8 +155,6 @@ fig = create_chord_diagram(drug_corr_df, active_drug)
 
 max_weight = drug_corr_df['weight'].max()
 
-# Function to determine the legend categories to include based on active connections
-
 
 def determine_legend_categories(df, active_drug, active_palette):
     connection_weights = df[(df['source'] == active_drug) | (
@@ -176,12 +167,13 @@ def determine_legend_categories(df, active_drug, active_palette):
     return sorted(categories_present)
 
 
-legend_categories = determine_legend_categories(
-    drug_corr_df, active_drug, active_palette)
+legend_categories = determine_legend_categories(drug_corr_df,
+                                                active_drug,
+                                                active_palette)
+
 legend_texts = ["Extrêmement faible", "Très faible", "Faible",
                 "Moyenne", "Élevée", "Très élevée", "Extrêmement élevée"]
 
-# Create the legend HTML dynamically based on the categories present
 legend = html.Div([
     html.H3("Indice de consommation conjointe", style={
             'textAlign': 'center', 'textDecoration': 'underline'}),
@@ -189,7 +181,6 @@ legend = html.Div([
              for i in legend_categories], style={'listStyleType': 'none', 'padding': '0', 'textAlign': 'center', 'fontWeight': 'bold'})
 ], style={'border': '5px groove #000', 'borderRadius': '1.5%', 'padding': '1.5%', 'marginTop': '0', 'backgroundColor': 'rgba(0, 0, 0, 0.02)'})
 
-# Ajouter la légende à la mise en page de l'application, à droite du graphique
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div([

@@ -10,12 +10,13 @@ from src.datasets.dataframe import cluster_by_age_df, age_df_colors, dataframe
 from src.datasets.dataframe import cluster_by_education_df, education_df_colors
 
 dash.register_page(
-    __name__, 
+    __name__,
     path='/demographics',
     title='Demographics Analysis'
 )
 
 layout = html.Div(id='demographics-page', children=[
+    html.Button('Vers l\'analyse des drogues', id='back-button', n_clicks=0),
     html.Div(children=[
         html.Label('Tranche d\'âge'),
         dcc.Dropdown(
@@ -32,7 +33,8 @@ layout = html.Div(id='demographics-page', children=[
             className='selector-dropdown',
             placeholder="Sélectionnez une tranche d'âge...",
         ),
-        dcc.Graph(id='age-graph', figure=clustered_barchart.cluster_by_age(cluster_by_age_df, age_df_colors)),
+        dcc.Graph(
+            id='age-graph', figure=clustered_barchart.cluster_by_age(cluster_by_age_df, age_df_colors)),
     ]),
     html.Div(children=[
         html.Label('Sexe', className='selector-label'),
@@ -46,7 +48,8 @@ layout = html.Div(id='demographics-page', children=[
             className='selector-dropdown',
             placeholder="Sélectionnez un sexe...",
         ),
-        dcc.Graph(id='gender-graph', figure=b2bbarchart.draw_b2b_barchart(b2bbarchart_df, "MAN")),
+        dcc.Graph(id='gender-graph',
+                  figure=b2bbarchart.draw_b2b_barchart(b2bbarchart_df, "MAN")),
     ]),
     html.Div(children=[
         html.Label('Niveau d\'éducation'),
@@ -54,20 +57,33 @@ layout = html.Div(id='demographics-page', children=[
             id='dropdown-education',
             options=[
                 {'label': 'Quitté l\'école avant 16 ans', 'value': 'BEFORE_16'},
-                {'label': 'Quitté l\'école à 16 ans','value': 'AT_16'},
-                {'label': 'Quitté l\'école à 17 ans','value': 'AT_17'},
-                {'label': 'Quitté l\'école à 18 ans','value': 'AT_18'},
-                {'label': 'Fréquenté une université, mais sans diplôme', 'value': 'SOME_COLLEGE_NO_DEGREE'},
-                {'label': 'Baccaulauréat','value': 'UNIVERSITY_DEGREE'},
-                {'label': 'Maîtrise','value': 'MASTER_DEGREE'},
-                {'label': 'Doctorat','value': 'DOCTORATE_DEGREE'},
+                {'label': 'Quitté l\'école à 16 ans', 'value': 'AT_16'},
+                {'label': 'Quitté l\'école à 17 ans', 'value': 'AT_17'},
+                {'label': 'Quitté l\'école à 18 ans', 'value': 'AT_18'},
+                {'label': 'Fréquenté une université, mais sans diplôme',
+                    'value': 'SOME_COLLEGE_NO_DEGREE'},
+                {'label': 'Baccaulauréat', 'value': 'UNIVERSITY_DEGREE'},
+                {'label': 'Maîtrise', 'value': 'MASTER_DEGREE'},
+                {'label': 'Doctorat', 'value': 'DOCTORATE_DEGREE'},
             ],
             value='UNIVERSITY_DEGREE',
             placeholder="Sélectionnez un niveau d'éducation...",
         ),
-        dcc.Graph(id='education-graph', figure=clustered_barchart.cluster_by_education(cluster_by_education_df, education_df_colors)),
+        dcc.Graph(id='education-graph', figure=clustered_barchart.cluster_by_education(
+            cluster_by_education_df, education_df_colors)),
     ]),
 ])
+
+
+@callback(
+    Output('url-back', 'pathname'),
+    Input('back-button', 'n_clicks'),
+    prevent_initial_call=True
+)
+def navigate_to_drugs(n_clicks):
+    if n_clicks > 0:
+        return '/drugs'
+
 
 @callback(
     Output('age-graph', 'figure'),
@@ -81,12 +97,14 @@ def create_age_figure(age_range):
     df, colors = preprocess.create_age_dataframe(dataframe.copy(), age_range)
     return clustered_barchart.cluster_by_age(df, colors)
 
+
 @callback(
     Output('gender-graph', 'figure'),
     Input('dropdown-gender', 'value')
 )
 def personality_per_drug_graph(gender):
     return b2bbarchart.draw_b2b_barchart(b2bbarchart_df, gender)
+
 
 @callback(
     Output('education-graph', 'figure'),
@@ -96,13 +114,13 @@ def personality_per_drug_graph(gender):
 def create_age_figure(education):
     if not education:
         return dash.no_update, dash.no_update, dash.no_update
-    
+
     education_level = ''
     for values in constants.EducationLevel.__members__.values():
         if (education == values.value['code']):
             education_level = values
             break
 
-    df, colors = preprocess.create_education_level_dataframe(dataframe, education_level)
+    df, colors = preprocess.create_education_level_dataframe(
+        dataframe, education_level)
     return clustered_barchart.cluster_by_age(df, colors)
-
