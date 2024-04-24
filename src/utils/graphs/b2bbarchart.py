@@ -43,4 +43,8 @@ def draw_b2b_barchart(dataframe, gender):
     fig.add_trace(fig_men['data'][0], row=1, col=1,  secondary_y=True)
     fig.add_trace(fig_women['data'][0], row=1, col=2)
     fig.update_layout(showlegend=False, xaxis_autorange='reversed')
+
+    for i, trace in enumerate(fig.data):
+        trace.hovertemplate = f'<b>Drogue:</b> %{{y}}<br><b>Portion:</b> %{{x}}%<extra></extra>'
+        
     return fig

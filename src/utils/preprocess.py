@@ -185,6 +185,7 @@ def b2b_barchart(dataframe):
     '''
     dataframe = b2b_barchart_sanitizing(dataframe)
     dataframe = gender_portion(dataframe)
+    dataframe['drug_french'] = dataframe['variable'].map(lambda x: constants.DRUG_INFO[x]['french'])
     return dataframe
 
 def create_age_label(age: str):
@@ -304,7 +305,13 @@ def create_education_level_dataframe(df, education_dict):
         colors.append('darkgrey')
 
     result_df = pd.DataFrame(data_dict)
+    
+    french_drugs = []
+    for key, value in constants.DRUG_INFO.items():
+        french_drugs.append(value['french'])
+        # print('key : ', key)
 
+    result_df['drug'] = french_drugs
     return result_df, colors
 
 

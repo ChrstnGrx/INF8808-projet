@@ -24,7 +24,7 @@ layout = html.Div(id='demographics-page', children=[
         html.H1('Analyse démographique'),
     ]),
     html.Div(children=[
-        html.H2('Tranche d\'âge'),
+        html.H2('Tranches d\'âge'),
         html.Div(className='viz', children=[
             dcc.Dropdown(
                 id='dropdown-age',
@@ -69,12 +69,11 @@ layout = html.Div(id='demographics-page', children=[
             dcc.Dropdown(
                 id='dropdown-education',
                 options=[
-                    {'label': 'Quitté.e l\'école avant 16 ans', 'value': 'BEFORE_16'},
-                    {'label': 'Quitté.e l\'école à 16 ans', 'value': 'AT_16'},
-                    {'label': 'Quitté.e l\'école à 17 ans', 'value': 'AT_17'},
-                    {'label': 'Quitté.e l\'école à 18 ans', 'value': 'AT_18'},
-                    {'label': 'Fréquenté.e une université, mais sans diplôme',
-                     'value': 'SOME_COLLEGE_NO_DEGREE'},
+                    {'label': 'Ayant quitté l\'école avant 16 ans', 'value': 'BEFORE_16'},
+                    {'label': 'Ayant quitté l\'école à 16 ans', 'value': 'AT_16'},
+                    {'label': 'Ayant quitté l\'école à 17 ans', 'value': 'AT_17'},
+                    {'label': 'Ayant quitté l\'école à 18 ans', 'value': 'AT_18'},
+                    {'label': 'Ayant fréquenté une université, mais sans diplôme','value': 'SOME_COLLEGE_NO_DEGREE'},
                     {'label': 'Baccaulauréat', 'value': 'UNIVERSITY_DEGREE'},
                     {'label': 'Maîtrise', 'value': 'MASTER_DEGREE'},
                     {'label': 'Doctorat', 'value': 'DOCTORATE_DEGREE'},
@@ -127,7 +126,7 @@ def personality_per_drug_graph(gender):
     Input('dropdown-education', 'value'),
     prevent_initial_call=False  # Placeholders by default to draw the graphs
 )
-def create_age_figure(education):
+def create_education_figure(education):
     if not education:
         return dash.no_update, dash.no_update, dash.no_update
 
@@ -139,4 +138,4 @@ def create_age_figure(education):
 
     df, colors = preprocess.create_education_level_dataframe(
         dataframe, education_level)
-    return clustered_barchart.cluster_by_age(df, colors)
+    return clustered_barchart.cluster_by_education(df, colors)
