@@ -11,7 +11,7 @@ import src.utils.graphs.chord_diagram as cd
 
 dash.register_page(
     __name__,
-    path='/',
+    path='/drugs',
     redirect_from=['/drugs'],
     title='Analyse des drogues',)
 
@@ -28,7 +28,7 @@ layout = html.Div(id='drugs-page', children=[
     ]),
     html.Div(id='viz1-wrapper', children=[
         html.H2('Profil susceptible'),
-        html.Div(id='viz-1', children=[
+        html.Div(className='viz', children=[
             dcc.Dropdown(
                 id='dropdown-drug',
                 options=drug_options,

@@ -16,13 +16,17 @@ def draw_b2b_barchart(dataframe, gender):
         Returns:
             The barchart figure
     '''
-    men_bars = dataframe[['variable', 'Homme']].rename(columns={'Homme': 'H_Value'})
-    women_bars = dataframe[['variable', 'Femme']].rename(columns={'Femme': 'F_Value'})
+    men_bars = dataframe[['variable', 'Homme']].rename(
+        columns={'Homme': 'H_Value'})
+    women_bars = dataframe[['variable', 'Femme']].rename(
+        columns={'Femme': 'F_Value'})
 
     # Create a dataframe for right side bars
     # Create individual bar charts for women and men
-    fig_men = px.bar(men_bars, x='H_Value', y='variable', orientation='h', text='H_Value', color='H_Value', title='Homme')
-    fig_women = px.bar(women_bars, x='F_Value', y='variable', orientation='h', text='F_Value', color='F_Value', title='Femme')
+    fig_men = px.bar(men_bars, x='H_Value', y='variable',
+                     orientation='h', text='H_Value', color='H_Value', title='Homme')
+    fig_women = px.bar(women_bars, x='F_Value', y='variable',
+                       orientation='h', text='F_Value', color='F_Value', title='Femme')
 
     fig_men.update_traces(marker=dict(color='#29b6f6'), showlegend=False)
     fig_women.update_traces(marker=dict(color='#424242'), showlegend=False)
@@ -32,16 +36,11 @@ def draw_b2b_barchart(dataframe, gender):
         fig_women.update_traces(marker=dict(color='#29b6f6'), showlegend=False)
 
     # Combine the two figures using subplots
-    fig = make_subplots(specs=[[{"secondary_y": True}, {}]], rows=1, cols=2, subplot_titles=('Homme', 'Femme'), shared_yaxes=True)
+    fig = make_subplots(specs=[[{"secondary_y": True}, {}]], rows=1, cols=2, subplot_titles=(
+        'Homme', 'Femme'), shared_yaxes=True)
 
     # Add the individual figures to the subplot grid
     fig.add_trace(fig_men['data'][0], row=1, col=1,  secondary_y=True)
     fig.add_trace(fig_women['data'][0], row=1, col=2)
-
-    # Update the subplot layout          ")
-    fig.update_layout(title='Diagramme à barres des consommateurs de drogue en fonction du genre', showlegend=False, xaxis_autorange='reversed')
-
-    # Show the combined figure
+    fig.update_layout(showlegend=False, xaxis_autorange='reversed')
     return fig
-
-### TODO space center y labels

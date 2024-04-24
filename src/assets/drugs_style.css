@@ -129,6 +129,7 @@
   width: 80%;
   margin: 0;
   padding: 0;
+  cursor: pointer;
 }
 
 .gateway-drug-variant{
@@ -148,7 +149,7 @@
   display: inline-block;
 }
 
-#viz-1 {
+.viz {
   display: flex;
   flex-direction: column;
   justify-content: space-around;

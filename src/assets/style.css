@@ -60,3 +60,24 @@ body {
 .icon-container img {
     height: 80px;
 }
+
+div p {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.35em;
+    margin-right: 10%;
+    margin-left: 10%;
+    line-height: 1.75em;
+    text-indent: 5rem;
+    text-align: justify;
+}
+
+#main-table-of-contents {
+    font-family: 'Goswald', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: left;
+    margin-left: 43.5%;
+    font-size: 1.25rem;
+    line-height: 1.5em;
+}

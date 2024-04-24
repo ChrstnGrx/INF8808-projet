@@ -9,13 +9,10 @@
     This file is the entry point for our dash app.
 '''
 
-from dash import callback_context
 import dash
-from dash import dcc, html, callback
-from dash.dependencies import Input, Output
+from dash import dcc, html
 import sys
 from pathlib import Path
-from src.components import footer
 
 base_path = Path(__file__).resolve().parent.parent
 sys.path.append(str(base_path))
