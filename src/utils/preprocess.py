@@ -180,7 +180,7 @@ def b2b_barchart(dataframe):
     '''
     dataframe = b2b_barchart_sanitizing(dataframe)
     dataframe = gender_portion(dataframe)
-    dataframe['drug_french'] = dataframe['variable'].map(lambda x: constants.DRUG_INFO[x]['french'])
+    # dataframe['drug_french'] = dataframe['variable'].map(lambda x: constants.DRUG_INFO[x]['french'])
     return dataframe
 
 def create_age_label(age: str):
