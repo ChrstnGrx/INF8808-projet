@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 '''
     File name: app.py
-    Authors: Aymen, Charles De Lafontaine
     Course: INF8808
     Python Version: 3.8
 
@@ -28,6 +27,11 @@ app = dash.Dash(
     title='PROJET | INF8808'
 )
 
+authors = [
+    "Charles DE LAFONTAINE", "Dieynaba DIALLO", "Erika FOSSOUO",
+    "Christine GROUX", "Samira YAZDANPOURMOGHADAM", "Aymen-Alaeddine ZEGHAIDA"
+]
+
 app.layout = html.Div([
     dcc.Location(id='url-forward', refresh=True),
     dcc.Location(id='url-forward-forward', refresh=True),
@@ -35,9 +39,13 @@ app.layout = html.Div([
     dcc.Location(id='url-back-back', refresh=True),
     html.Div([
         html.Div(
-            dcc.Link('',
-                     href=page["relative_path"])
+            dcc.Link('', href=page["relative_path"])
         ) for page in dash.page_registry.values()
     ]),
-    dash.page_container
+    dash.page_container,
+    html.Div(children=[
+        html.Div([html.Div(author, className="author") for author in authors]),
+        html.Div('Projet final pour le cours INF8808'),
+        html.Div('Polytechnique Montréal'),
+    ], id='footer')
 ])
