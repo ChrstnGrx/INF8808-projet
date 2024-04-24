@@ -48,7 +48,7 @@ questions = [
      "ID": '8'},
     {"Questions": "Existe-t-il des différences notables dans les taux de consommation de drogues entre différents groupes démographiques (par ex., hommes vs femmes, différents groupes d'âge, différents niveaux d’études) ?",
      "Priorité": "☆☆☆",
-     "Viz": "6/7",
+     "Viz": "5/6/7",
      "ID": '9'},
     {"Questions": "Quelles caractéristiques, au niveau des caractères sociaux, distinguent ceux qui ne consomment pas de drogues?",
      "Priorité": "☆☆",
@@ -433,7 +433,7 @@ layout = html.Div([
         html.P("À l'intérieur de chaque barre, différentes classes représentent la proportion de chaque fréquence de consommation. Le montant de la consommation est divisé en sous sous-classes qui vont de « jamais consommée » (CL0) à « consommée dans le dernier jour » (CL6). Ce graphique interactif permet à l'utilisateur de cliquer sur une ou plusieurs de ces 7 sous-classes de consommation répertoriées dans la section légende pour visualiser uniquement les sections liées à la ou aux mêmes classes pour chaque drogue. Cette fonctionnalité permet à l'utilisateur de visualiser un schéma plus simple en fonction de ses besoins et obtenir des informations plus détaillées en supprimant les détails inutiles. De plus, en cliquant sur les classes dans les barres, les valeurs pertinentes sont affichées. Par défaut, tous les éléments de légende sont actifs, en cliquant sur n'importe quel nombre d'éléments de légende, leur texte deviendra gris clair et les classes consommées seront supprimées de la barre de drogue, ce qui peut être fait jusqu'à ce que toutes les classes soient supprimées. Bien entendu, en cliquant à nouveau sur le titre de chaque classe, le texte du titre de la classe dans la légende reviendra à l'état par défaut (gris gras) et la classe elle-même sera ajoutée au graphique."),
         html.P("Le graphique est présenté sous deux formes. La première est la présentation générale, soit quand l’utilisateur n’a pas sélectionné de drogue pour l’analyse. La seconde apparaît à la suite de la sélection d’une drogue quelconque pour l’analyse."),
         html.Div(children=[
-            html.Img(src='/assets/static/3.webp', className='icon'),
+            html.Img(src='/assets/static/3.png', className='icon'),
             html.P(children=[
                 html.B("Figure 3."),
                 html.Span(
@@ -441,7 +441,7 @@ layout = html.Div([
             ], className='figure-title'),
         ]),
         html.Div(children=[
-            html.Img(src='/assets/static/4.webp', className='icon'),
+            html.Img(src='/assets/static/4.png', className='icon'),
             html.P(children=[
                 html.B("Figure 4."),
                 html.Span(
@@ -493,17 +493,17 @@ layout = html.Div([
     html.P("La visualisation 3 est un graphe de coordonnées parallèles. Les axes parallèles contiennent une échelle représentant l’indice de chaque trait de personnalité. Lorsque l’utilisateur survole un axe de personnalité, une info-bulle va apparaître et définir ce trait de personnalité, ce qui est nécessaire puisque la signification des traits de personnalité n’est pas évidente. Les lignes connectées représentent chacune une drogue. Elles traversent les axes parallèles à la moyenne de l’indice de personnalité de leurs consommateurs. Pour répondre à la quatrième question, on ajoute une ligne représentant les traits de personnalité moyens pour les répondants ne consommant pas de drogue. Un graphique de coordonnées parallèles a été choisi, car il permet de montrer des tendances connectées sur plusieurs échelles ordinales."),
     html.P("Le graphique est présenté sous deux formes. La première est la présentation générale, soit quand l’utilisateur n’a pas sélectionné de drogue pour l’analyse. Dans cette version, toutes les lignes représentant les drogues sont de la même couleur grise. Dans la seconde forme, la ligne représentant la drogue sélectionnée est colorée et légèrement plus épaisse. Les valeurs des indices de chaque personnalité sont affichées sur le graphique, pour la drogue sélectionnée. Toutes les autres sont dans la même teinte de gris."),
     html.Div(children=[
-        html.Img(src='/assets/static/4.webp', className='icon'),
+        html.Img(src='/assets/static/5.png', className='icon'),
         html.P(children=[
-            html.B("Figure 4."),
+            html.B("Figure 5."),
             html.Span(
                 " Viz 3 sans drogue sélectionnée.")
         ], className='figure-title'),
     ]),
     html.Div(children=[
-        html.Img(src='/assets/static/5.webp', className='icon'),
+        html.Img(src='/assets/static/6.png', className='icon'),
         html.P(children=[
-            html.B("Figure 5."),
+            html.B("Figure 6."),
             html.Span(
                 " Viz 3 avec drogue sélectionnée.")
         ], className='figure-title'),
@@ -511,7 +511,7 @@ layout = html.Div([
     html.H3("6.4. Viz #4 – Diagramme de cordes", id='viz-4'),
     html.P(children=[
         html.Span(
-            "La visualisation 4 correspond à un diagramme de cordes (diagramme de Gauss, « chord diagram ») (voir Figure 6). Un tel diagramme sert à représenter des relations entre différentes entités. En ce qui nous concerne, dans le contexte de l’usage des drogues, ledit diagramme sera particulièrement adapté pour montrer les différentes combinaisons de drogues consommées ensemble. Il permettra sans aucun doute de répondre à la question suivante :"),
+            "La visualisation 4 correspond à un diagramme de cordes (diagramme de Gauss, « chord diagram ») (voir Figure 7). Un tel diagramme sert à représenter des relations entre différentes entités. En ce qui nous concerne, dans le contexte de l’usage des drogues, ledit diagramme sera particulièrement adapté pour montrer les différentes combinaisons de drogues consommées ensemble. Il permettra sans aucun doute de répondre à la question suivante :"),
         dash_table.DataTable(
             columns=[
                 {'name': '#', 'id': 'ID'},
@@ -547,9 +547,9 @@ layout = html.Div([
     ]),
     html.P("La raison pour laquelle ce type de diagramme est l’un des meilleurs pour répondre à la question des combinaisons de drogues est qu’il permet de visualiser la complexité et l’intensité des interactions entre différentes catégories de manière intuitive. En effet, les liens ou « cordes » qui connectent les différents groupes de drogues révélera les tendances de consommation croisée et peuvent mettre en évidence des motifs et associations qui ne seraient pas évidents autrement."),
     html.Div(children=[
-        html.Img(src='/assets/static/6.webp', className='icon'),
+        html.Img(src='/assets/static/7.png', className='icon'),
         html.P(children=[
-            html.B("Figure 6."),
+            html.B("Figure 7."),
             html.Span(
                 " Viz 4 avec drogue sélectionnée (alcool).")
         ], className='figure-title'),
@@ -564,11 +564,11 @@ layout = html.Div([
         dash_table.DataTable(
             columns=[
                 {'name': '#', 'id': 'ID'},
-                {"name": "Questions", "id": "Questions"},
+                {"name": "Question", "id": "Questions"},
                 {"name": "Priorité (/3)", "id": "Priorité"},
                 {"name": "Viz", "id": "Viz"}
             ],
-            data=questions_viz_4,
+            data=questions_viz_5_6_7,
             style_table={
                 'maxWidth': '80%',
                 'marginLeft': '10%',
@@ -596,18 +596,18 @@ layout = html.Div([
     ]),
     html.P("Un graphe de deux diagrammes à barres horizontales côte à côte est le choix le plus approprié pour représenter les schémas démographiques généraux des consommateurs de chaque drogue en fonction du sexe, car il permet une comparaison directe et efficace entre les deux catégories, pour chaque catégorie de drogue. La valeur de chaque barre correspond à la proportion de consommateur de cette drogue parmi tous les consommateurs de son sexe. On considère qu'une personne est consommatrice si elle a consommé de cette drogue au moins dans le dernier mois. Voici un exemple de calcul utilisé :"),
     html.Div(children=[
-        html.Img(src='/assets/static/7.webp', className='icon'),
+        html.Img(src='/assets/static/8.png', className='icon'),
         html.P(children=[
-            html.B("Figure 7."),
+            html.B("Figure 8."),
             html.Span(
                 " Exemple de calcul utilisé.")
         ], className='figure-title'),
     ]),
     html.P("De plus, lorsque l'utilisateur précise son sexe, le graphique correspondant affiche les barres horizontales pour ce sexe en bleu, tandis que l'autre sexe est représenté en gris. Cette coloration permet une visualisation claire et intuitive des différences entre les genres dans les schémas de consommation de drogues."),
     html.Div(children=[
-        html.Img(src='/assets/static/8.webp', className='icon'),
+        html.Img(src='/assets/static/9.png', className='icon'),
         html.P(children=[
-            html.B("Figure 8."),
+            html.B("Figure 9."),
             html.Span(
                 " Viz 5 lorsque le sexe « Femme » est selectionné.")
         ], className='figure-title'),
@@ -619,11 +619,11 @@ layout = html.Div([
         dash_table.DataTable(
             columns=[
                 {'name': '#', 'id': 'ID'},
-                {"name": "Questions", "id": "Questions"},
+                {"name": "Question", "id": "Questions"},
                 {"name": "Priorité (/3)", "id": "Priorité"},
                 {"name": "Viz", "id": "Viz"}
             ],
-            data=questions_viz_4,
+            data=questions_viz_5_6_7,
             style_table={
                 'maxWidth': '80%',
                 'marginLeft': '10%',
@@ -654,9 +654,9 @@ layout = html.Div([
     html.P("Cela permet une comparaison directe des taux de consommation de drogues pour différentes tranches d’âges, facilitant ainsi l’identification des tendances et des disparités dans les comportements de consommation."),
     html.P("Lorsque l’utilisateur choisit une tranche d’âge, la barre du centre dans chaque groupe est mise en bleu tandis que le reste est gris. La tranche d’âge de la barre du centre est celle qui correspond à la tranche d’âge de l’utilisateur, ainsi il obtient des informations qui le concernent directement."),
     html.Div(children=[
-        html.Img(src='/assets/static/9.webp', className='icon'),
+        html.Img(src='/assets/static/10.png', className='icon'),
         html.P(children=[
-            html.B("Figure 9."),
+            html.B("Figure 10."),
             html.Span(
                 " Viz 6 lorsque la tranche d’âge 35-44 ans est sélectionnée.")
         ], className='figure-title'),
@@ -669,11 +669,11 @@ layout = html.Div([
         dash_table.DataTable(
             columns=[
                 {'name': '#', 'id': 'ID'},
-                {"name": "Questions", "id": "Questions"},
+                {"name": "Question", "id": "Questions"},
                 {"name": "Priorité (/3)", "id": "Priorité"},
                 {"name": "Viz", "id": "Viz"}
             ],
-            data=questions_viz_4,
+            data=questions_viz_5_6_7,
             style_table={
                 'maxWidth': '80%',
                 'marginLeft': '10%',
@@ -702,9 +702,9 @@ layout = html.Div([
     html.P("La visualisation 7 est un graphique à barres groupées (clustered barchart) qui offre un aperçu des taux de consommation pour chaque drogue au sein de différents groupes démographiques, ici les différents niveaux d’éducation."),
     html.P("Il fonctionne exactement comme la visualisation 6 sauf qu’ici, il s’agit des différents niveaux d’éducation et non des différentes tranches d’âge. Ce sont donc les mêmes intéractions (mettre la barre du niveau d’étude concerné en couleur) et les mêmes justifications (visibilité, comparaison) que pour la visualisation 6."),
     html.Div(children=[
-        html.Img(src='/assets/static/10.webp', className='icon'),
+        html.Img(src='/assets/static/11.png', className='icon'),
         html.P(children=[
-            html.B("Figure 10."),
+            html.B("Figure 11."),
             html.Span(
                 " Viz 7 lorsque le niveau d’étude « diplôme de certificat professionnel » est sélectionné.")
         ], className='figure-title'),
@@ -731,11 +731,12 @@ layout = html.Div([
                    target="_blank"),
         ]),
     ]),
-    dcc.Link('Découvrir les visualisations', href='/visualizations'),
-    html.Div([
-        html.Div([html.Div(author, className="typewrite")
-                  for author in authors], style={'font-size': '12px', 'font-family': 'Courier New', 'textAlign': 'center'})
-    ])
+    html.Div(children=[
+        html.Div([html.Div(author, className="author")
+                 for author in authors]),
+        html.Div('Projet final pour le cours INF8808'),
+        html.Div('Polytechnique Montréal'),
+    ], id='footer')
 ])
 
 
