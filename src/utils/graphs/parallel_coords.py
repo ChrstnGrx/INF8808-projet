@@ -1,7 +1,11 @@
 import plotly.graph_objects as go
+import pandas as pd
+from dash import html
+
 import src.colors as c
 from src.utils.constants import PERSONNALITY_INFO, DRUG_INFO
-from dash import html
+
+pd.options.mode.chained_assignment = None
 
 c_selected = c.GROUP4_3
 c_not_selected = c.NEUTRAL_1
