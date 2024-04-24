@@ -191,8 +191,9 @@ def create_age_label(age: str):
 
 def create_age_dataframe(dataframe, selected_age):
     age_labels = create_age_label(selected_age)
+    df = convert_scores(dataframe)
 
-    selected_columns_dataframe = dataframe.iloc[:, 11:27]
+    selected_columns_dataframe = df.iloc[:, 11:27]
     drugs = selected_columns_dataframe.columns
     # Data pour construire le dataframe
     data_dict = {'drug': drugs}
@@ -202,7 +203,7 @@ def create_age_dataframe(dataframe, selected_age):
     # BELOW
     if (selected_age != '18-24'):
         # Filtrer le DataFrame pour ne garder que les lignes correspondant aux âges inférieurs à l'âge sélectionné
-        df_ages_below_selected = dataframe[dataframe['age'] < selected_age]
+        df_ages_below_selected = df[df['age'] < selected_age]
         # Calculer le nombre de personnes dans les tranches d'âge inférieures qui consomment chaque drogue
         ages_below_count = df_ages_below_selected[drugs].applymap(is_consumer).sum()
         # Calculer le nombre total de personne dans le groupe
@@ -214,7 +215,7 @@ def create_age_dataframe(dataframe, selected_age):
 
     # SELECTED
     # Filtrer le DataFrame pour ne garder que les lignes correspondant à l'âge sélectionné
-    df_selected_age = dataframe[dataframe['age'] == selected_age]
+    df_selected_age = df[df['age'] == selected_age]
     # Calculer le nombre de personnes dans la tranche d'âge sélectionnée qui consomment chaque drogue
     selected_age_count = df_selected_age[drugs].applymap(is_consumer).sum()
     # Calculer le nombre total de personne dans le groupe
@@ -229,7 +230,7 @@ def create_age_dataframe(dataframe, selected_age):
     # ABOVE
     if (selected_age != '65+'):
         # Filtrer le DataFrame pour ne garder que les lignes correspondant aux âges supérieurs à l'âge sélectionné
-        df_ages_above_selected = dataframe[dataframe['age'] > selected_age]
+        df_ages_above_selected = df[df['age'] > selected_age]
         # Calculer le nombre de personnes dans les tranches d'âge supérieures qui consomment chaque drogue
         ages_above_count = df_ages_above_selected[drugs].applymap(is_consumer).sum()
         # Calculer le nombre total de personne dans le groupe
