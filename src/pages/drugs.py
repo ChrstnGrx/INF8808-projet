@@ -19,52 +19,67 @@ drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug}
                 for drug in DRUG_INFO]
 
 layout = html.Div(id='drugs-page', children=[
-    html.Button('Analyse démographique',
-                id='forward-button', n_clicks=0),
-    dcc.Dropdown(
-        id='dropdown-drug',
-        options=drug_options,
-        placeholder="Veuillez sélectionner une drogue...",
-    ),
-    html.Div(id='warning'),
-    html.Div(id='typical-person'),
+    html.Div(id='header', children=[
+        html.Div(id='nav', children=[
+                html.Button('Vers l\'analyse démographique',
+                            id='forward-button', n_clicks=0),
+        ]),
+        html.H1('Analyse des drogues'),
+    ]),
+    html.Div(id='viz1-wrapper', children=[
+        html.H2('Profil susceptible'),
+        html.Div(id='viz-1', children=[
+            dcc.Dropdown(
+                id='dropdown-drug',
+                options=drug_options,
+                placeholder="Veuillez sélectionner une drogue...",
+            ),
+            html.Div(id='warning'),
+            html.Div(id='typical-person'),
+        ]),
+    ]),
     html.Div(
         id='personality_per_drug',
         className='chart-container',
         children=[
-            html.H1(
+            html.H2(
                 'Tendances pour chaque trait de personnalité selon la drogue consommée'),
             dcc.Graph(
                 id='personality_per_drug_graph',
                 className='chart',
                 figure=pc.get_plot(personality_per_drug_df),
             ),
-            html.Div(
-                id='personality_per_drug_legend',
-                className='legend',
-                children=pc.get_legend()
-            )
+            html.Div(className='legend-wrapper', children=[
+                html.H3("Légende"),
+                html.Div(
+                    id='personality_per_drug_legend',
+                    className='legend',
+                    children=pc.get_legend()
+                )
+            ])
         ]
     ),
     html.Div(
         id='drug_consumption',
         className='chart-container',
         children=[
-            html.H1('Fréquences de consommations pour chaque drogue'),
+            html.H2('Fréquences de consommation pour chaque drogue'),
             dcc.Graph(
                 id='drug_consumption_graph',
                 className='chart',
                 figure=sb.get_plot(consumption_per_drug_df),
             ),
-            html.Div(
-                id='drug_consumption_legend',
-                className='legend',
-                children=sb.get_legend()
-            )
+            html.Div(id='legend-drug-consumption', className='legend-wrapper', children=[
+                html.H3("Légende"),
+                html.Div(
+                    id='drug_consumption_legend',
+                    className='legend',
+                    children=sb.get_legend()
+                )
+            ])
         ]
     ),
     html.Div(id='jointly-consumed-drugs', className='chart-container'),
-
 ])
 
 
@@ -117,7 +132,7 @@ def drug_consumption_legend(drug):
 def jointly_consumed_drugs(drug):
     if drug is not None:
         return [
-            html.H1('Drogues consommees conjointement'),
+            html.H2('Drogues consommées conjointement'),
             html.Div(id='chord-diagram-container', children=[
                 dcc.Graph(figure=cd.create_chord_diagram(drug_corr_df, drug)),
                 html.Div(id='chord-diagram',
@@ -142,7 +157,6 @@ def warning(drug):
 def typical_person(drug):
     if drug is not None:
         return [
-            html.H1('Profil Susceptible'),
             html.P('Les consommateurs de cette drogue ont tendance à...'),
             html.Div(
                 className='icons-container',

@@ -116,9 +116,10 @@ DRUG_INFO = {
     },
     "vsa": {
         'group': 'group0',
-        'french': 'substances volatiles'
+        'french': 'solvants volatils'
     }
 }
+
 
 class EducationLevel(Enum):
     BEFORE_16 = {'code': 'BEFORE_16',
@@ -140,6 +141,7 @@ class EducationLevel(Enum):
     DOCTORATE_DEGREE = {'code': 'DOCTORATE_DEGREE',
                         'text': 'Doctorat', 'value': 1.98437}
 
+
 GATEWAY_DRUGS = [
     'alcohol',
     'nicotine',
@@ -147,11 +149,11 @@ GATEWAY_DRUGS = [
 ]
 
 CONSUMPTION_CLASSES = {
-    'CL0': 'Jamais utilisé',
-    'CL1': 'Utilisé il y a plus de une décennie',
-    'CL2': 'Utilisé dans la dernière décennie',
-    'CL3': 'Utilisé dans la dernière année',
-    'CL4': 'Utilisé dans le dernier mois',
-    'CL5': 'Utilisé dans la dernière semaine',
-    'CL6': 'Utilisé dans le dernier jour'
+    'CL0': 'Jamais consommée',
+    'CL1': 'Consommée il y a plus d\'une décennie',
+    'CL2': 'Consommée dans la dernière décennie',
+    'CL3': 'Consommée dans la dernière année',
+    'CL4': 'Consommée dans le dernier mois',
+    'CL5': 'Consommée dans la dernière semaine',
+    'CL6': 'Consommée dans le dernier jour'
 }

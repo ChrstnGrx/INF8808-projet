@@ -36,10 +36,9 @@ app.layout = html.Div([
     dcc.Location(id='url-back', refresh=True),
     html.Div([
         html.Div(
-            dcc.Link(f"{page['name']} - {page['path']}",
+            dcc.Link('',
                      href=page["relative_path"])
         ) for page in dash.page_registry.values()
     ]),
-    dash.page_container,
-    footer
+    dash.page_container
 ])

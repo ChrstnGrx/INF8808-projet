@@ -109,13 +109,12 @@ text-align: center; /* This centers the placeholder */
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  margin: 10px 0;
   text-decoration: none;
   transition: background-color 0.3s ease;
-  position: relative;
-  left: 10px; 
+  position: fixed;
+  left: 20px;
   top: 10px;
-  cursor: pointer;
+  z-index: 1;
 }
 
 #back-button:hover {
@@ -125,4 +124,8 @@ text-align: center; /* This centers the placeholder */
 #back-button::before {
   content: '← ';
   display: inline;
+}
+
+#nav {
+  margin-bottom: 5%;
 }

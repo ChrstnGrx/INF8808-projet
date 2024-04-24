@@ -122,7 +122,7 @@ def create_chord_diagram(df, active_drug):
 
     fig.update_layout(
         title={
-            'text': "Drogues consommées conjointement",
+            'text': "",
             'y': 0.9,
             'x': 0.5,
             'xanchor': 'center',

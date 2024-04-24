@@ -12,11 +12,14 @@ from src.datasets.dataframe import cluster_by_education_df, education_df_colors
 dash.register_page(
     __name__,
     path='/demographics',
-    title='Demographics Analysis'
+    title='Analyse démographique'
 )
 
 layout = html.Div(id='demographics-page', children=[
-    html.Button('Vers l\'analyse des drogues', id='back-button', n_clicks=0),
+    html.Div(id='nav', children=[
+        html.Button('Vers l\'analyse des drogues',
+                    id='back-button', n_clicks=0),
+    ]),
     html.Div(children=[
         html.Label('Tranche d\'âge'),
         dcc.Dropdown(
