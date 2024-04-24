@@ -16,45 +16,51 @@ authors = [
 questions = [
     {"Questions": "Quelles caractéristiques de personnalité sont les plus associées à la consommation de chaque type de drogue ?",
      "Priorité": "☆☆☆",
-     "Viz": "V3",
+     "Viz": "3",
      "ID": '1'},
     {"Questions": "Quels types de drogues sont les plus populaires?",
      "Priorité": "☆☆☆",
-     "Viz": "V2",
+     "Viz": "2",
      "ID": '2'},
     {"Questions": "Comment la consommation de drogues varie-t-elle en fonction du niveau de recherche de sensation d’un individu (Sensation Seeking) ?",
      "Priorité": "☆☆",
-     "Viz": "V3",
+     "Viz": "3",
      "ID": '3'},
     {"Questions": "Quelles caractéristiques, au niveau personnalité, distinguent ceux qui ne consomment pas de drogues?",
      "Priorité": "☆☆",
-     "Viz": "V3",
+     "Viz": "3",
      "ID": '4'},
     {"Questions": "Selon l’effet passerelle de la drogue (la théorie de l’escalade des drogues), quel est le profil typique le plus corrélé vers la consommation des drogues passerelles (pour la prévention des non-consommateurs) ?",
      "Priorité": "☆☆☆",
-     "Viz": "V1",
+     "Viz": "1",
      "ID": '5'},
     {"Questions": "Quelles sont les tendances (de CL0 à CL6) de consommation de chaque type de drogue ?",
      "Priorité": "☆☆",
-     "Viz": "V2",
+     "Viz": "2",
      "ID": '6'},
     {"Questions": "Quelles drogues sont souvent consommées conjointement ?",
      "Priorité": "☆☆",
-     "Viz": "V4",
+     "Viz": "4",
      "ID": '7'},
     {"Questions": "Quels sont les schémas démographiques généraux des consommateurs de chaque drogue ?",
      "Priorité": "☆☆☆",
-     "Viz": "V1",
+     "Viz": "1",
      "ID": '8'},
     {"Questions": "Existe-t-il des différences notables dans les taux de consommation de drogues entre différents groupes démographiques (par ex., hommes vs femmes, différents groupes d'âge, différents niveaux d’études) ?",
      "Priorité": "☆☆☆",
-     "Viz": "V6/V7",
+     "Viz": "6/7",
      "ID": '9'},
     {"Questions": "Quelles caractéristiques, au niveau des caractères sociaux, distinguent ceux qui ne consomment pas de drogues?",
      "Priorité": "☆☆",
-     "Viz": "V1",
+     "Viz": "1",
      "ID": '10'}
 ]
+
+questions_viz_1 = [q for q in questions if q['ID'] in ['5', '8', '10']]
+questions_viz_2 = [q for q in questions if q['ID'] in ['2', '6']]
+questions_viz_3 = [q for q in questions if q['ID'] in ['1', '3', '4']]
+questions_viz_4 = [q for q in questions if q['ID'] in ['7']]
+questions_viz_5_6_7 = [q for q in questions if q['ID'] in ['9']]
 
 layout = html.Div([
     html.Div(id='header', children=[
@@ -121,6 +127,46 @@ layout = html.Div([
             html.Span("6. ", className="toc-number"),
             html.Span(html.A("Visualisations", href="#viz"),
                       className="toc-link"),
+            html.Div(className="toc-subitem", children=[
+                html.Span("6.1. ", className="toc-number"),
+                html.Span(html.A("Viz #1 – Icônes SVG", href="#viz-1"),
+                          className="toc-link"),
+            ]),
+            html.Div(className="toc-subitem", children=[
+                html.Span("6.2. ", className="toc-number"),
+                html.Span(html.A("Viz #2 – Diagramme à barres empilées", href="#viz-2"),
+                          className="toc-link"),
+            ]),
+            html.Div(className="toc-subitem", children=[
+                html.Span("6.3. ", className="toc-number"),
+                html.Span(html.A("Viz #3 – Diagramme de coordonnées parallèles", href="#viz-3"),
+                          className="toc-link"),
+            ]),
+            html.Div(className="toc-subitem", children=[
+                html.Span("6.4. ", className="toc-number"),
+                html.Span(html.A("Viz #4 – Diagramme de cordes", href="#viz-4"),
+                          className="toc-link"),
+            ]),
+            html.Div(className="toc-subitem", children=[
+                html.Span("6.5. ", className="toc-number"),
+                html.Span(html.A("Viz #5 – Diagrammes à barres horizontales", href="#viz-5"),
+                          className="toc-link"),
+            ]),
+            html.Div(className="toc-subitem", children=[
+                html.Span("6.6. ", className="toc-number"),
+                html.Span(html.A("Viz #6 – Diagrammes à barres groupées (âge)", href="#viz-6"),
+                          className="toc-link"),
+            ]),
+            html.Div(className="toc-subitem", children=[
+                html.Span("6.7. ", className="toc-number"),
+                html.Span(html.A("Viz #7 – Diagrammes à barres groupées (éducation)", href="#viz-7"),
+                          className="toc-link"),
+            ]),
+        ]),
+        html.Div(className="toc-item", children=[
+            html.Span("7. ", className="toc-number"),
+            html.Span(html.A("Références", href="#references"),
+                      className="toc-link"),
         ]),
     ]),
     html.Div([
@@ -168,7 +214,8 @@ layout = html.Div([
         html.P("Au final, cela a conduit à un échantillon utilisable de 1885 participants (homme/femme = 943/942) dans un fichier .data de 32 colonnes."),
         html.H3("2.2. Données", id='donnees'),
         html.P(children=[
-            html.Span("Pour chaque répondant, le jeu de données contient 12 attributs dont l'âge (1), le genre (2), le niveau d'éducation (3), le pays de résidence (4) et l'ethnicité (5) et d’autres qui métriques issues des modèles suivants:"),
+            html.Span(
+                "Pour chaque répondant, le jeu de données contient 12 attributs dont l'âge (1), le genre [note: nous avons choisi de représenter cette variable comme 'sexe'] (2), le niveau d'éducation (3), le pays de résidence (4) et l'ethnicité (5) et d’autres qui métriques issues des modèles suivants:"),
             html.Ol(id='main-sources', children=[
                 html.Li(
                     "L'Inventaire révisé des cinq facteurs NEO (« Revised NEO Five-Factor Inventory » (NEO-FFI-R))"),
@@ -207,7 +254,6 @@ layout = html.Div([
                 {"name": "Priorité (/3)", "id": "Priorité"},
                 {"name": "Viz", "id": "Viz"}
             ],
-            # Make sure 'questions' is defined properly as a list of dictionaries.
             data=questions,
             style_table={
                 'maxWidth': '80%',
@@ -263,7 +309,427 @@ layout = html.Div([
     ]),
     html.Div([
         html.H2("6. Visualisations", id='viz'),
-        html.P("Détails des visualisations proposées, avec description et justification de leur conception pour répondre aux questions de l'étude."),
+        html.P(children=[
+            html.Span(
+                "Cette section contient la maquette des visualisations qui répondent aux questions de la "),
+            html.A("section 4",
+                   href="#questions-cibles"),
+            html.Span("."),
+        ]),
+        html.H3("6.1. Viz #1 – Icônes SVG", id='viz-1'),
+        html.P(children=[
+            html.Span(
+                "La visualisation 1 cherche à répondre aux questions ci-dessous : "),
+            dash_table.DataTable(
+                columns=[
+                    {'name': '#', 'id': 'ID'},
+                    {"name": "Questions", "id": "Questions"},
+                    {"name": "Priorité (/3)", "id": "Priorité"},
+                    {"name": "Viz", "id": "Viz"}
+                ],
+                data=questions_viz_1,
+                style_table={
+                    'maxWidth': '80%',
+                    'marginLeft': '10%',
+                },
+                style_cell={
+                    'textAlign': 'center',
+                    'whiteSpace': 'normal',
+                    'height': 'auto',
+                    'minWidth': '20%',
+                    'maxWidth': '40%',
+                    'fontSize': '1rem',
+                },
+                style_header={
+                    'backgroundColor': 'rgb(230, 230, 230)',
+                    'fontWeight': 'bold',
+                    'fontSize': '1.15rem',
+                },
+                style_data_conditional=[
+                    {'if': {'filter_query': '{Priorité} contains "☆☆☆"'},
+                     'fontWeight': 'bold'},
+                    {'if': {'filter_query': '{ID} = 5'},
+                     'backgroundColor': '#0288d1', 'color': 'white'},
+                    {'if': {'filter_query': '{ID} = 8'},
+                     'backgroundColor': '#81d4fa', 'color': 'black'},
+                    {'if': {'filter_query': '{ID} = 10'},
+                     'backgroundColor': '#81d4fa', 'color': 'black'},
+                ],
+            ),
+        ]),
+        html.P(children=[
+            html.Span("Les caractéristiques démographiques des consommateurs sont représentées dans cette visualisation grâce à un ensemble d'icônes en SVG « "),
+            html.A("Scalable Vector Graphics",
+                   href='https://fr.wikipedia.org/wiki/Scalable_Vector_Graphics',
+                   target="_blank"),
+            html.Span(" » récoltées du "),
+            html.A("domaine public",
+                   href='https://www.svgrepo.com',
+                   target="_blank"),
+            html.Span(
+                " [3] et accompagnées de sous-titres, afin de décrire précisément la catégorie visée."),
+        ]),
+        html.P("Pour la drogue sélectionnée avec le menu déroulant, on retrouve dans la zone de d’affichage 1 trois icônes représentant la tranche d’âge, le niveau d’éducation et le sexe consommant le plus le type de drogue sélectionné en noir, répondant ainsi la question 8. Pour répondre à la question 10, il suffit alors de retirer la drogue (aucune drogue sélectionnée) pour montrer les trois caractères sociaux qui distinguent un individu non-consommateur."),
+        html.Div(children=[
+            html.Img(src='/assets/static/1.webp', className='icon'),
+            html.P(children=[
+                html.B("Figure 1."),
+                html.Span(
+                    " Échantillion d’une démographie : 55-65 ans, premier cycle universitaire achevé, femme.")
+            ], className='figure-title'),
+        ]),
+        html.P("Les icônes servent à attirer l’attention du lecteur pour lui permettre une lecture rapide, et se basent sur ses connaissances a priori des symboles indiqués. Le justificatif pour ces icônes est que les images sont un bon canal pour véhiculer une idée si elles représentent quelque chose d'évocateur au public cible. De ce fait, ces icônes ont été choisies de manière à être le moins ambiguës possible et à exploiter le bagage culturel en visualisation d'un consommateur lambda."),
+        html.P("Le sous-titrage, quant à lui, se justifie par le besoin de différencier certaines catégories de la variable éducation qui sont trop proches (exemple: Ayant quitté.e l'école avant 16 ans; Ayant quitté.e l'école avant 17 ans; Ayant quitté.e l'école avant 18 ans) et pour représenter des catégories de la variable de la tranche d'âge qui ne sont pas instinctivement déchiffrables (comme 45-55, 55-65, etc.)."),
+        html.P("L'interaction principale de cette visualisation est la mise à jour automatique des trois icônes afin de correspondre à la drogue sélectionnée par l’utilisateur. Si aucune drogue n’est sélectionnée, les icônes sont grisées et l'icône des drogues passerelles disparaît."),
+        html.P("La surface sous le menu déroulant permet d’afficher l'icône des drogues passerelles (Figure 2), répondant ainsi à la question 5. Si une drogue est une drogue passerelle, l'icône sera affichée. S’il n’y a pas de drogue passerelle sélectionnée, l’espace est vide."),
+        html.Div(children=[
+            html.Img(src='/assets/static/2.webp', className='icon'),
+            html.P(children=[
+                html.B("Figure 2."),
+                html.Span(
+                    " Surface d’affichage de l'icône des drogues passerelles.")
+            ], className='figure-title'),
+        ]),
+        html.H3("6.2. Viz #2 – Diagramme à barres empilées", id='viz-2'),
+        html.P(children=[
+            html.Span(
+                "La visualisation 2 cherche à répondre aux questions ci-dessous : "),
+            dash_table.DataTable(
+                columns=[
+                    {'name': '#', 'id': 'ID'},
+                    {"name": "Questions", "id": "Questions"},
+                    {"name": "Priorité (/3)", "id": "Priorité"},
+                    {"name": "Viz", "id": "Viz"}
+                ],
+                data=questions_viz_2,
+                style_table={
+                    'maxWidth': '80%',
+                    'marginLeft': '10%',
+                },
+                style_cell={
+                    'textAlign': 'center',
+                    'whiteSpace': 'normal',
+                    'height': 'auto',
+                    'minWidth': '20%',
+                    'maxWidth': '40%',
+                    'fontSize': '1rem',
+                },
+                style_header={
+                    'backgroundColor': 'rgb(230, 230, 230)',
+                    'fontWeight': 'bold',
+                    'fontSize': '1.15rem',
+                },
+                style_data_conditional=[
+                    {'if': {'filter_query': '{Priorité} contains "☆☆☆"'},
+                     'fontWeight': 'bold'},
+                    {'if': {'filter_query': '{ID} = 2'},
+                     'backgroundColor': '#004ba0', 'color': 'white'},
+                    {'if': {'filter_query': '{ID} = 6'},
+                     'backgroundColor': '#0288d1', 'color': 'white'},
+                ],
+            ),
+        ]),
+        html.P("Chaque barre dans l'axe horizontal du graphique représente une drogue. L'axe vertical, soit la hauteur de la barre, représente le cumul de la fréquence de consommation de chaque drogue. En regardant cette visualisation, l’utilisateur va rapidement pouvoir observer quels types de drogues sont les plus populaires et ceux à la consommation la plus faible, puisque l’on peut facilement comparer la fréquence de la consommation de chaque drogue entre elles. En effet, les barres dans les graphiques seront placées en ordre décroissant de consommation (consommée dans le dernier jour) pour y faciliter la compréhension."),
+        html.P("À l'intérieur de chaque barre, différentes classes représentent la proportion de chaque fréquence de consommation. Le montant de la consommation est divisé en sous sous-classes qui vont de « jamais consommée » (CL0) à « consommée dans le dernier jour » (CL6). Ce graphique interactif permet à l'utilisateur de cliquer sur une ou plusieurs de ces 7 sous-classes de consommation répertoriées dans la section légende pour visualiser uniquement les sections liées à la ou aux mêmes classes pour chaque drogue. Cette fonctionnalité permet à l'utilisateur de visualiser un schéma plus simple en fonction de ses besoins et obtenir des informations plus détaillées en supprimant les détails inutiles. De plus, en cliquant sur les classes dans les barres, les valeurs pertinentes sont affichées. Par défaut, tous les éléments de légende sont actifs, en cliquant sur n'importe quel nombre d'éléments de légende, leur texte deviendra gris clair et les classes consommées seront supprimées de la barre de drogue, ce qui peut être fait jusqu'à ce que toutes les classes soient supprimées. Bien entendu, en cliquant à nouveau sur le titre de chaque classe, le texte du titre de la classe dans la légende reviendra à l'état par défaut (gris gras) et la classe elle-même sera ajoutée au graphique."),
+        html.P("Le graphique est présenté sous deux formes. La première est la présentation générale, soit quand l’utilisateur n’a pas sélectionné de drogue pour l’analyse. La seconde apparaît à la suite de la sélection d’une drogue quelconque pour l’analyse."),
+        html.Div(children=[
+            html.Img(src='/assets/static/3.webp', className='icon'),
+            html.P(children=[
+                html.B("Figure 3."),
+                html.Span(
+                    " Viz 2 sans drogue sélectionnée.")
+            ], className='figure-title'),
+        ]),
+        html.Div(children=[
+            html.Img(src='/assets/static/4.webp', className='icon'),
+            html.P(children=[
+                html.B("Figure 4."),
+                html.Span(
+                    " Viz 2 avec drogue sélectionnée.")
+            ], className='figure-title'),
+        ]),
+    ]),
+    html.H3("6.3. Viz #3 – Diagramme de coordonnées parallèles", id='viz-3'),
+    html.P(children=[
+        html.Span(
+            "La visualisation 3 cherche à répondre aux questions ci-dessous : "),
+        dash_table.DataTable(
+            columns=[
+                {'name': '#', 'id': 'ID'},
+                {"name": "Questions", "id": "Questions"},
+                {"name": "Priorité (/3)", "id": "Priorité"},
+                {"name": "Viz", "id": "Viz"}
+            ],
+            data=questions_viz_3,
+            style_table={
+                'maxWidth': '80%',
+                'marginLeft': '10%',
+            },
+            style_cell={
+                'textAlign': 'center',
+                'whiteSpace': 'normal',
+                'height': 'auto',
+                'minWidth': '20%',
+                'maxWidth': '40%',
+                'fontSize': '1rem',
+            },
+            style_header={
+                'backgroundColor': 'rgb(230, 230, 230)',
+                'fontWeight': 'bold',
+                'fontSize': '1.15rem',
+            },
+            style_data_conditional=[
+                {'if': {'filter_query': '{Priorité} contains "☆☆☆"'},
+                 'fontWeight': 'bold'},
+                {'if': {'filter_query': '{ID} = 1'},
+                 'backgroundColor': '#004ba0', 'color': 'white'},
+                {'if': {'filter_query': '{ID} = 3'},
+                 'backgroundColor': '#004ba0', 'color': 'white'},
+                {'if': {'filter_query': '{ID} = 4'},
+                 'backgroundColor': '#004ba0', 'color': 'white'},
+            ],
+        ),
+    ]),
+    html.P("La visualisation 3 est un graphe de coordonnées parallèles. Les axes parallèles contiennent une échelle représentant l’indice de chaque trait de personnalité. Lorsque l’utilisateur survole un axe de personnalité, une info-bulle va apparaître et définir ce trait de personnalité, ce qui est nécessaire puisque la signification des traits de personnalité n’est pas évidente. Les lignes connectées représentent chacune une drogue. Elles traversent les axes parallèles à la moyenne de l’indice de personnalité de leurs consommateurs. Pour répondre à la quatrième question, on ajoute une ligne représentant les traits de personnalité moyens pour les répondants ne consommant pas de drogue. Un graphique de coordonnées parallèles a été choisi, car il permet de montrer des tendances connectées sur plusieurs échelles ordinales."),
+    html.P("Le graphique est présenté sous deux formes. La première est la présentation générale, soit quand l’utilisateur n’a pas sélectionné de drogue pour l’analyse. Dans cette version, toutes les lignes représentant les drogues sont de la même couleur grise. Dans la seconde forme, la ligne représentant la drogue sélectionnée est colorée et légèrement plus épaisse. Les valeurs des indices de chaque personnalité sont affichées sur le graphique, pour la drogue sélectionnée. Toutes les autres sont dans la même teinte de gris."),
+    html.Div(children=[
+        html.Img(src='/assets/static/4.webp', className='icon'),
+        html.P(children=[
+            html.B("Figure 4."),
+            html.Span(
+                " Viz 3 sans drogue sélectionnée.")
+        ], className='figure-title'),
+    ]),
+    html.Div(children=[
+        html.Img(src='/assets/static/5.webp', className='icon'),
+        html.P(children=[
+            html.B("Figure 5."),
+            html.Span(
+                " Viz 3 avec drogue sélectionnée.")
+        ], className='figure-title'),
+    ]),
+    html.H3("6.4. Viz #4 – Diagramme de cordes", id='viz-4'),
+    html.P(children=[
+        html.Span(
+            "La visualisation 4 correspond à un diagramme de cordes (diagramme de Gauss, « chord diagram ») (voir Figure 6). Un tel diagramme sert à représenter des relations entre différentes entités. En ce qui nous concerne, dans le contexte de l’usage des drogues, ledit diagramme sera particulièrement adapté pour montrer les différentes combinaisons de drogues consommées ensemble. Il permettra sans aucun doute de répondre à la question suivante :"),
+        dash_table.DataTable(
+            columns=[
+                {'name': '#', 'id': 'ID'},
+                {"name": "Questions", "id": "Questions"},
+                {"name": "Priorité (/3)", "id": "Priorité"},
+                {"name": "Viz", "id": "Viz"}
+            ],
+            data=questions_viz_4,
+            style_table={
+                'maxWidth': '80%',
+                'marginLeft': '10%',
+            },
+            style_cell={
+                'textAlign': 'center',
+                'whiteSpace': 'normal',
+                'height': 'auto',
+                'minWidth': '20%',
+                'maxWidth': '40%',
+                'fontSize': '1rem',
+            },
+            style_header={
+                'backgroundColor': 'rgb(230, 230, 230)',
+                'fontWeight': 'bold',
+                'fontSize': '1.15rem',
+            },
+            style_data_conditional=[
+                {'if': {'filter_query': '{Priorité} contains "☆☆☆"'},
+                 'fontWeight': 'bold'},
+                {'if': {'filter_query': '{ID} = 7'},
+                 'backgroundColor': '#0288d1', 'color': 'white'},
+            ],
+        ),
+    ]),
+    html.P("La raison pour laquelle ce type de diagramme est l’un des meilleurs pour répondre à la question des combinaisons de drogues est qu’il permet de visualiser la complexité et l’intensité des interactions entre différentes catégories de manière intuitive. En effet, les liens ou « cordes » qui connectent les différents groupes de drogues révélera les tendances de consommation croisée et peuvent mettre en évidence des motifs et associations qui ne seraient pas évidents autrement."),
+    html.Div(children=[
+        html.Img(src='/assets/static/6.webp', className='icon'),
+        html.P(children=[
+            html.B("Figure 6."),
+            html.Span(
+                " Viz 4 avec drogue sélectionnée (alcool).")
+        ], className='figure-title'),
+    ]),
+    html.P("À travers la première page de l’application, l'utilisateur peut sélectionner une drogue spécifique à partir d'un menu déroulant. Lorsqu'une drogue est sélectionnée, le diagramme à cordes est automatiquement mis à jour pour mettre en évidence les connexions entre la drogue choisie et les autres substances. Cette mise à jour dynamique permet d'analyser les tendances de consommation conjointe de drogues, révélant des associations et des motifs qui pourraient autrement rester cachés."),
+    html.P("Le diagramme est accompagné d'une légende qui explique l'indice de consommation conjointe, échelonnée de « Extrêmement faible » à « Extrêmement élevée ». Chaque niveau de l'indice est associé à une couleur spécifique, allant du bleu clair au bleu foncé (gradation descendante de teintes selon la sévérité ascendante). La largeur du trait augmente également de quelques pixels selon la sévérité ascendante. La légende est générée dynamiquement (les indices de consommation conjointes qui ne sont pas visualisés en fonction de la drogue sélectionnée ne sont également pas affichés pour amoindrir la charge visuelle et cognitive). Cette légende est en fonction des poids des connexions entre les drogues, qui sont eux-même ajustés pour refléter la fréquence relative des associations de consommation conjointe, en pourcentage du total des associations observées."),
+    html.P("Cette approche est particulièrement utile pour les organisations non gouvernementales (ONG) axées sur la santé publique, la réduction des méfaits et le soutien social pour comprendre les dynamiques de consommation de plusieurs substances, qui est une dimension complexe et souvent sous-estimée de la consommation de drogues."),
+    html.H3("6.5. Viz #5 – Diagrammes à barres horizontales", id='viz-5'),
+    html.P(children=[
+        html.Span(
+            "La visualisation 5 cherche à répondre à la question suivante :"),
+        dash_table.DataTable(
+            columns=[
+                {'name': '#', 'id': 'ID'},
+                {"name": "Questions", "id": "Questions"},
+                {"name": "Priorité (/3)", "id": "Priorité"},
+                {"name": "Viz", "id": "Viz"}
+            ],
+            data=questions_viz_4,
+            style_table={
+                'maxWidth': '80%',
+                'marginLeft': '10%',
+            },
+            style_cell={
+                'textAlign': 'center',
+                'whiteSpace': 'normal',
+                'height': 'auto',
+                'minWidth': '20%',
+                'maxWidth': '40%',
+                'fontSize': '1rem',
+            },
+            style_header={
+                'backgroundColor': 'rgb(230, 230, 230)',
+                'fontWeight': 'bold',
+                'fontSize': '1.15rem',
+            },
+            style_data_conditional=[
+                {'if': {'filter_query': '{Priorité} contains "☆☆☆"'},
+                 'fontWeight': 'bold'},
+                {'if': {'filter_query': '{ID} = 9'},
+                 'backgroundColor': '#81d4fa', 'color': 'black'},
+            ],
+        ),
+    ]),
+    html.P("Un graphe de deux diagrammes à barres horizontales côte à côte est le choix le plus approprié pour représenter les schémas démographiques généraux des consommateurs de chaque drogue en fonction du sexe, car il permet une comparaison directe et efficace entre les deux catégories, pour chaque catégorie de drogue. La valeur de chaque barre correspond à la proportion de consommateur de cette drogue parmi tous les consommateurs de son sexe. On considère qu'une personne est consommatrice si elle a consommé de cette drogue au moins dans le dernier mois. Voici un exemple de calcul utilisé :"),
+    html.Div(children=[
+        html.Img(src='/assets/static/7.webp', className='icon'),
+        html.P(children=[
+            html.B("Figure 7."),
+            html.Span(
+                " Exemple de calcul utilisé.")
+        ], className='figure-title'),
+    ]),
+    html.P("De plus, lorsque l'utilisateur précise son sexe, le graphique correspondant affiche les barres horizontales pour ce sexe en bleu, tandis que l'autre sexe est représenté en gris. Cette coloration permet une visualisation claire et intuitive des différences entre les genres dans les schémas de consommation de drogues."),
+    html.Div(children=[
+        html.Img(src='/assets/static/8.webp', className='icon'),
+        html.P(children=[
+            html.B("Figure 8."),
+            html.Span(
+                " Viz 5 lorsque le sexe « Femme » est selectionné.")
+        ], className='figure-title'),
+    ]),
+    html.H3("6.6. Viz #6 – Diagrammes à barres groupées (âge)", id='viz-6'),
+    html.P(children=[
+        html.Span(
+            "La visualisation 6 cherche à répondre à la question suivante :"),
+        dash_table.DataTable(
+            columns=[
+                {'name': '#', 'id': 'ID'},
+                {"name": "Questions", "id": "Questions"},
+                {"name": "Priorité (/3)", "id": "Priorité"},
+                {"name": "Viz", "id": "Viz"}
+            ],
+            data=questions_viz_4,
+            style_table={
+                'maxWidth': '80%',
+                'marginLeft': '10%',
+            },
+            style_cell={
+                'textAlign': 'center',
+                'whiteSpace': 'normal',
+                'height': 'auto',
+                'minWidth': '20%',
+                'maxWidth': '40%',
+                'fontSize': '1rem',
+            },
+            style_header={
+                'backgroundColor': 'rgb(230, 230, 230)',
+                'fontWeight': 'bold',
+                'fontSize': '1.15rem',
+            },
+            style_data_conditional=[
+                {'if': {'filter_query': '{Priorité} contains "☆☆☆"'},
+                 'fontWeight': 'bold'},
+                {'if': {'filter_query': '{ID} = 9'},
+                 'backgroundColor': '#81d4fa', 'color': 'black'},
+            ],
+        ),
+    ]),
+    html.P("La visualisation 6 est un graphique à barres groupées (clustered barchart) qui offre un aperçu des taux de consommation pour chaque drogues au sein de différents groupes démographiques, ici différentes tranches d’âges. "),
+    html.P("Chaque groupe représente une drogue, avec trois barres correspondantes à différentes tranches d'âge. La barre située au centre du groupe représente le taux de consommation de la drogue pour la tranche d’âge sélectionnée par l’utilisateur. La barre de gauche représente le taux de consommation pour des âges inférieurs à la tranche d’âge de la barre du centre et la barre de droite représente le taux de consommation pour des âges supérieurs à ceux de la barre du centre."),
+    html.P("Cela permet une comparaison directe des taux de consommation de drogues pour différentes tranches d’âges, facilitant ainsi l’identification des tendances et des disparités dans les comportements de consommation."),
+    html.P("Lorsque l’utilisateur choisit une tranche d’âge, la barre du centre dans chaque groupe est mise en bleu tandis que le reste est gris. La tranche d’âge de la barre du centre est celle qui correspond à la tranche d’âge de l’utilisateur, ainsi il obtient des informations qui le concernent directement."),
+    html.Div(children=[
+        html.Img(src='/assets/static/9.webp', className='icon'),
+        html.P(children=[
+            html.B("Figure 9."),
+            html.Span(
+                " Viz 6 lorsque la tranche d’âge 35-44 ans est sélectionnée.")
+        ], className='figure-title'),
+    ]),
+    html.H3(
+        "6.7. Viz #7 – Diagrammes à barres groupées (éducation)", id='viz-7'),
+    html.P(children=[
+        html.Span(
+            "La visualisation 7 cherche à répondre à la question suivante :"),
+        dash_table.DataTable(
+            columns=[
+                {'name': '#', 'id': 'ID'},
+                {"name": "Questions", "id": "Questions"},
+                {"name": "Priorité (/3)", "id": "Priorité"},
+                {"name": "Viz", "id": "Viz"}
+            ],
+            data=questions_viz_4,
+            style_table={
+                'maxWidth': '80%',
+                'marginLeft': '10%',
+            },
+            style_cell={
+                'textAlign': 'center',
+                'whiteSpace': 'normal',
+                'height': 'auto',
+                'minWidth': '20%',
+                'maxWidth': '40%',
+                'fontSize': '1rem',
+            },
+            style_header={
+                'backgroundColor': 'rgb(230, 230, 230)',
+                'fontWeight': 'bold',
+                'fontSize': '1.15rem',
+            },
+            style_data_conditional=[
+                {'if': {'filter_query': '{Priorité} contains "☆☆☆"'},
+                 'fontWeight': 'bold'},
+                {'if': {'filter_query': '{ID} = 9'},
+                 'backgroundColor': '#81d4fa', 'color': 'black'},
+            ],
+        ),
+    ]),
+    html.P("La visualisation 7 est un graphique à barres groupées (clustered barchart) qui offre un aperçu des taux de consommation pour chaque drogue au sein de différents groupes démographiques, ici les différents niveaux d’éducation."),
+    html.P("Il fonctionne exactement comme la visualisation 6 sauf qu’ici, il s’agit des différents niveaux d’éducation et non des différentes tranches d’âge. Ce sont donc les mêmes intéractions (mettre la barre du niveau d’étude concerné en couleur) et les mêmes justifications (visibilité, comparaison) que pour la visualisation 6."),
+    html.Div(children=[
+        html.Img(src='/assets/static/10.webp', className='icon'),
+        html.P(children=[
+            html.B("Figure 10."),
+            html.Span(
+                " Viz 7 lorsque le niveau d’étude « diplôme de certificat professionnel » est sélectionné.")
+        ], className='figure-title'),
+    ]),
+    html.Div([
+        html.H2("7. Références", id='references'),
+        html.P(children=[
+            html.Span(
+                "[1] Fehrman, Elaine, Egan,Vincent, and Mirkes,Evgeny. (2016). Drug consumption (quantified). UCI Machine Learning Repository. "),
+            html.A("https://doi.org/10.24432/C5TC7S",
+                   href='https://doi.org/10.24432/C5TC7S',
+                   target="_blank"),
+            html.Span(". [Online]. Available: "),
+            html.A("https://archive.ics.uci.edu/dataset/373/drug+consumption+quantified",
+                   href='https://archive.ics.uci.edu/dataset/373/drug+consumption+quantified',
+                   target="_blank"),
+        ]),
+        html.P("[2] Zuckerman, M., Kuhlman, D. M., Teta, P., Joireman, J., & Kraft, M. (1993). A comparison of three structural models of personality: the big three, the big five, and the alternative five. Journal of Personality and Social Psychology, 65, 757-768."),
+        html.P(children=[
+            html.Span(
+                "[3] “SVG Repo - Free SVG Vectors and Icons,” SVG Repo. Accessed: Mar. 18, 2024. [Online]. Available: "),
+            html.A("https://www.svgrepo.com",
+                   href='https://www.svgrepo.com',
+                   target="_blank"),
+        ]),
     ]),
     dcc.Link('Découvrir les visualisations', href='/visualizations'),
     html.Div([

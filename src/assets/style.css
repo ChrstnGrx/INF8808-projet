@@ -98,7 +98,7 @@ div p {
     font-weight: bold;
     padding-right: 2%;
     flex: 1;
-    margin-left: 44%;
+    margin-left: 37%;
 }
 
 .toc-text {
@@ -154,5 +154,11 @@ div p {
 }
 
 .table-title {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.figure-title {
+    font-style: italic;
     text-align: center;
 }
