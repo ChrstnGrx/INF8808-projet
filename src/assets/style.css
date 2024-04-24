@@ -71,13 +71,88 @@ div p {
     text-align: justify;
 }
 
-#main-table-of-contents {
+.table-of-contents {
     font-family: 'Goswald', sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: left;
-    margin-left: 43.5%;
+    justify-content: center;
+    align-items: center;
     font-size: 1.25rem;
     line-height: 1.5em;
+}
+
+.toc-item, .toc-subitem {
+    width: 100%;
+}
+
+.toc-item {
+    font-size: 1.35rem;
+}
+
+.toc-subitem {
+    margin-left: 15px;
+    font-size: 1.25rem;
+}
+
+.toc-number {
+    font-weight: bold;
+    padding-right: 2%;
+    flex: 1;
+    margin-left: 44%;
+}
+
+.toc-text {
+    font-size: 16px;
+    flex: 1;
+}
+
+.toc-link {
+    color: #039be5;
+    text-decoration: none;
+}
+
+.toc-link:hover {
+    text-decoration: underline;
+}
+
+.typewrite {
+    font-size: 24px;  /* Example font size, adjust as needed */
+    color: white;  /* Text color */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0); /* Initial glow state, invisible */
+    animation: glow 2s infinite alternate;  /* Animation settings */
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0); /* Start with no glow */
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 1); /* End with a strong white glow */
+    }
+}
+
+#main-sources {
+    margin-left: 5%;
+}
+
+#view-angles {
+    margin-left: 37%;
+    font-size: 1.25rem;
+    line-height: 1.5em;
+}
+
+#view-angle-1 {
+    color: #004ba0;
+}
+
+#view-angle-2 {
+    color: #0288d1;
+}
+
+#view-angle-3 {
+    color: #81d4fa;
+}
+
+.table-title {
+    text-align: center;
 }
