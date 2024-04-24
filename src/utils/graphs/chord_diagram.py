@@ -53,7 +53,7 @@ def create_legend(active_drug, df):
 
     # Wrapping the items in a ul and div structure
     legend_component = html.Div([
-        html.H3("Indice de consommation conjointe", style={
+        html.H4("Indice de consommation conjointe", style={
                 'fontFamily': 'Oswald, sans-serif', 'fontSize': '1.35em', 'textAlign': 'center', 'textDecoration': 'underline'}),
         html.Ul(legend_items, style={
                 'listStyleType': 'none', 'padding': '0', 'textAlign': 'center', 'fontWeight': 'bold'})
