@@ -157,3 +157,57 @@ CONSUMPTION_CLASSES = {
     'CL5': 'Consommée dans la dernière semaine',
     'CL6': 'Consommée dans le dernier jour'
 }
+
+
+AGE_CLASSES = {
+    -0.95197: '18-24',
+    -0.07854: '25-34',
+     0.49788: '35-44',
+     1.09449: '45-54',
+     1.82213: '55-64',
+     2.59171: '65+'
+}
+
+GENDER_CLASSES = {
+     0.48246: 'Femme',
+    -0.48246: 'Homme'
+}
+
+EDUCATION_CLASSES = {
+    -2.43591: 'Quitté l\'école avant 16 ans',
+    -1.73790: 'Quitté l\'école à 16 ans',
+    -1.43719: 'Quitté l\'école à 17 ans',
+    -1.22751: 'Quitté l\'école à 18 ans',
+    -0.61113: 'Fréquenté une université, mais sans diplôme',
+    -0.05921: 'Diplôme ou certificat professionnel',
+     0.45468: 'Baccaulauréat',
+     1.16365: 'Maîtrise',
+     1.98437: 'Doctorat'
+}
+
+
+AGE_IMAGE_PATHS = {
+    '18-24': '/assets/icons/ages/18-24.svg',
+    '25-34': '/assets/icons/ages/25-34.svg',
+    '35-44': '/assets/icons/ages/35-44.svg',
+    '45-54': '/assets/icons/ages/45-54.png',
+    '55-64': '/assets/icons/ages/55-64.svg',
+    '65+': '/assets/icons/ages/65+.svg'
+}
+
+GENDER_IMAGE_PATHS = {
+    'Femme': '/assets/icons/gender/woman.svg',
+    'Homme': '/assets/icons/gender/man.svg'
+}
+
+EDUCATION_IMAGE_PATHS = {
+    'Quitté l\'école avant 16 ans': '/assets/icons/education/Left_school_before_16.svg',
+    'Quitté l\'école à 16 ans': '/assets/icons/education/Left_school_at_16.svg',
+    'Quitté l\'école à 17 ans': '/assets/icons/education/Left_school_at_17.svg',
+    'Quitté l\'école à 18 ans': '/assets/icons/education/Left_school_at_18.svg',
+    'Fréquenté une université, mais sans diplôme': '/assets/icons/education/some_college_no_degree.svg',
+    'Diplôme ou certificat professionnel': '/assets/icons/education/Professional_certificat_diploma.svg',
+    'Baccaulauréat': '/assets/icons/education/baccalaureat.svg',
+    'Maîtrise': '/assets/icons/education/maitrise.svg',
+    'Doctorat': '/assets/icons/education/doctorat.svg'
+}

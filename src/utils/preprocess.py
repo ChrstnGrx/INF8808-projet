@@ -52,13 +52,15 @@ def personality_per_drug(dataframe):
         if is_sober(dataframe.loc[i]):
             df_size["sober"] += 1
             for personality in constants.PERSONNALITY:
-                df["sober"][personality] += dataframe[personality][i]
+                # df["sober"][personality] += dataframe[personality][i]
+                df.at[personality, "sober"] += dataframe.at[i, personality]
         else:
             for drug in constants.DRUGS:
                 if is_consumer(dataframe[drug][i]):
                     df_size[drug] += 1
                     for personality in constants.PERSONNALITY:
-                        df[drug][personality] += dataframe[personality][i]
+                        # df[drug][personality] += dataframe[personality][i]
+                        df.at[personality, drug] += dataframe.at[i, personality]
 
     for c in columns:
         for personality in constants.PERSONNALITY:
@@ -304,3 +306,116 @@ def create_education_level_dataframe(df, education_dict):
     result_df = pd.DataFrame(data_dict)
 
     return result_df, colors
+
+
+def get_most_common_profiles(df):
+    """ Generate a DataFrame with the most common profiles of drug consumers. """
+    # Drop unnecessary columns
+    df = df.drop(columns=['nscore', 'escore', 'ascore', 'oscore', 'cscore', 'impulsive', 'ss'])
+
+    # Apply mappings
+    df['age'] = df['age'].map(constants.AGE_CLASSES)
+    df['gender'] = df['gender'].map(constants.GENDER_CLASSES)
+    df['education'] = df['education'].map(constants.EDUCATION_CLASSES)
+
+    # Drug columns assumed to start from the 5th column onwards
+    drug_columns = df.columns[4:]
+    results = []
+
+    # Loop through each drug column to filter and calculate modes
+    for drug in drug_columns:
+        # Apply the is_consumer function using vectorized approach
+        filtered_df = df[df[drug].apply(is_consumer)][['age', 'gender', 'education', drug]]
+
+        if not filtered_df.empty:
+            # Calculate mode (most common value) for each demographic attribute
+            most_common_values = filtered_df[['age', 'gender', 'education']].mode().iloc[0]
+            results.append({
+                'drug': drug,
+                'most_common_age': most_common_values['age'],
+                'most_common_gender': most_common_values['gender'],
+                'most_common_education': most_common_values['education']
+            })
+
+    return pd.DataFrame(results)
+
+
+
+def get_most_common_profiles_by_demographic(df):
+    # Drop unnecessary columns
+    df = df.drop(columns=['nscore', 'escore', 'ascore', 'oscore', 'cscore', 'impulsive', 'ss'])
+
+    # Apply mappings
+    df['age'] = df['age'].map(constants.AGE_CLASSES)
+    df['gender'] = df['gender'].map(constants.GENDER_CLASSES)
+    df['education'] = df['education'].map(constants.EDUCATION_CLASSES)
+
+    # Drug columns assumed to start from the 5th column onwards
+    drug_columns = df.columns[4:]
+    results = []
+    
+    # print(df['education'].value_counts())
+    # print((df[df["alcohol"].apply(is_consumer)])['education'].value_counts())
+
+    for drug in drug_columns:
+        # Total count per gender
+        # gender_counts = df['gender'].value_counts()
+        total_counts = {
+            'gender': df['gender'].value_counts(),
+            'education': df['education'].value_counts(),
+            'age': df['age'].value_counts()
+        }
+        
+        # Filter to consumers only
+        consumer_df = df[df[drug].apply(is_consumer)]
+        
+        consumer_counts = {
+            'gender': consumer_df['gender'].value_counts(),
+            'education': consumer_df['education'].value_counts(),
+            'age': consumer_df['age'].value_counts()
+        }
+        drug_results = {'drug': drug}
+
+        for category in ['gender', 'education', 'age']:
+            if not consumer_counts[category].empty:
+                ratios = consumer_counts[category] / total_counts[category]
+                most_common_category = ratios.idxmax()
+                most_common_ratio = ratios.max()
+            else:
+                most_common_category = 'Not Available'
+                most_common_ratio = 0
+            
+            drug_results[f'most_common_{category}'] = most_common_category
+            drug_results[f'{category}_ratio'] = most_common_ratio
+        results.append(drug_results)
+
+        # # Consumer count per gender
+        # consumer_gender_counts = consumer_df['gender'].value_counts()
+
+        # # Calculate ratios
+        # ratios = consumer_gender_counts / gender_counts
+
+        # # Find the gender with the highest ratio
+        # most_common_gender = ratios.idxmax()
+        # most_common_ratio = ratios.max()
+
+        # results.append({
+        #     'drug': drug,
+        #     'most_common_gender': most_common_gender,
+        #     'ratio': most_common_ratio
+        # })
+
+    return pd.DataFrame(results)
+
+
+# Tu prends les hommes si 45 % des hommes consommes et 51% consommes alors c'est les femmes qui l'emporte, 
+# meme si c'est les hommes les plus represente.
+# for each drug, count all consumers and non consumers 4000 6000 donc 40 % taux de consommation
+#                   FEMMES taux de consommation. 
+# For cannabis :
+    # 18-24 Taux de consommation : combien de 18-24 sont consommateurs ? 18-24 consommateurs / 18-24 total
+    # 24-35 Taux de consommation : combien de 24-35 sont consommateurs ? 24-35 consommateurs / 24-35 total
+    ...
+
+    # take the highest -> ratio for
+# Do again for all drugs 
