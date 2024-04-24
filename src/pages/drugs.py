@@ -52,6 +52,7 @@ layout = html.Div(id='drugs-page', children=[
         children=[
             html.H2(
                 'Tendances pour chaque trait de personnalité selon la drogue consommée'),
+            html.P("Chaque drogue a tendance à intéresser des types de personnalité différentes. Voici donc un graphique qui montre l'écart entre la moyenne de chaque personnalité et sa valeur normale (0)."),
             dcc.Graph(
                 id='personality_per_drug_graph',
                 className='chart',
@@ -64,7 +65,8 @@ layout = html.Div(id='drugs-page', children=[
                     className='legend',
                     children=pc.get_legend()
                 )
-            ])
+            ]),
+            html.P("On voit des tendances générales qui démontrent que, peu importe la drogue, les consommateurs sont souvent plus neurotiques, plus ouverts, moins agréables, moins consciencieux, plus impulsifs et plus à la recherche de sensations. Ce sont donc ces traits qui doivent être surveillés lors de la prévention. En effet, les consommateurs d'aucune drogue (répondants sobres) ont souvent les traits de personalité opposés. Cependant, les traits de personalité des consommateurs d'alcool se situent toujours autour de la valeur normale (0). ")
         ]
     ),
     html.Div(
