@@ -188,7 +188,7 @@ def b2b_barchart(dataframe):
     dataframe['drug_french'] = dataframe['variable'].map(lambda x: constants.DRUG_INFO[x]['french'])
     return dataframe
 
-def create_age_label(age: str):
+def create_age_labels(age: str):
     if age == "18-24":
         return '18-24', 'Plus de 24 ans'
     elif age == "65+":
@@ -198,37 +198,37 @@ def create_age_label(age: str):
         return f'18-{int(lower_bound) - 1}', age, f'Plus de {upper_bound} ans'
 
 def create_age_dataframe(dataframe, selected_age):
-    age_labels = create_age_label(selected_age)
+    age_labels = create_age_labels(selected_age)
     df = convert_scores(dataframe)
 
     selected_columns_dataframe = df.iloc[:, 11:27]
     drugs = selected_columns_dataframe.columns
-    # Data pour construire le dataframe
+    # Data to construct the dataframe
     data_dict = {'drug': drugs}
-    # Définir les couleurs pour chaque barre dans un cluster
+    # Define colors for each bar in a cluster
     colors = []
 
     # BELOW
     if (selected_age != '18-24'):
-        # Filtrer le DataFrame pour ne garder que les lignes correspondant aux âges inférieurs à l'âge sélectionné
+        # Filter the DataFrame to keep only rows corresponding to ages below the selected age
         df_ages_below_selected = df[df['age'] < selected_age]
-        # Calculer le nombre de personnes dans les tranches d'âge inférieures qui consomment chaque drogue
+        # Calculate the number of people in the lower age ranges who consume each drug
         ages_below_count = df_ages_below_selected[drugs].applymap(is_consumer).sum()
-        # Calculer le nombre total de personne dans le groupe
+        # Calculate the total number of people in the group
         total_below_ages = len(df_ages_below_selected)
-        # Calculer la portion de personnes dans les tranches inférieures d'âge qui consomment chaque drogue
+        # Calculate the portion of people in the lower age ranges who consume each drug
         below_portion = ages_below_count / total_below_ages
         data_dict.update({age_labels[0]: below_portion})
         colors.append('lightgray')
 
     # SELECTED
-    # Filtrer le DataFrame pour ne garder que les lignes correspondant à l'âge sélectionné
+    # Filter the DataFrame to keep only rows corresponding to the selected age
     df_selected_age = df[df['age'] == selected_age]
-    # Calculer le nombre de personnes dans la tranche d'âge sélectionnée qui consomment chaque drogue
+     # Calculate the number of people in the selected age range who consume each drug
     selected_age_count = df_selected_age[drugs].applymap(is_consumer).sum()
-    # Calculer le nombre total de personne dans le groupe
+    # Calculate the total number of people in the group
     total_selected_age = len(df_selected_age)
-    # Calculer la portion de personnes dans la tranche d'âge sélectionnée qui consomment chaque drogue
+    # Calculate the portion of people in the selected age range who consume each drug
     selected_age_portion = selected_age_count / total_selected_age
     selected_age_index = 0 if (selected_age == '18-24') else 1
     data_dict.update({age_labels[selected_age_index]: selected_age_portion})
@@ -237,81 +237,68 @@ def create_age_dataframe(dataframe, selected_age):
 
     # ABOVE
     if (selected_age != '65+'):
-        # Filtrer le DataFrame pour ne garder que les lignes correspondant aux âges supérieurs à l'âge sélectionné
+        # Filter the DataFrame to keep only rows corresponding to ages above the selected age
         df_ages_above_selected = df[df['age'] > selected_age]
-        # Calculer le nombre de personnes dans les tranches d'âge supérieures qui consomment chaque drogue
+        # Calculate the number of people in the upper age ranges who consume each drug
         ages_above_count = df_ages_above_selected[drugs].applymap(is_consumer).sum()
-        # Calculer le nombre total de personne dans le groupe
+        # Calculate the total number of people in the group
         total_above_ages = len(df_ages_above_selected)
-        # Calculer la portion de personnes dans les tranches supérieures d'âge qui consomment chaque drogue
+        # Calculate the portion of people in the upper age ranges who consume each drug
         above_portion = ages_above_count / total_above_ages
         data_dict.update({age_labels[len(age_labels) - 1]: above_portion})
         colors.append('darkgray')
     
     result_df = pd.DataFrame(data_dict)
-
-    french_drugs = []
-    for key, value in constants.DRUG_INFO.items():
-        french_drugs.append(value['french'])
-        # print('key : ', key)
-
-    result_df['drug'] = french_drugs
-
+    result_df['drug'] = result_df['drug'].map(lambda x: constants.DRUG_INFO[x]['french'])
     return result_df, colors
 
 def create_education_level_dataframe(df, education_dict):
-    # Niveau d'étude sélectionné
+    # Selected education level
     selected_education_level = education_dict.value['value']
 
-    # Filtrer le DataFrame pour ne garder que les lignes correspondant au niveau d'éducation sélectionné
+    # Filter the DataFrame to keep only rows corresponding to the selected education level
     df_selected_education_level = df[df['education'] == selected_education_level]
 
     selected_columns_dataframe = df.iloc[:, 11:27]
     drugs = selected_columns_dataframe.columns
-    # Data pour construire le dataframe
+    # Data to construct the dataframe
     data_dict = {'drug': drugs}
-    # Définir les couleurs pour chaque barre dans un cluster
+    # Define colors for each bar in a cluster
     colors = []
 
     if selected_education_level != -2.43591:
-        # Calculer le nombre de personnes avec les niveaux d'études inférieurs qui consomment chaque drogue
+        # Calculate the number of people with lower education levels who consume each drug
         df_below_education = df[df['education'] < selected_education_level]
         below_education_count = df_below_education[drugs].applymap(is_consumer).sum()
-        # Calculer le nombre total de personne dans le groupe
+        # Calculate the total number of people in the group
         total_below_education = len(df_below_education)
-        # Calculer la portion de personnes dans les niveaux d'étude inférieurs qui consomment chaque drogue
+        # Calculate the portion of people with lower education levels who consume each drug
         below_portion = below_education_count / total_below_education
         data_dict.update({'Niveau d\'études inférieures': below_portion})
         colors.append('lightgray')
 
-    # Calculer le nombre de personnes avec le niveau d'étude sélectionné qui consomment chaque drogue
+    # Calculate the number of people with the selected education level who consume each drug
     selected_education_level_count = df_selected_education_level[drugs].applymap(is_consumer).sum()
-    # Calculer le nombre total de personne dans le groupe
+    # Calculate the total number of people in the group
     total_selected_age = len(df_selected_education_level)
-    # Calculer la portion de personnes qui ont le niveau d'étude sélectionné qui consomment chaque drogue
+    # Calculate the portion of people with the selected education level who consume each drug
     selected_age_portion = selected_education_level_count / total_selected_age
     data_dict.update({education_dict.value['text']: selected_age_portion})
     colors.append('#29b6f6')
     
     if selected_education_level != 1.98437:
-        # Calculer le nombre de personnes avec les niveaux d'études supérieurs qui consomment chaque drogue
+        # Calculate the number of people with higher education levels who consume each drug
         df_above_education = df[df['education'] > selected_education_level]
         above_education_count = df_above_education[drugs].applymap(is_consumer).sum()
-        # Calculer le nombre total de personne dans le groupe
+        # Calculate the total number of people in the group
         total_above_education = len(df_above_education)
-        # Calculer la portion de personnes dans les niveaux d'étude supérieurs qui consomment chaque drogue
+        # Calculate the portion of people with higher education levels who consume each drug
         above_portion = above_education_count / total_above_education
         data_dict.update({'Niveau d\'études supérieures': above_portion})
         colors.append('darkgrey')
 
     result_df = pd.DataFrame(data_dict)
-    
-    french_drugs = []
-    for key, value in constants.DRUG_INFO.items():
-        french_drugs.append(value['french'])
-        # print('key : ', key)
-
-    result_df['drug'] = french_drugs
+    result_df['drug'] = result_df['drug'].map(lambda x: constants.DRUG_INFO[x]['french'])
     return result_df, colors
 
 
