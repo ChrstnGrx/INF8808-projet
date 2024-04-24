@@ -1,7 +1,11 @@
 import plotly.graph_objects as go
+import pandas as pd
+from dash import html
+
 import src.colors as c
 from src.utils.constants import PERSONNALITY_INFO, DRUG_INFO
-from dash import html
+
+pd.options.mode.chained_assignment = None
 
 c_selected = c.GROUP4_3
 c_not_selected = c.NEUTRAL_1
@@ -70,7 +74,7 @@ def get_plot(my_df, selected_drug=None):
     # Update layout for font size, which affects all text including the dimension titles
     fig.update_layout(
         font=dict(
-            size=17  # Adjust the size as needed
+            size=14  # Adjust the size as needed
         )
     )
 

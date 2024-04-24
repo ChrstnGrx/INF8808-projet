@@ -27,7 +27,7 @@ body {
     align-items: center;
 }
 
-#warning p {
+#warning .warning-text {
     font-style: italic;
 }
 
