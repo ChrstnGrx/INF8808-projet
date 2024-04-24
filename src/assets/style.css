@@ -60,3 +60,17 @@ body {
 .icon-container img {
     height: 80px;
 }
+
+
+/* New or adjusted styles for warning messages */
+.warning-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;  /* Ensures the container takes full width if necessary */
+}
+
+.warning-container p {
+    font-weight: bold;
+}

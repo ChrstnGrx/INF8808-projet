@@ -2,8 +2,8 @@ import dash
 from dash import dcc, html, callback
 from dash.dependencies import Input, Output
 
-from src.datasets.dataframe import drug_corr_df, personality_per_drug_df, consumption_per_drug_df
-from src.utils.constants import DRUG_INFO, GATEWAY_DRUGS
+from src.datasets.dataframe import drug_corr_df, personality_per_drug_df, consumption_per_drug_df, profiles_df
+from src.utils.constants import DRUG_INFO, GATEWAY_DRUGS, AGE_IMAGE_PATHS, GENDER_IMAGE_PATHS, EDUCATION_IMAGE_PATHS
 
 import src.utils.graphs.parallel_coords as pc
 import src.utils.graphs.stacked_bar as sb
@@ -14,6 +14,12 @@ dash.register_page(
     path='/',
     redirect_from=['/drugs'],
     title='Analyse des drogues',)
+
+drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug} for drug in DRUG_INFO]
+
+
+# print()
+
 
 drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug}
                 for drug in DRUG_INFO]
@@ -125,6 +131,7 @@ def drug_consumption_legend(drug):
     return sb.get_legend(drug)
 
 
+
 @callback(
     Output('jointly-consumed-drugs', 'children'),
     Input('dropdown-drug', 'value')
@@ -147,7 +154,16 @@ def jointly_consumed_drugs(drug):
 )
 def warning(drug):
     if drug is not None and drug in GATEWAY_DRUGS:
-        return html.P('Attention : Ceci s\'agit d\'une drogue passerelle!')
+        return html.Div([
+            html.P("Attention : Ceci s'agit d'une drogue passerelle!", style={'font-weight': 'bold', 'text-align': 'center'}),
+            html.Div(
+                className='icon-container',  # Use the same class as you have styled or a new one for specific styling
+                children=[
+                    html.Img(src="/assets/icons/gateway-drugs.png", style={'height': '80px', 'margin': 'auto', 'display': 'block'})
+                ]
+            ),
+        ], style={'text-align': 'center', 'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'})
+    return html.Div()  # This ensures that no residual content is displayed when the drug is not a gateway drug
 
 
 @callback(
@@ -156,6 +172,8 @@ def warning(drug):
 )
 def typical_person(drug):
     if drug is not None:
+        profile = profiles_df[profiles_df['drug'] == drug].iloc[0]
+        print(profile)
         return [
             html.P('Les consommateurs de cette drogue ont tendance à...'),
             html.Div(
@@ -164,26 +182,26 @@ def typical_person(drug):
                     html.Div(
                         className='icon-container',
                         children=[
-                            html.Img(
-                                src='/assets/icons/graduate-cap-solid.svg'),
+                            # Gatewa drugs is the defualt here
+                            html.Img(src=EDUCATION_IMAGE_PATHS.get(profile['most_common_education'], '/assets/icons/gateway-drugs.png')),
                             html.Label('Formation'),
-                            html.P('... avoir complété un baccalauréat.')
+                            html.P(f"{profile['most_common_education']}.")
                         ]
                     ),
                     html.Div(
                         className='icon-container',
                         children=[
-                            html.Img(src='/assets/icons/diploma.svg'),
+                            html.Img(src=AGE_IMAGE_PATHS.get(profile['most_common_age'], '/assets/icons/gateway-drugs.png')),
                             html.Label('Âge'),
-                            html.P('...être âgé entre 45 et 55 ans.')
+                            html.P(f"être âgé entre {profile['most_common_age']}.")
                         ]
                     ),
                     html.Div(
                         className='icon-container',
                         children=[
-                            html.Img(src='/assets/icons/man.svg'),
+                            html.Img(src=GENDER_IMAGE_PATHS.get(profile['most_common_gender'], '/assets/gateway-drugs.png')),
                             html.Label('Genre'),
-                            html.P('...être un homme.')
+                            html.P(f"être un(e) {profile['most_common_gender']}.")
                         ]
                     )
                 ]
