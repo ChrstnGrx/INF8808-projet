@@ -52,13 +52,15 @@ def personality_per_drug(dataframe):
         if is_sober(dataframe.loc[i]):
             df_size["sober"] += 1
             for personality in constants.PERSONNALITY:
-                df["sober"][personality] += dataframe[personality][i]
+                # df["sober"][personality] += dataframe[personality][i]
+                df.at[personality, "sober"] += dataframe.at[i, personality]
         else:
             for drug in constants.DRUGS:
                 if is_consumer(dataframe[drug][i]):
                     df_size[drug] += 1
                     for personality in constants.PERSONNALITY:
-                        df[drug][personality] += dataframe[personality][i]
+                        # df[drug][personality] += dataframe[personality][i]
+                        df.at[personality, drug] += dataframe.at[i, personality]
 
     for c in columns:
         for personality in constants.PERSONNALITY:
