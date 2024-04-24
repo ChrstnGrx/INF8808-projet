@@ -108,7 +108,7 @@ def profile(drug):
     if drug is not None:
         return [
             html.H3('Profil susceptible'),
-            html.P("En regardant les données des répondants, on s'apperçoit que certains groupes sont disproportionément représentés dans les consommateurs de certaines drogues spécifiques. Voici donc les caractéristiques d'une personnes qui est le plus susceptible de consommer la drogue sélectionnée."),
+            html.P("En regardant les données des répondants, on s'apperçoit que certains groupes sont disproportionément représentés dans les consommateurs de certaines drogues spécifiques. Afin de compenser les biais liés à l'échantillonnage et de trouver un profil significatif, la normalisation des données a été effectuée en calculant la proportion de consommateurs pour chaque substance et chaque catégorie démographique (sexe, tranche d'âge, et niveau d'éducation). Cette méthode permet de déterminer les caractéristiques typiques des personnes les plus susceptibles de consommer une drogue spécifique, fournissant ainsi une base solide pour élaborer des stratégies de prévention ciblées. Voici donc les caractéristiques d'une personnes qui est le plus susceptible de consommer la drogue sélectionnée."),
             html.Div(className='viz', children=[
                 html.Div(id='typical-person', children=typical_person(drug)),
             ]),
