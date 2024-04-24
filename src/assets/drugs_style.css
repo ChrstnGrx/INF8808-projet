@@ -1,7 +1,7 @@
 
 /* ----------------------------- */
 
-#forward-button {
+#forward-button, #forward-forward-button {
   padding: 10px 20px;
   background-color: white;
   color: #000;
@@ -17,11 +17,11 @@
   z-index: 1;
 }
 
-#forward-button:hover {
+#forward-button:hover, #forward-forward-button:hover {
   background-color: #f8f9fa;
 }
 
-#forward-button::after {
+#forward-button::after, #forward-forward-button::after {
   content: ' →';
 }
 

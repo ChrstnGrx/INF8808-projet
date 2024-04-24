@@ -1,5 +1,5 @@
 import dash
-from dash import dcc, html, dash_table
+from dash import dcc, html, dash_table, callback
 from dash.dependencies import Input, Output
 
 dash.register_page(
@@ -66,7 +66,7 @@ layout = html.Div([
     html.Div(id='header', children=[
         html.Div(id='nav', children=[
                 html.Button('Vers l\'analyse des drogues',
-                            id='forward-button', n_clicks=0),
+                            id='forward-forward-button', n_clicks=0),
         ]),
         html.H1(
             'Une analyse pour la prévention et l\'éducation à la consommation de drogues'),
@@ -371,7 +371,7 @@ layout = html.Div([
         ]),
         html.P("Pour la drogue sélectionnée avec le menu déroulant, on retrouve dans la zone de d’affichage 1 trois icônes représentant la tranche d’âge, le niveau d’éducation et le sexe consommant le plus le type de drogue sélectionné en noir, répondant ainsi la question 8. Pour répondre à la question 10, il suffit alors de retirer la drogue (aucune drogue sélectionnée) pour montrer les trois caractères sociaux qui distinguent un individu non-consommateur."),
         html.Div(children=[
-            html.Img(src='/assets/static/1.webp', className='icon'),
+            html.Img(src='/assets/static/1.png', className='icon'),
             html.P(children=[
                 html.B("Figure 1."),
                 html.Span(
@@ -383,7 +383,7 @@ layout = html.Div([
         html.P("L'interaction principale de cette visualisation est la mise à jour automatique des trois icônes afin de correspondre à la drogue sélectionnée par l’utilisateur. Si aucune drogue n’est sélectionnée, les icônes sont grisées et l'icône des drogues passerelles disparaît."),
         html.P("La surface sous le menu déroulant permet d’afficher l'icône des drogues passerelles (Figure 2), répondant ainsi à la question 5. Si une drogue est une drogue passerelle, l'icône sera affichée. S’il n’y a pas de drogue passerelle sélectionnée, l’espace est vide."),
         html.Div(children=[
-            html.Img(src='/assets/static/2.webp', className='icon'),
+            html.Img(src='/assets/static/2.png', className='icon'),
             html.P(children=[
                 html.B("Figure 2."),
                 html.Span(
@@ -738,11 +738,12 @@ layout = html.Div([
     ])
 ])
 
-# @callback(
-#     Output('url-forward', 'pathname'),
-#     Input('forward-button', 'n_clicks'),
-#     prevent_initial_call=True
-# )
-# def navigate_to_demographics(n_clicks):
-#     if n_clicks > 0:
-#         return '/demographics'
+
+@callback(
+    Output('url-forward-forward', 'pathname'),
+    Input('forward-forward-button', 'n_clicks'),
+    prevent_initial_call=True
+)
+def navigate_to_drugs(n_clicks):
+    if n_clicks > 0:
+        return '/drugs'

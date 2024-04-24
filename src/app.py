@@ -30,7 +30,9 @@ app = dash.Dash(
 
 app.layout = html.Div([
     dcc.Location(id='url-forward', refresh=True),
+    dcc.Location(id='url-forward-forward', refresh=True),
     dcc.Location(id='url-back', refresh=True),
+    dcc.Location(id='url-back-back', refresh=True),
     html.Div([
         html.Div(
             dcc.Link('',

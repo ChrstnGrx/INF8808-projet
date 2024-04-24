@@ -12,7 +12,6 @@ import src.utils.graphs.chord_diagram as cd
 dash.register_page(
     __name__,
     path='/drugs',
-    redirect_from=['/drugs'],
     title='Analyse des drogues',)
 
 drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug}
