@@ -24,14 +24,13 @@ layout = html.Div(id='demographics-page', children=[
         html.H1('Analyse démographique'),
     ]),
     html.Div(children=[
-        html.H2('Tranches d\'âge'),
+        html.H3('Tranches d\'âge'),
         html.P('Tu peux choisir la tranche d\'âge dans laquelle tu te trouves pour voir le pourcentage de personnes \
                 dans la même tranche d\'âge que toi qui consomment tel ou tel drogue.'),
         html.P('On a regroupé tous les répondants dans une tranche d\'âge (par exemple entre 25 et 34 ans). Ensuite il y a les moins \
                 agés que ce groupe et les plus agés. Pour chacun des groupes, on calcule ensuite la portion de consommateurs de drogue.'),
         html.P('Par exemple, 83.58% des personnes ayant entre 25 et 34 ans consomment de l\'alcool. 84.14% des personnes moins agées \
                 (18-24 ans) consomment de l\'alcool et 79.89% des personnes plus agés (plus de 34 ans) consomment de l\'alcool.'),
-        html.H3('Portion de consommateurs de drogues selon la tranche d\'âge'),
         html.Div(className='viz', children=[
             dcc.Dropdown(
                 id='dropdown-age',
@@ -48,11 +47,12 @@ layout = html.Div(id='demographics-page', children=[
                 placeholder="Sélectionnez une tranche d'âge...",
             ),
         ]),
+        html.H4('Portion de consommateurs de drogues selon la tranche d\'âge'),
         dcc.Graph(
             id='age-graph', figure=clustered_barchart.cluster_by_age(cluster_by_age_df, age_df_colors)),
     ]),
     html.Div(children=[
-        html.H2('Sexe'),
+        html.H3('Sexe'),
         html.Div(className='viz', children=[
             dcc.Dropdown(
                 id='dropdown-gender',
@@ -65,12 +65,12 @@ layout = html.Div(id='demographics-page', children=[
                 placeholder="Sélectionnez un sexe...",
             ),
         ]),
-        html.H3('Portion de consommateurs de drogues selon le sexe'),
+        html.H4('Portion de consommateurs de drogues selon le sexe'),
         dcc.Graph(id='gender-graph',
                   figure=b2bbarchart.draw_b2b_barchart(b2bbarchart_df, "MAN")),
     ]),
     html.Div(children=[
-        html.H2('Niveau d\'éducation'),
+        html.H3('Niveau d\'éducation'),
         html.P('Tu peux choisir le niveau d\'études qui correspond au tien pour voir le pourcentage de personnes avec le même niveau \
                 d\'études que toi qui consomment tel ou tel drogue.'),
         html.P('On a regroupé tous les répondants ayant un niveau d\'éducation (par exemple baccalauréat) et on a calculé la portion \
@@ -96,7 +96,7 @@ layout = html.Div(id='demographics-page', children=[
                 placeholder="Sélectionnez un niveau d'éducation...",
             ),
         ]),
-        html.H3('Portion de consommateurs de drogues selon le niveau d\'éducation'),
+        html.H4('Portion de consommateurs de drogues selon le niveau d\'éducation'),
         dcc.Graph(id='education-graph', figure=clustered_barchart.cluster_by_education(
             cluster_by_education_df, education_df_colors)),
     ]),
