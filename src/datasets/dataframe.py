@@ -8,6 +8,14 @@ dataframe = fetch_ucirepo(id=373).data.original
 dataframe = preprocess.drop_columns(dataframe)
 dataframe = preprocess.fix_errors(dataframe)
 
+
+profiles_df = preprocess.get_most_common_profiles_by_demographic(dataframe.copy())
+
+# print(preprocess.get_most_common_profiles_by_demographic(dataframe.copy()))
+
+# print(profiles_df)
+
+
 personality_per_drug_df = preprocess.personality_per_drug(dataframe.copy())
 
 consumption_per_drug_df = preprocess.consumption_per_drug(dataframe.copy())

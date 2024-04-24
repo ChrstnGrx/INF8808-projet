@@ -2,7 +2,7 @@ import dash
 from dash import html
 import plotly.graph_objects as go
 
-import math 
+import math
 
 
 active_palette = ['#81d4fa', '#29b6f6', '#039be5',
@@ -20,12 +20,13 @@ french_drug_names = {
     'crack': 'Crack',
     'ecstasy': 'Ecstasy',
     'ketamine': 'Kétamine',
-    'legalh': 'Drogues légales',
+    'legalh': 'Euphorisants légaux',
     'lsd': 'LSD',
     'meth': 'Méthamphétamines',
     'mushrooms': 'Champignons magiques',
     'heroin': 'Héroïne',
 }
+
 
 def activate_drug_palette(df, drug):
     colors = {}
@@ -53,10 +54,10 @@ def create_legend(active_drug, df):
     # Wrapping the items in a ul and div structure
     legend_component = html.Div([
         html.H3("Indice de consommation conjointe", style={
-                'textAlign': 'center', 'textDecoration': 'underline'}),
+                'fontFamily': 'Oswald, sans-serif', 'fontSize': '1.35em', 'textAlign': 'center', 'textDecoration': 'underline'}),
         html.Ul(legend_items, style={
                 'listStyleType': 'none', 'padding': '0', 'textAlign': 'center', 'fontWeight': 'bold'})
-    ], style={'border': '5px groove #000', 'borderRadius': '1.5%', 'padding': '1.5%', 'marginTop': '0', 'backgroundColor': 'rgba(0, 0, 0, 0.02)'})
+    ], style={'border': '3px solid black', 'padding': '1.5%', 'marginTop': '0', 'marginRight': '30%', 'marginLeft': '30%', 'backgroundColor': 'rgba(0, 0, 0, 0.02)'})
 
     return legend_component
 
@@ -116,7 +117,7 @@ def create_chord_diagram(df, active_drug):
 
     fig.update_layout(
         title={
-            'text': "Drogues consommées conjointement",
+            'text': "",
             'y': 0.9,
             'x': 0.5,
             'xanchor': 'center',
@@ -143,13 +144,16 @@ def create_chord_diagram(df, active_drug):
 
     return fig
 
+
 def get_legend(drug_corr_df, drug):
     legend = create_legend(drug, drug_corr_df, active_palette)
     return legend
 
-def get_plot(drug_corr_df,drug):
+
+def get_plot(drug_corr_df, drug):
     fig = create_chord_diagram(drug_corr_df, drug)
     return fig
+
 
 def determine_legend_categories(df, active_drug, active_palette):
     connection_weights = df[(df['source'] == active_drug) | (
@@ -161,4 +165,3 @@ def determine_legend_categories(df, active_drug, active_palette):
             color_index = int(weight * (len(active_palette) - 1))
             categories_present.add(color_index)
     return sorted(categories_present)
-

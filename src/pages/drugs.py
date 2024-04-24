@@ -2,8 +2,8 @@ import dash
 from dash import dcc, html, callback
 from dash.dependencies import Input, Output
 
-from src.datasets.dataframe import drug_corr_df, personality_per_drug_df, consumption_per_drug_df
-from src.utils.constants import DRUG_INFO, GATEWAY_DRUGS
+from src.datasets.dataframe import drug_corr_df, personality_per_drug_df, consumption_per_drug_df, profiles_df
+from src.utils.constants import DRUG_INFO, GATEWAY_DRUGS, AGE_IMAGE_PATHS, GENDER_IMAGE_PATHS, EDUCATION_IMAGE_PATHS
 
 import src.utils.graphs.parallel_coords as pc
 import src.utils.graphs.stacked_bar as sb
@@ -11,61 +11,94 @@ import src.utils.graphs.chord_diagram as cd
 
 dash.register_page(
     __name__,
-    path='/',
-    redirect_from=['/drugs'],
+    path='/drugs',
     title='Analyse des drogues',)
 
 drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug}
                 for drug in DRUG_INFO]
 
+
+# print()
+
+
+drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug}
+                for drug in DRUG_INFO]
+
 layout = html.Div(id='drugs-page', children=[
-    html.Button('Analyse démographique',
-                id='forward-button', n_clicks=0),
-    dcc.Dropdown(
-        id='dropdown-drug',
-        options=drug_options,
-        placeholder="Veuillez sélectionner une drogue...",
-    ),
-    html.Div(id='warning'),
-    html.Div(id='typical-person'),
+    html.Div(id='header', children=[
+        html.Div(id='nav', children=[
+            html.Button('Vers l\'accueil',
+                        id='back-back-button', n_clicks=0),
+                html.Button('Vers l\'analyse démographique',
+                            id='forward-button', n_clicks=0),
+        ]),
+        html.H1('Analyse des drogues'),
+    ]),
+    html.Div(id='viz1-wrapper', children=[
+        html.H2('Profil susceptible'),
+        html.Div(className='viz', children=[
+            dcc.Dropdown(
+                id='dropdown-drug',
+                options=drug_options,
+                placeholder="Veuillez sélectionner une drogue...",
+            ),
+            html.Div(id='warning'),
+            html.Div(id='typical-person'),
+        ]),
+    ]),
     html.Div(
         id='personality_per_drug',
         className='chart-container',
         children=[
-            html.H1(
+            html.H2(
                 'Tendances pour chaque trait de personnalité selon la drogue consommée'),
             dcc.Graph(
                 id='personality_per_drug_graph',
                 className='chart',
                 figure=pc.get_plot(personality_per_drug_df),
             ),
-            html.Div(
-                id='personality_per_drug_legend',
-                className='legend',
-                children=pc.get_legend()
-            )
+            html.Div(className='legend-wrapper', children=[
+                html.H3("Légende"),
+                html.Div(
+                    id='personality_per_drug_legend',
+                    className='legend',
+                    children=pc.get_legend()
+                )
+            ])
         ]
     ),
     html.Div(
         id='drug_consumption',
         className='chart-container',
         children=[
-            html.H1('Fréquences de consommations pour chaque drogue'),
+            html.H2('Fréquences de consommation pour chaque drogue'),
             dcc.Graph(
                 id='drug_consumption_graph',
                 className='chart',
                 figure=sb.get_plot(consumption_per_drug_df),
             ),
-            html.Div(
-                id='drug_consumption_legend',
-                className='legend',
-                children=sb.get_legend()
-            )
+            html.Div(id='legend-drug-consumption', className='legend-wrapper', children=[
+                html.H3("Légende"),
+                html.Div(
+                    id='drug_consumption_legend',
+                    className='legend',
+                    children=sb.get_legend()
+                )
+            ])
         ]
     ),
     html.Div(id='jointly-consumed-drugs', className='chart-container'),
-
 ])
+
+
+@callback(
+    Output('url-back-back', 'pathname'),
+    Input('back-back-button', 'n_clicks'),
+    prevent_initial_call=True
+)
+def navigate_to_home(n_clicks):
+    if n_clicks > 0:
+        return '/home'
 
 
 @callback(
@@ -117,7 +150,7 @@ def drug_consumption_legend(drug):
 def jointly_consumed_drugs(drug):
     if drug is not None:
         return [
-            html.H1('Drogues consommees conjointement'),
+            html.H2('Drogues consommées conjointement'),
             html.Div(id='chord-diagram-container', children=[
                 dcc.Graph(figure=cd.create_chord_diagram(drug_corr_df, drug)),
                 html.Div(id='chord-diagram',
@@ -132,7 +165,38 @@ def jointly_consumed_drugs(drug):
 )
 def warning(drug):
     if drug is not None and drug in GATEWAY_DRUGS:
-        return html.P('Attention : Ceci s\'agit d\'une drogue passerelle!')
+        return html.Div([
+            html.P("Attention : Ceci s'agit d'une drogue passerelle!",
+                   style={'font-weight': 'bold', 'text-align': 'center',
+                          'font-family': 'Arial, sans-serif',
+                          'font-size': '1em',
+                          'margin-right': '0',
+                          'margin-left': '0',
+                          'line-height': '1em',
+                          'text-indent': '0rem',
+                          'text-align': 'center'}),
+            html.Div(
+                className='icon-container',
+                children=[
+                    html.Img(src="/assets/icons/gateway-drugs.png",
+                             style={'height': '80px', 'margin': 'auto', 'display': 'block', 'width':'100%'})
+                ]
+            ),
+        ], style={'text-align': 'center', 'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'})
+    # This ensures that no residual content is displayed when the drug is not a gateway drug
+    return html.Div()
+
+def print_education(raw_education_level: str) -> str:
+    """
+    Print the education level in a more readable format.
+    :param: raw_education_level: The education level to print.
+    :return: The education level in a more readable format.
+    """
+    raw_education_level = raw_education_level.lower()
+    if raw_education_level[0] in ['q', 'f']:
+        return f"...avoir {raw_education_level}."
+    else:
+        return f"...avoir une {raw_education_level}."
 
 
 @callback(
@@ -141,35 +205,67 @@ def warning(drug):
 )
 def typical_person(drug):
     if drug is not None:
+        profile = profiles_df[profiles_df['drug'] == drug].iloc[0]
+        print(profile)
         return [
-            html.H1('Profil Susceptible'),
-            html.P('Les consommateurs de cette drogue ont tendance à...'),
+            html.P('Les consommateurs de cette drogue ont tendance à...',
+                   style={'font-family': 'Arial, sans-serif',
+                          'font-size': '1em',
+                          'margin-right': '0',
+                          'margin-left': '0',
+                          'line-height': '1em',
+                          'text-indent': '0rem',
+                          'text-align': 'center'}),
             html.Div(
                 className='icons-container',
                 children=[
                     html.Div(
                         className='icon-container',
                         children=[
-                            html.Img(
-                                src='/assets/icons/graduate-cap-solid.svg'),
+                            html.Img(src=EDUCATION_IMAGE_PATHS.get(
+                                profile['most_common_education'], '/assets/icons/gateway-drugs.png')),
                             html.Label('Formation'),
-                            html.P('... avoir complété un baccalauréat.')
+                            html.P(print_education(
+                                profile['most_common_education']),
+                                   style={'font-family': 'Arial, sans-serif',
+                                          'font-size': '1em',
+                                          'margin-right': '0',
+                                          'margin-left': '0',
+                                          'line-height': '1em',
+                                          'text-indent': '0rem',
+                                          'text-align': 'center'})
                         ]
                     ),
                     html.Div(
                         className='icon-container',
                         children=[
-                            html.Img(src='/assets/icons/diploma.svg'),
+                            html.Img(src=AGE_IMAGE_PATHS.get(
+                                profile['most_common_age'], '/assets/icons/gateway-drugs.png')),
                             html.Label('Âge'),
-                            html.P('...être âgé entre 45 et 55 ans.')
+                            html.P(f"...être âgé.e entre {profile['most_common_age']}.",
+                                   style={'font-family': 'Arial, sans-serif',
+                                          'font-size': '1em',
+                                          'margin-right': '0',
+                                          'margin-left': '0',
+                                          'line-height': '1em',
+                                          'text-indent': '0rem',
+                                          'text-align': 'center'})
                         ]
                     ),
                     html.Div(
                         className='icon-container',
                         children=[
-                            html.Img(src='/assets/icons/man.svg'),
+                            html.Img(src=GENDER_IMAGE_PATHS.get(
+                                profile['most_common_gender'], '/assets/gateway-drugs.png')),
                             html.Label('Genre'),
-                            html.P('...être un homme.')
+                            html.P(f"...être un.e {profile['most_common_gender'].lower()}.",
+                                   style={'font-family': 'Arial, sans-serif',
+                                          'font-size': '1em',
+                                          'margin-right': '0',
+                                          'margin-left': '0',
+                                          'line-height': '1em',
+                                          'text-indent': '0rem',
+                                          'text-align': 'center'})
                         ]
                     )
                 ]

@@ -9,13 +9,10 @@
     This file is the entry point for our dash app.
 '''
 
-from dash import callback_context
 import dash
-from dash import dcc, html, callback
-from dash.dependencies import Input, Output
+from dash import dcc, html
 import sys
 from pathlib import Path
-from src.components import footer
 
 base_path = Path(__file__).resolve().parent.parent
 sys.path.append(str(base_path))
@@ -33,13 +30,14 @@ app = dash.Dash(
 
 app.layout = html.Div([
     dcc.Location(id='url-forward', refresh=True),
+    dcc.Location(id='url-forward-forward', refresh=True),
     dcc.Location(id='url-back', refresh=True),
+    dcc.Location(id='url-back-back', refresh=True),
     html.Div([
         html.Div(
-            dcc.Link(f"{page['name']} - {page['path']}",
+            dcc.Link('',
                      href=page["relative_path"])
         ) for page in dash.page_registry.values()
     ]),
-    dash.page_container,
-    footer
+    dash.page_container
 ])

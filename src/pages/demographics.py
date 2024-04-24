@@ -12,65 +12,78 @@ from src.datasets.dataframe import cluster_by_education_df, education_df_colors
 dash.register_page(
     __name__,
     path='/demographics',
-    title='Demographics Analysis'
+    title='Analyse démographique'
 )
 
 layout = html.Div(id='demographics-page', children=[
-    html.Button('Vers l\'analyse des drogues', id='back-button', n_clicks=0),
+    html.Div(id='header', children=[
+        html.Div(id='nav', children=[
+                html.Button('Vers l\'analyse des drogues',
+                            id='back-button', n_clicks=0),
+        ]),
+        html.H1('Analyse démographique'),
+    ]),
     html.Div(children=[
-        html.Label('Tranche d\'âge'),
-        dcc.Dropdown(
-            id='dropdown-age',
-            options=[
-                {'label': '18-24 ans', 'value': '18-24'},
-                {'label': '25-34 ans', 'value': '25-34'},
-                {'label': '35-44 ans', 'value': '35-44'},
-                {'label': '45-54 ans', 'value': '45-54'},
-                {'label': '55-64 ans', 'value': '55-64'},
-                {'label': '65+ ans', 'value': '65+'},
-            ],
-            value='18-24',
-            className='selector-dropdown',
-            placeholder="Sélectionnez une tranche d'âge...",
-        ),
+        html.H2('Tranches d\'âge'),
+        html.Div(className='viz', children=[
+            dcc.Dropdown(
+                id='dropdown-age',
+                options=[
+                           {'label': '18-24 ans', 'value': '18-24'},
+                           {'label': '25-34 ans', 'value': '25-34'},
+                           {'label': '35-44 ans', 'value': '35-44'},
+                           {'label': '45-54 ans', 'value': '45-54'},
+                           {'label': '55-64 ans', 'value': '55-64'},
+                           {'label': '65+ ans', 'value': '65+'},
+                ],
+                value='18-24',
+                className='selector-dropdown',
+                placeholder="Sélectionnez une tranche d'âge...",
+            ),
+        ]),
+        html.H3('Portion de consommateurs de drogues selon la tranche d\'âge'),
         dcc.Graph(
             id='age-graph', figure=clustered_barchart.cluster_by_age(cluster_by_age_df, age_df_colors)),
     ]),
     html.Div(children=[
-         html.H1(
-                'Les drogues les plus consommées selon le genre'),
-        html.Label('Sexe', className='selector-label'),
-        dcc.Dropdown(
-            id='dropdown-gender',
-            options=[
-                {'label': 'Homme', 'value': 'MAN'},
-                {'label': 'Femme', 'value': 'WOMAN'},
-            ],
-            value='MAN',
-            className='selector-dropdown',
-            placeholder="Sélectionnez un sexe...",
-        ),
+        html.H2('Sexe'),
+        html.Div(className='viz', children=[
+            dcc.Dropdown(
+                id='dropdown-gender',
+                options=[
+                    {'label': 'Homme', 'value': 'MAN'},
+                    {'label': 'Femme', 'value': 'WOMAN'},
+                ],
+                value='MAN',
+                className='selector-dropdown',
+                placeholder="Sélectionnez un sexe...",
+            ),
+        ]),
+        html.H3('Portion de drogues les plus consommées selon le genre'),
         dcc.Graph(id='gender-graph',
                   figure=b2bbarchart.draw_b2b_barchart(b2bbarchart_df, "MAN")),
     ]),
     html.Div(children=[
-        html.Label('Niveau d\'éducation'),
-        dcc.Dropdown(
-            id='dropdown-education',
-            options=[
-                {'label': 'Quitté l\'école avant 16 ans', 'value': 'BEFORE_16'},
-                {'label': 'Quitté l\'école à 16 ans', 'value': 'AT_16'},
-                {'label': 'Quitté l\'école à 17 ans', 'value': 'AT_17'},
-                {'label': 'Quitté l\'école à 18 ans', 'value': 'AT_18'},
-                {'label': 'Fréquenté une université, mais sans diplôme',
-                    'value': 'SOME_COLLEGE_NO_DEGREE'},
-                {'label': 'Baccaulauréat', 'value': 'UNIVERSITY_DEGREE'},
-                {'label': 'Maîtrise', 'value': 'MASTER_DEGREE'},
-                {'label': 'Doctorat', 'value': 'DOCTORATE_DEGREE'},
-            ],
-            value='UNIVERSITY_DEGREE',
-            placeholder="Sélectionnez un niveau d'éducation...",
-        ),
+        html.H2('Niveau d\'éducation'),
+        html.Div(className='viz', children=[
+            dcc.Dropdown(
+                id='dropdown-education',
+                options=[
+                    {'label': 'Ayant quitté l\'école avant 16 ans', 'value': 'BEFORE_16'},
+                    {'label': 'Ayant quitté l\'école à 16 ans', 'value': 'AT_16'},
+                    {'label': 'Ayant quitté l\'école à 17 ans', 'value': 'AT_17'},
+                    {'label': 'Ayant quitté l\'école à 18 ans', 'value': 'AT_18'},
+                    {'label': 'Ayant fréquenté une université, mais sans diplôme','value': 'SOME_COLLEGE_NO_DEGREE'},
+                    {'label': 'Baccaulauréat', 'value': 'UNIVERSITY_DEGREE'},
+                    {'label': 'Maîtrise', 'value': 'MASTER_DEGREE'},
+                    {'label': 'Doctorat', 'value': 'DOCTORATE_DEGREE'},
+                ],
+                value='UNIVERSITY_DEGREE',
+                className='selector-dropdown',
+                placeholder="Sélectionnez un niveau d'éducation...",
+            ),
+        ]),
+        html.H3('Portion de consommateurs de drogues selon le niveau d\'éducation'),
         dcc.Graph(id='education-graph', figure=clustered_barchart.cluster_by_education(
             cluster_by_education_df, education_df_colors)),
     ]),
@@ -113,7 +126,7 @@ def personality_per_drug_graph(gender):
     Input('dropdown-education', 'value'),
     prevent_initial_call=False  # Placeholders by default to draw the graphs
 )
-def create_age_figure(education):
+def create_education_figure(education):
     if not education:
         return dash.no_update, dash.no_update, dash.no_update
 
@@ -125,4 +138,4 @@ def create_age_figure(education):
 
     df, colors = preprocess.create_education_level_dataframe(
         dataframe, education_level)
-    return clustered_barchart.cluster_by_age(df, colors)
+    return clustered_barchart.cluster_by_education(df, colors)

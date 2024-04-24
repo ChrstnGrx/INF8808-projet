@@ -38,6 +38,7 @@ def draw_b2b_barchart(dataframe, gender):
     # # Add the individual figures to the subplot grid
     fig.add_trace(fig_men['data'][0], row=1, col=1,  secondary_y=True)
     fig.add_trace(fig_women['data'][0], row=1, col=2)
+    fig.update_layout(showlegend=False, xaxis_autorange='reversed')
 
     # # Update the subplot layout  
     fig.update_layout( showlegend=False, xaxis_range=[max(list(men_bars['Homme']))+5,0],plot_bgcolor = "white",height=700, xaxis2=dict(range=[0, max(list(women_bars['Femme']))+5]))
@@ -50,6 +51,7 @@ def draw_b2b_barchart(dataframe, gender):
 
     print(fig.layout)
     # Show the combined figure
+    for i, trace in enumerate(fig.data):
+        trace.hovertemplate = f'<b>Drogue:</b> %{{y}}<br><b>Portion:</b> %{{x}}%<extra></extra>'
+        
     return fig
-
-### TODO space center y labels
