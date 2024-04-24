@@ -23,7 +23,6 @@ layout = html.Div(id='demographics-page', children=[
         ]),
         html.H1('Analyse démographique'),
     ]),
-
     html.Div(children=[
         html.H2('Tranche d\'âge'),
         html.Div(className='viz', children=[
