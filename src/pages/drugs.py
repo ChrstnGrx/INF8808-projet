@@ -11,7 +11,8 @@ import src.utils.graphs.chord_diagram as cd
 
 dash.register_page(
     __name__,
-    path='/drugs',
+    path='/',
+    redirect_from=['/drugs'],
     title='Analyse des drogues',)
 
 drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug}
@@ -20,10 +21,7 @@ drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug}
 layout = html.Div(id='drugs-page', children=[
     html.Div(id='header', children=[
         html.Div(id='nav', children=[
-            html.Button('Vers l\'accueil',
-                        id='back-back-button', n_clicks=0),
-                html.Button('Vers l\'analyse démographique',
-                            id='forward-button', n_clicks=0),
+            html.Button('Quel est mon risque?', id='forward-button', n_clicks=0),
         ]),
         html.H1('Prévention des drogues'),
     ]),
@@ -92,17 +90,6 @@ layout = html.Div(id='drugs-page', children=[
     ])
     
 ])
-
-
-@callback(
-    Output('url-back-back', 'pathname'),
-    Input('back-back-button', 'n_clicks'),
-    prevent_initial_call=True
-)
-def navigate_to_home(n_clicks):
-    if n_clicks > 0:
-        return '/home'
-
 
 @callback(
     Output('url-forward', 'pathname'),

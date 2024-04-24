@@ -6,13 +6,6 @@ body {
     padding: 0;
 }
 
-.footer {
-    margin-top: 10px;
-    padding: 20px 10px;
-    height: 100px;
-    background-color: #bbbbbb;
-}
-
 .legend {
     display: flex;
     align-items: center;
@@ -127,9 +120,8 @@ div p {
     font-size: 18px;
     color: white;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0);
-    animation: glow 2s infinite alternate;
-    font-family: 'Courier New', Courier, monospace;
     text-align: center;
+    font-weight: bold;
 }
 
 @keyframes glow {

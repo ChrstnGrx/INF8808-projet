@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 import pandas as pd
 from dash import html
 
-import src.colors as c
+import src.utils.colors as c
 from src.utils.constants import PERSONNALITY_INFO, DRUG_INFO
 
 pd.options.mode.chained_assignment = None
