@@ -14,7 +14,8 @@ dash.register_page(
     path='/drugs',
     title='Analyse des drogues',)
 
-drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug} for drug in DRUG_INFO]
+drug_options = [{'label': DRUG_INFO[drug]['french'].capitalize(), 'value': drug}
+                for drug in DRUG_INFO]
 
 
 # print()
@@ -142,7 +143,6 @@ def drug_consumption_legend(drug):
     return sb.get_legend(drug)
 
 
-
 @callback(
     Output('jointly-consumed-drugs', 'children'),
     Input('dropdown-drug', 'value')
@@ -166,15 +166,32 @@ def jointly_consumed_drugs(drug):
 def warning(drug):
     if drug is not None and drug in GATEWAY_DRUGS:
         return html.Div([
-            html.P("Attention : Ceci s'agit d'une drogue passerelle!", style={'font-weight': 'bold', 'text-align': 'center'}),
+            html.P("Attention : Ceci s'agit d'une drogue passerelle!",
+                   style={'font-weight': 'bold', 'text-align': 'center'}),
             html.Div(
-                className='icon-container',  # Use the same class as you have styled or a new one for specific styling
+                # Use the same class as you have styled or a new one for specific styling
+                className='icon-container',
                 children=[
-                    html.Img(src="/assets/icons/gateway-drugs.png", style={'height': '80px', 'margin': 'auto', 'display': 'block'})
+                    html.Img(src="/assets/icons/gateway-drugs.png",
+                             style={'height': '80px', 'margin': 'auto', 'display': 'block'})
                 ]
             ),
         ], style={'text-align': 'center', 'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'})
-    return html.Div()  # This ensures that no residual content is displayed when the drug is not a gateway drug
+    # This ensures that no residual content is displayed when the drug is not a gateway drug
+    return html.Div()
+
+
+def print_education(raw_education_level: str) -> str:
+    """
+    Print the education level in a more readable format.
+    :param: raw_education_level: The education level to print.
+    :return: The education level in a more readable format.
+    """
+    raw_education_level = raw_education_level.lower()
+    if raw_education_level[0] in ['q', 'f']:
+        return f"...avoir {raw_education_level}."
+    else:
+        return f"...avoir une {raw_education_level}."
 
 
 @callback(
@@ -193,26 +210,31 @@ def typical_person(drug):
                     html.Div(
                         className='icon-container',
                         children=[
-                            # Gatewa drugs is the defualt here
-                            html.Img(src=EDUCATION_IMAGE_PATHS.get(profile['most_common_education'], '/assets/icons/gateway-drugs.png')),
+                            html.Img(src=EDUCATION_IMAGE_PATHS.get(
+                                profile['most_common_education'], '/assets/icons/gateway-drugs.png')),
                             html.Label('Formation'),
-                            html.P(f"{profile['most_common_education']}.")
+                            html.P(print_education(
+                                profile['most_common_education']))
                         ]
                     ),
                     html.Div(
                         className='icon-container',
                         children=[
-                            html.Img(src=AGE_IMAGE_PATHS.get(profile['most_common_age'], '/assets/icons/gateway-drugs.png')),
+                            html.Img(src=AGE_IMAGE_PATHS.get(
+                                profile['most_common_age'], '/assets/icons/gateway-drugs.png')),
                             html.Label('Âge'),
-                            html.P(f"être âgé entre {profile['most_common_age']}.")
+                            html.P(
+                                f"...être âgé.e entre {profile['most_common_age']}.")
                         ]
                     ),
                     html.Div(
                         className='icon-container',
                         children=[
-                            html.Img(src=GENDER_IMAGE_PATHS.get(profile['most_common_gender'], '/assets/gateway-drugs.png')),
+                            html.Img(src=GENDER_IMAGE_PATHS.get(
+                                profile['most_common_gender'], '/assets/gateway-drugs.png')),
                             html.Label('Genre'),
-                            html.P(f"être un(e) {profile['most_common_gender']}.")
+                            html.P(
+                                f"...être un.e {profile['most_common_gender'].lower()}.")
                         ]
                     )
                 ]
