@@ -39,7 +39,7 @@ def draw_b2b_barchart(dataframe, gender):
     fig.add_trace(fig_women['data'][0], row=1, col=2)
 
     # Update the subplot layout          ")
-    fig.update_layout(title='Diagramme à barres des consommateurs de drogue en fonction du genre', showlegend=False, xaxis_autorange='reversed')
+    fig.update_layout( showlegend=False, xaxis_autorange='reversed')
 
     # Show the combined figure
     return fig

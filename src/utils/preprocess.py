@@ -137,9 +137,6 @@ def generate_drogue_options(dataframe):
 
     return options, default_value
 
-def categorize_gender(value):
-    return "Femme" if value < 0 else "Homme"
-
 def b2b_barchart_sanitizing(dataframe):
     '''
         Creates the dataframe for the bar chart.
@@ -147,17 +144,14 @@ def b2b_barchart_sanitizing(dataframe):
         Args:
             dataframe: The dataframe to use
     '''
-    dataframe['gender_category'] = dataframe['gender'].apply(categorize_gender)
-    drugs = ['alcohol', 'amphet', 'amyl', 'benzos', 'cannabis', 'coke', 'crack', 'ecstasy',
-            'heroin', 'ketamine', 'legalh', 'lsd', 'meth', 'mushrooms', 'nicotine', 'vsa']
-    for drug in drugs:
-        dataframe[drug] = dataframe[drug].apply(is_consumer)
+    for key, value in constants.DRUG_INFO.items():
+        dataframe[value['french']] = dataframe[key].apply(is_consumer)
 
     # pick only the columns we need
-    melted_df = pd.melt(dataframe, id_vars=['gender_category'], value_vars=[f'{drug}' for drug in drugs])
+    melted_df = pd.melt(dataframe, id_vars=['gender'], value_vars=[f"{value['french']}" for (key, value) in constants.DRUG_INFO.items()])
 
     # Group by gender and drug consumption variable, then count occurrences
-    result_df = melted_df.groupby(['gender_category', 'variable'])['value'].sum().reset_index()
+    result_df = melted_df.groupby(['gender', 'variable'])['value'].sum().reset_index()
 
     # Rename the 'value' column to 'count'
     result_df.rename(columns={'value': 'count'}, inplace=True)
@@ -165,10 +159,11 @@ def b2b_barchart_sanitizing(dataframe):
     return result_df
 
 def gender_portion(dataframe):
-    total_counts = dataframe.groupby('gender_category')['count'].transform('sum')
+    print(dataframe)
+    total_counts = dataframe.groupby('gender')['count'].transform('sum')
     # Calculating portion for each variable
     dataframe['percentage'] = ((100*dataframe['count']) / total_counts).round(1)
-    dataframe = dataframe.pivot(index='variable', columns='gender_category', values='percentage').reset_index()
+    dataframe = dataframe.pivot(index='variable', columns='gender', values='percentage').reset_index()
     return dataframe
     
 def b2b_barchart(dataframe):
@@ -196,9 +191,8 @@ def create_age_label(age: str):
 
 def create_age_dataframe(dataframe, selected_age):
     age_labels = create_age_label(selected_age)
-    df = convert_scores(dataframe)
 
-    selected_columns_dataframe = df.iloc[:, 11:27]
+    selected_columns_dataframe = dataframe.iloc[:, 11:27]
     drugs = selected_columns_dataframe.columns
     # Data pour construire le dataframe
     data_dict = {'drug': drugs}
@@ -208,7 +202,7 @@ def create_age_dataframe(dataframe, selected_age):
     # BELOW
     if (selected_age != '18-24'):
         # Filtrer le DataFrame pour ne garder que les lignes correspondant aux âges inférieurs à l'âge sélectionné
-        df_ages_below_selected = df[df['age'] < selected_age]
+        df_ages_below_selected = dataframe[dataframe['age'] < selected_age]
         # Calculer le nombre de personnes dans les tranches d'âge inférieures qui consomment chaque drogue
         ages_below_count = df_ages_below_selected[drugs].applymap(is_consumer).sum()
         # Calculer le nombre total de personne dans le groupe
@@ -220,7 +214,7 @@ def create_age_dataframe(dataframe, selected_age):
 
     # SELECTED
     # Filtrer le DataFrame pour ne garder que les lignes correspondant à l'âge sélectionné
-    df_selected_age = df[df['age'] == selected_age]
+    df_selected_age = dataframe[dataframe['age'] == selected_age]
     # Calculer le nombre de personnes dans la tranche d'âge sélectionnée qui consomment chaque drogue
     selected_age_count = df_selected_age[drugs].applymap(is_consumer).sum()
     # Calculer le nombre total de personne dans le groupe
@@ -235,7 +229,7 @@ def create_age_dataframe(dataframe, selected_age):
     # ABOVE
     if (selected_age != '65+'):
         # Filtrer le DataFrame pour ne garder que les lignes correspondant aux âges supérieurs à l'âge sélectionné
-        df_ages_above_selected = df[df['age'] > selected_age]
+        df_ages_above_selected = dataframe[dataframe['age'] > selected_age]
         # Calculer le nombre de personnes dans les tranches d'âge supérieures qui consomment chaque drogue
         ages_above_count = df_ages_above_selected[drugs].applymap(is_consumer).sum()
         # Calculer le nombre total de personne dans le groupe
@@ -246,15 +240,18 @@ def create_age_dataframe(dataframe, selected_age):
         colors.append('darkgray')
     
     result_df = pd.DataFrame(data_dict)
+    translate_drugs(result_df)
 
+    return result_df, colors
+
+def translate_drugs(dataframe):
     french_drugs = []
     for key, value in constants.DRUG_INFO.items():
         french_drugs.append(value['french'])
         # print('key : ', key)
 
-    result_df['drug'] = french_drugs
-
-    return result_df, colors
+    dataframe['drug'] = french_drugs
+    # return dataframe
 
 def create_education_level_dataframe(df, education_dict):
     # Niveau d'étude sélectionné

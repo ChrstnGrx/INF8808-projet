@@ -37,6 +37,8 @@ layout = html.Div(id='demographics-page', children=[
             id='age-graph', figure=clustered_barchart.cluster_by_age(cluster_by_age_df, age_df_colors)),
     ]),
     html.Div(children=[
+         html.H1(
+                'Les drogues les plus consommées selon le genre'),
         html.Label('Sexe', className='selector-label'),
         dcc.Dropdown(
             id='dropdown-gender',

@@ -1,8 +1,8 @@
 ''' TODO: Add docstring '''
 
 GENDER_CONVERSIONS = {
-    0.48246: "F",
-    -0.48246: "M"
+    0.48246: "Femme",
+    -0.48246: "Homme"
 }
 
 AGE_CONVERSIONS = {
