@@ -167,19 +167,24 @@ def warning(drug):
     if drug is not None and drug in GATEWAY_DRUGS:
         return html.Div([
             html.P("Attention : Ceci s'agit d'une drogue passerelle!",
-                   style={'font-weight': 'bold', 'text-align': 'center'}),
+                   style={'font-weight': 'bold', 'text-align': 'center',
+                          'font-family': 'Arial, sans-serif',
+                          'font-size': '1em',
+                          'margin-right': '0',
+                          'margin-left': '0',
+                          'line-height': '1em',
+                          'text-indent': '0rem',
+                          'text-align': 'center'}),
             html.Div(
-                # Use the same class as you have styled or a new one for specific styling
                 className='icon-container',
                 children=[
                     html.Img(src="/assets/icons/gateway-drugs.png",
-                             style={'height': '80px', 'margin': 'auto', 'display': 'block'})
+                             style={'height': '80px', 'margin': 'auto', 'display': 'block', 'width':'100%'})
                 ]
             ),
         ], style={'text-align': 'center', 'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'})
     # This ensures that no residual content is displayed when the drug is not a gateway drug
     return html.Div()
-
 
 def print_education(raw_education_level: str) -> str:
     """
@@ -203,7 +208,14 @@ def typical_person(drug):
         profile = profiles_df[profiles_df['drug'] == drug].iloc[0]
         print(profile)
         return [
-            html.P('Les consommateurs de cette drogue ont tendance à...'),
+            html.P('Les consommateurs de cette drogue ont tendance à...',
+                   style={'font-family': 'Arial, sans-serif',
+                          'font-size': '1em',
+                          'margin-right': '0',
+                          'margin-left': '0',
+                          'line-height': '1em',
+                          'text-indent': '0rem',
+                          'text-align': 'center'}),
             html.Div(
                 className='icons-container',
                 children=[
@@ -214,7 +226,14 @@ def typical_person(drug):
                                 profile['most_common_education'], '/assets/icons/gateway-drugs.png')),
                             html.Label('Formation'),
                             html.P(print_education(
-                                profile['most_common_education']))
+                                profile['most_common_education']),
+                                   style={'font-family': 'Arial, sans-serif',
+                                          'font-size': '1em',
+                                          'margin-right': '0',
+                                          'margin-left': '0',
+                                          'line-height': '1em',
+                                          'text-indent': '0rem',
+                                          'text-align': 'center'})
                         ]
                     ),
                     html.Div(
@@ -223,8 +242,14 @@ def typical_person(drug):
                             html.Img(src=AGE_IMAGE_PATHS.get(
                                 profile['most_common_age'], '/assets/icons/gateway-drugs.png')),
                             html.Label('Âge'),
-                            html.P(
-                                f"...être âgé.e entre {profile['most_common_age']}.")
+                            html.P(f"...être âgé.e entre {profile['most_common_age']}.",
+                                   style={'font-family': 'Arial, sans-serif',
+                                          'font-size': '1em',
+                                          'margin-right': '0',
+                                          'margin-left': '0',
+                                          'line-height': '1em',
+                                          'text-indent': '0rem',
+                                          'text-align': 'center'})
                         ]
                     ),
                     html.Div(
@@ -233,8 +258,14 @@ def typical_person(drug):
                             html.Img(src=GENDER_IMAGE_PATHS.get(
                                 profile['most_common_gender'], '/assets/gateway-drugs.png')),
                             html.Label('Genre'),
-                            html.P(
-                                f"...être un.e {profile['most_common_gender'].lower()}.")
+                            html.P(f"...être un.e {profile['most_common_gender'].lower()}.",
+                                   style={'font-family': 'Arial, sans-serif',
+                                          'font-size': '1em',
+                                          'margin-right': '0',
+                                          'margin-left': '0',
+                                          'line-height': '1em',
+                                          'text-indent': '0rem',
+                                          'text-align': 'center'})
                         ]
                     )
                 ]

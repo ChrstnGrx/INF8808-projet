@@ -31,6 +31,7 @@ body {
     font-style: italic;
 }
 
+
 #typical-person {
     display: flex;
     flex-direction: column;
@@ -66,9 +67,7 @@ body {
     width: 30%;
 }
 
-.icon-container p {
-    
-}
+/* width: 100%; */
 
 div p {
     font-family: 'Arial', sans-serif;
