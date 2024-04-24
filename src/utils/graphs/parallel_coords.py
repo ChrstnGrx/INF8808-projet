@@ -74,7 +74,7 @@ def get_plot(my_df, selected_drug=None):
     # Update layout for font size, which affects all text including the dimension titles
     fig.update_layout(
         font=dict(
-            size=17  # Adjust the size as needed
+            size=14  # Adjust the size as needed
         )
     )
 
