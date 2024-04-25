@@ -11,10 +11,6 @@ dataframe = preprocess.fix_errors(dataframe)
 
 profiles_df = preprocess.get_most_common_profiles_by_demographic(dataframe.copy())
 
-# print(preprocess.get_most_common_profiles_by_demographic(dataframe.copy()))
-
-# print(profiles_df)
-
 
 personality_per_drug_df = preprocess.personality_per_drug(dataframe.copy())
 
