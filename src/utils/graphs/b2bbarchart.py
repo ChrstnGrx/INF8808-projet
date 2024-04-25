@@ -16,13 +16,16 @@ def draw_b2b_barchart(dataframe, gender):
         Returns:
             The barchart figure
     '''
-    men_bars = dataframe[['variable', 'Homme']]
-    women_bars = dataframe[['variable', 'Femme']]
 
+    dataframe['homme_text'] = dataframe['Homme'].astype(str) + "%"
+    dataframe['femme_text'] = dataframe['Femme'].astype(str) + "%"
+
+    men_bars = dataframe[['variable', 'Homme', 'homme_text']]
+    women_bars = dataframe[['variable', 'Femme', 'femme_text']]
     # Create a dataframe for right side bars
     # Create individual bar charts for women and men
-    fig_men = px.bar(men_bars, x='Homme', y='variable', orientation='h', text='Homme', color_discrete_sequence =['#29b6f6']*len(men_bars), title='Homme', template='plotly_white')
-    fig_women = px.bar(women_bars, x='Femme', y='variable', orientation='h', text='Femme', color_discrete_sequence =['#424242']*len(women_bars), title='Femme', template='plotly_white')
+    fig_men = px.bar(men_bars, x='Homme', y='variable', orientation='h', text='homme_text', color_discrete_sequence =['#29b6f6']*len(men_bars), title='Homme', template='plotly_white')
+    fig_women = px.bar(women_bars, x='Femme', y='variable', orientation='h', text='femme_text', color_discrete_sequence =['#424242']*len(women_bars), title='Femme', template='plotly_white')
 
     fig_men.update_traces(textposition='outside')
     fig_women.update_traces(textposition='outside')
