@@ -161,7 +161,6 @@ def b2b_barchart_sanitizing(dataframe):
     return result_df
 
 def gender_portion(dataframe):
-    print(dataframe)
     total_counts = dataframe.groupby('gender')['count'].transform('sum')
     # Calculating portion for each variable
     dataframe['percentage'] = ((100*dataframe['count']) / total_counts).round(1)
@@ -342,9 +341,6 @@ def get_most_common_profiles_by_demographic(df):
     # Drug columns assumed to start from the 5th column onwards
     drug_columns = df.columns[4:]
     results = []
-    
-    # print(df['education'].value_counts())
-    # print((df[df["alcohol"].apply(is_consumer)])['education'].value_counts())
 
     for drug in drug_columns:
         # Total count per gender

@@ -24,6 +24,7 @@ layout = html.Div(id='demographics-page', children=[
         html.H1('Analyse démographique'),
     ]),
     html.Div(children=[
+        html.P("Vous pouvez découvrir ici quelles drogues sont consommées par des personnes de votre profil en sélectionnant une option dans les listes déroulantes"),
         html.H3('Tranches d\'âge'),
         html.P('Tu peux choisir la tranche d\'âge dans laquelle tu te trouves pour voir le pourcentage de personnes \
                 dans la même tranche d\'âge que toi qui consomment tel ou tel drogue.'),
@@ -47,7 +48,7 @@ layout = html.Div(id='demographics-page', children=[
                 placeholder="Sélectionnez une tranche d'âge...",
             ),
         ]),
-        html.H4('Portion de consommateurs de drogues selon la tranche d\'âge'),
+        html.H3('Portion de consommateurs de drogues selon la tranche d\'âge'),
         dcc.Graph(
             id='age-graph', figure=clustered_barchart.cluster_by_age(cluster_by_age_df, age_df_colors)),
     ]),

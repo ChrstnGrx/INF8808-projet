@@ -18,7 +18,6 @@ def draw_b2b_barchart(dataframe, gender):
     '''
     men_bars = dataframe[['variable', 'Homme']]
     women_bars = dataframe[['variable', 'Femme']]
-    print(men_bars)
 
     # Create a dataframe for right side bars
     # Create individual bar charts for women and men
@@ -48,7 +47,6 @@ def draw_b2b_barchart(dataframe, gender):
     gridcolor='lightgrey'
 )
 
-    print(fig.layout)
     # Show the combined figure
     for i, trace in enumerate(fig.data):
         trace.hovertemplate = f'<b>Drogue:</b> %{{y}}<br><b>Portion:</b> %{{x}}%<extra></extra>'
