@@ -24,7 +24,7 @@ layout = html.Div(id='demographics-page', children=[
         html.H1('Analyse démographique'),
     ]),
     html.Div(children=[
-        html.P("Vous pouvez découvrir ici quelles drogues sont consommées par des personnes de votre profil en sélectionnant une option dans les listes déroulantes"),
+        html.P("Vous pouvez découvrir ici quelles drogues sont consommées par des personnes de votre profil en sélectionnant une option dans les listes déroulantes."),
         html.H3('Tranches d\'âge'),
         html.P('Tu peux choisir la tranche d\'âge dans laquelle tu te trouves pour voir le pourcentage de personnes \
                 dans la même tranche d\'âge que toi qui consomment tel ou tel drogue.'),
@@ -54,6 +54,8 @@ layout = html.Div(id='demographics-page', children=[
     ]),
     html.Div(children=[
         html.H3('Sexe'),
+        html.P('Cette représentation permet une comparaison directe et efficace entre les deux catégories pour chaque drogue. Chaque barre représente la proportion de consommateurs de cette drogue parmi tous les consommateurs de son genre. Une personne est considérée comme consommatrice si elle a utilisé cette drogue au moins une fois dans le dernier mois. Les calculs suivent ce principe pour chaque catégorie de drogue.'),
+        html.P('Par exemple, 16.5% des hommes consomment de la nicotine parmi toutes les drogues consommées par les hommes. Sélectionne ton sexe pour voir la portion de consommateurs de drogues.'),
         html.Div(className='viz', children=[
             dcc.Dropdown(
                 id='dropdown-gender',
