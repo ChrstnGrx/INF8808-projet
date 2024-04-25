@@ -34,7 +34,7 @@ PERSONNALITY_INFO = {
         'french': 'Extraversion'
     },
     'nscore': {
-        'french': 'Neuroticisme'
+        'french': 'Névrosisme'
     },
     'oscore': {
         'french': 'Ouverture'

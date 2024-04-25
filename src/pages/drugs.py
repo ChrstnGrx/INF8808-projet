@@ -26,7 +26,7 @@ layout = html.Div(id='drugs-page', children=[
         html.H1('Prévention des drogues'),
     ]),
     html.Div(className='page-content', children=[
-        html.P("La consommation de drogues est une problématique majeure qui intéresse un large éventail de personnes et d'organisation. Par ce fait, une analyse sur la consommation de drogues est cruciale pour justifier et cibler les efforts de prévention et de sensibilisation. L'objectif principal de cette étude consiste à identifier et à faire ressortir les principaux facteurs liés à la consommation de drogues grâce à l'analyse approfondie d'un riche ensemble de données regroupant des informations sur 1885 individus, leur personnalité, leurs antécédents sociodémographiques et leurs habitudes de consommation de 18 substances psychoactives différentes. Grâce à cette recherche, nous visons à apporter des éléments probants susceptibles d'orienter les efforts de prévention et d'éducation en matière de mauvaise utilisation de substances psychoactives."),
+        html.P("La consommation de drogues est une problématique majeure qui intéresse un large éventail de personnes et d'organisation. Par ce fait, une analyse sur la consommation de drogues est cruciale pour justifier et cibler les efforts de prévention et de sensibilisation. L'objectif principal de cette étude consiste à identifier et à faire ressortir les principaux facteurs liés à la consommation de drogues grâce à l'analyse approfondie d'un riche ensemble de données regroupant des informations sur 1885 individus, leurs personnalités, leurs antécédents sociodémographiques et leurs habitudes de consommation de 18 substances psychoactives différentes. Grâce à cette recherche, nous visons à apporter des éléments probants susceptibles d'orienter les efforts de prévention et d'éducation en matière de mauvaise utilisation de substances psychoactives."),
         html.P("Plus précisement, cette page sert à décrire le profil typique d'une personne consommant une drogue spécifique et ses habitudes de consommation."),
         dcc.Dropdown(
             id='dropdown-drug',
@@ -35,7 +35,7 @@ layout = html.Div(id='drugs-page', children=[
         ),
         html.Div(className='disclaimer', children=["N.B. Si aucune drogue n'est sélectionnée, les graphiques affichent les informations générales pour toutes les drogues. Les graphiques qui n'ont pas de vue générale sont cachés."]),
         html.Div(id='warning'),
-        html.H2('Qui en sont les consommateurs?'),
+        html.H2('Qui en sont les consommateurs ?'),
         html.P("D'une part, il est important de connaître les consommateurs typiques de chaque drogue. Ainsi, les intervenants peuvent cibler les groupes les plus à risque selon les drogues visées et mieux reconnaître les risques associés."),
         html.Div(id='profile'),
         html.Div(
@@ -58,7 +58,7 @@ layout = html.Div(id='drugs-page', children=[
                         children=pc.get_legend()
                     )
                 ]),
-                html.P("On voit des tendances générales qui démontrent que, peu importe la drogue, les consommateurs sont souvent plus neurotiques, plus ouverts, moins agréables, moins consciencieux, plus impulsifs et plus à la recherche de sensations. Ce sont donc ces traits qui doivent être surveillés lors de la prévention. En effet, les consommateurs d'aucune drogue (répondants sobres) ont souvent les traits de personalité opposés. Cependant, les traits de personalité des consommateurs d'alcool se situent toujours autour de la valeur normale (0). ")
+                html.P("On voit des tendances générales qui démontrent que, peu importe la drogue, les consommateurs sont souvent plus neurotiques, plus ouverts, moins agréables, moins consciencieux, plus impulsifs et plus à la recherche de sensations. Ce sont donc ces traits qui doivent être surveillés lors de la prévention. En effet, les consommateurs d'aucune drogue (répondants sobres) ont souvent des traits de personalité opposés. Cependant, les traits de personalité des consommateurs d'alcool se situent toujours autour de la valeur normale (0). ")
             ]
         ),
         html.H2('Quelles sont les habitudes de consommation?'),
@@ -155,7 +155,7 @@ def jointly_consumed_drugs(drug):
     if drug is not None:
         return [
             html.H3('Drogues consommées conjointement'),
-            html.P('Une autre mesure important à connaître sont les relations entre les différentes drogues. En effet, certaines drogues sont souvent consommées ensemble, ce qui peut indiquer des comportements à risque. Le graphique ci-dessous montre donc la corrélation entre la consommation de la drogues sélectionnées avec les autres drogues, c\'est à dire combien de répondant on consommé à la fois les deux drogues comparées.'),
+            html.P('Une autre mesure important à connaître sont les relations entre les différentes drogues. En effet, certaines drogues sont souvent consommées ensemble, ce qui peut indiquer des comportements à risque. Le graphique ci-dessous montre donc la corrélation entre la consommation de la drogues sélectionnées avec les autres drogues, c\'est à dire combien de répondant ont consommé à la fois les deux drogues comparées.'),
             html.Div(id='chord-diagram-container', children=[
                 dcc.Graph(figure=cd.create_chord_diagram(drug_corr_df, drug)),
                 html.Div(id='chord-diagram',
@@ -207,7 +207,6 @@ def print_education(raw_education_level: str) -> str:
 def typical_person(drug):
     if drug is not None:
         profile = profiles_df[profiles_df['drug'] == drug].iloc[0]
-        print(profile)
         return [
             html.P('Les consommateurs de cette drogue ont tendance à...',
                    style={'font-family': 'Arial, sans-serif',
