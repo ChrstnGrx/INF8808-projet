@@ -1,14 +1,20 @@
+"""
+    This module contains the content of the second page.
+"""
 import dash
 from dash import dcc, html, callback
 from dash.dependencies import Input, Output
+
 import src.utils.preprocess as preprocess
 import src.utils.constants as constants
 import src.utils.graphs.b2bbarchart as b2bbarchart
 import src.utils.graphs.clustered_barchart as clustered_barchart
+
 from src.datasets.dataframe import b2bbarchart_df
 from src.datasets.dataframe import cluster_by_age_df, age_df_colors, dataframe
 from src.datasets.dataframe import cluster_by_education_df, education_df_colors
 
+# Registering the path for nav buttons
 dash.register_page(
     __name__,
     path='/demographics',

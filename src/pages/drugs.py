@@ -1,3 +1,6 @@
+"""
+    This module contains the content of the first page.
+"""
 import dash
 from dash import dcc, html, callback
 from dash.dependencies import Input, Output
@@ -9,6 +12,7 @@ import src.utils.graphs.parallel_coords as pc
 import src.utils.graphs.stacked_bar as sb
 import src.utils.graphs.chord_diagram as cd
 
+# Registering the path for nav buttons
 dash.register_page(
     __name__,
     path='/',
@@ -168,28 +172,21 @@ def jointly_consumed_drugs(drug):
     Input('dropdown-drug', 'value')
 )
 def warning(drug):
+    # This ensures that no residual content is displayed when the drug is not a gateway drug
     if drug is not None and drug in GATEWAY_DRUGS:
         return html.Div([
             html.P("Attention : Ceci s'agit d'une drogue passerelle!",
-                   className='warning-text',
-                   style={'font-weight': 'bold', 'text-align': 'center',
-                          'font-family': 'Arial, sans-serif',
-                          'font-size': '1em',
-                          'margin-right': '0',
-                          'margin-left': '0',
-                          'line-height': '1em',
-                          'text-indent': '0rem',
-                          'text-align': 'center'}),
+                   className='warning-text'),
             html.Div(
                 className='icon-container',
                 children=[
-                    html.Img(src="/assets/icons/gateway-drugs.png",
-                             style={'height': '80px', 'margin': 'auto', 'display': 'block', 'width':'100%'})
+                    html.Img(id='gateway-warning-icon',
+                             src="/assets/icons/gateway-drugs.png")
                 ]
             ),
-            html.P('Cela signifie que cette drogue a tendance à être dans les premières essayées. Il est donc important de sensibiliser à ses dangers.', style={'text-style': 'normal'}),
-        ], style={'text-align': 'center', 'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'})
-    # This ensures that no residual content is displayed when the drug is not a gateway drug
+            html.P('Cela signifie que cette drogue a tendance à être dans les premières essayées. Il est donc important de sensibiliser à ses dangers.', 
+                   id='gateway-warning-description'),
+        ], id='gateway-warning-container')
     return html.Div()
 
 def print_education(raw_education_level: str) -> str:
@@ -209,13 +206,7 @@ def typical_person(drug):
         profile = profiles_df[profiles_df['drug'] == drug].iloc[0]
         return [
             html.P('Les consommateurs de cette drogue ont tendance à...',
-                   style={'font-family': 'Arial, sans-serif',
-                          'font-size': '1em',
-                          'margin-right': '0',
-                          'margin-left': '0',
-                          'line-height': '1em',
-                          'text-indent': '0rem',
-                          'text-align': 'center'}),
+                          className='typical-person-description'),
             html.Div(
                 className='icons-container',
                 children=[
@@ -227,13 +218,7 @@ def typical_person(drug):
                             html.Label('Formation'),
                             html.P(print_education(
                                 profile['most_common_education']),
-                                   style={'font-family': 'Arial, sans-serif',
-                                          'font-size': '1em',
-                                          'margin-right': '0',
-                                          'margin-left': '0',
-                                          'line-height': '1em',
-                                          'text-indent': '0rem',
-                                          'text-align': 'center'})
+                                          className='typical-person-description')
                         ]
                     ),
                     html.Div(
@@ -243,13 +228,7 @@ def typical_person(drug):
                                 profile['most_common_age'], '/assets/icons/gateway-drugs.png')),
                             html.Label('Âge'),
                             html.P(f"...être âgés entre {profile['most_common_age']}.",
-                                   style={'font-family': 'Arial, sans-serif',
-                                          'font-size': '1em',
-                                          'margin-right': '0',
-                                          'margin-left': '0',
-                                          'line-height': '1em',
-                                          'text-indent': '0rem',
-                                          'text-align': 'center'})
+                                          className='typical-person-description')
                         ]
                     ),
                     html.Div(
@@ -259,13 +238,7 @@ def typical_person(drug):
                                 profile['most_common_gender'], '/assets/gateway-drugs.png')),
                             html.Label('Genre'),
                             html.P(f"...être un.e {profile['most_common_gender'].lower()}.",
-                                   style={'font-family': 'Arial, sans-serif',
-                                          'font-size': '1em',
-                                          'margin-right': '0',
-                                          'margin-left': '0',
-                                          'line-height': '1em',
-                                          'text-indent': '0rem',
-                                          'text-align': 'center'})
+                                          className='typical-person-description')
                         ]
                     )
                 ]

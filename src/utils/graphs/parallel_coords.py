@@ -1,19 +1,30 @@
+from dash import html
 import plotly.graph_objects as go
 import pandas as pd
-from dash import html
-
-import src.utils.colors as c
+import src.utils.colors 
 from src.utils.constants import PERSONNALITY_INFO, DRUG_INFO
 
+# Disabling chained assignment warnings for cleaner execution
 pd.options.mode.chained_assignment = None
 
-c_selected = c.GROUP4_3
-c_not_selected = c.NEUTRAL_1
-c_sober = c.NEUTRAL_3
+# Predefined colors for different elements
+c_selected = src.utils.colors.GROUP4_3
+c_not_selected = src.utils.colors.NEUTRAL_1
+c_sober = src.utils.colors.NEUTRAL_3
 
-
-def set_color(my_df, selected_drug):
-    color_df = my_df.copy()
+def set_color(df, selected_drug):
+    """
+    Applies a color index to a DataFrame based on drug selection status.
+    
+    Parameters:
+    - df (DataFrame): Data.
+    - selected_drug (str or None): Drug name if selected, otherwise None.
+    
+    Returns:
+    - DataFrame: Modified DataFrame with new 'color' column.
+    """
+    color_df = df.copy()
+    
     # Set a default color index for all rows
     # A low value to pick the first color from the colorscale
     color_df['color'] = 0.1
@@ -28,6 +39,15 @@ def set_color(my_df, selected_drug):
 
 
 def get_colorscale(selected_drug):
+    """
+    Define colorscale for the parallel coordinates plot.
+    
+    Args:
+    - selected_drug (str or None): Selected drug name.
+    
+    Returns:
+    - list: List of tuples defining colorscale.
+    """
     if selected_drug is not None:
         colorscale = [(0.00, c_not_selected), (0.30, c_not_selected), (0.31, "white"),  (0.34, "white"), (0.35,
                                                                                                           c_selected), (0.65, c_selected), (0.66, "white"),  (0.69, "white"), (0.70, c_sober),  (1.00, c_sober)]
@@ -37,37 +57,57 @@ def get_colorscale(selected_drug):
     return colorscale
 
 
-def get_dimensions(my_df, selected_drug):
+def get_dimensions(df, selected_drug):
+    """
+    Define dimensions for the parallel coordinates plot (axis and lines).
+    
+    Args:
+    - df (DataFrame): data
+    - selected_drug (str or None): Selected drug name.
+    
+    Returns:
+    - list: List of dictionaries defining dimensions.
+    """
     def round(x):
         return int(x * 100) / 100
 
     dimensions = []
-    for personality in my_df.columns:
+    for personality in df.columns:
         if personality != 'color':
             tickvals = [-1, -0.5, 0, 0.5, 1]
             if selected_drug is not None:
-                selected_value = round(my_df[personality][selected_drug])
+                selected_value = round(df[personality][selected_drug])
                 for i in range(0, len(tickvals)):
                     if tickvals[i] > selected_value - 0.1 and tickvals[i] < selected_value + 0.1:
                         tickvals.pop(i)
                         break
                 tickvals.append(selected_value)
             dimensions.append({'label': PERSONNALITY_INFO[personality]['french'],
-                              'values': my_df[personality], 'range': [-1, 1], 'tickvals': tickvals})
+                              'values': df[personality], 'range': [-1, 1], 'tickvals': tickvals})
     return dimensions
 
 
-def get_plot(my_df, selected_drug=None):
-    my_df = set_color(my_df, selected_drug)
+def get_plot(df, selected_drug=None):
+    """
+    Generate the parallel coordinates plot.
+    
+    Args:
+    - df (DataFrame): data.
+    - selected_drug (str or None): Selected drug name.
+    
+    Returns:
+    - Figure: Plotly Figure object.
+    """
+    df = set_color(df, selected_drug)
 
     fig = go.Figure(
         go.Parcoords(
             line=dict(
                 # This should now properly map to the colorscale
-                color=my_df['color'],
+                color=df['color'],
                 colorscale=get_colorscale(selected_drug)
             ),
-            dimensions=get_dimensions(my_df, selected_drug)
+            dimensions=get_dimensions(df, selected_drug)
         )
     )
 
@@ -82,6 +122,15 @@ def get_plot(my_df, selected_drug=None):
 
 
 def get_legend(selected_drug=None):
+    """
+    Generates a HTML legend for the visualization, explaining the colors.
+    
+    Parameters:
+    - selected_drug (str or None): The drug that is specifically selected, if any.
+    
+    Returns:
+    - Div: A Dash HTML Div element containing the legend.
+    """
     def legend_box(color, text):
         return html.Div(children=[
             html.Span(style={'background-color': color,

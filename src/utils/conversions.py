@@ -1,5 +1,12 @@
-''' TODO: Add docstring '''
+"""
+This module defines mappings to decode encoded data values in DataFrames. These mappings translate encoded numeric
+values into meaningful labels or scores across various demographic and personality assessment categories.
 
+The mappings include conversions for gender, age, and several personality scores such as neuroticism (nscore),
+extraversion (escore), openness (oscore), agreeableness (ascore), and conscientiousness (cscore). The purpose of these
+conversions is to facilitate the interpretation and analysis of data collected through surveys or assessments where
+these values are typically encoded for reasons of confidentiality or standardization.
+"""
 GENDER_CONVERSIONS = {
     0.48246: "Femme",
     -0.48246: "Homme"
@@ -258,3 +265,21 @@ CONVERSIONS = {
     "cscore": CSCORE_CONVERSIONS
 }
 
+FRENCH_DRUG_NAMES = {
+    'nicotine': 'Nicotine',
+    'vsa': 'Solvants volatils',
+    'alcohol': 'Alcool',
+    'amphet': 'Amphétamines',
+    'amyl': 'Amyl nitrite',
+    'benzos': 'Benzodiazépines',
+    'cannabis': 'Cannabis',
+    'coke': 'Cocaïne',
+    'crack': 'Crack',
+    'ecstasy': 'Ecstasy',
+    'ketamine': 'Kétamine',
+    'legalh': 'Euphorisants légaux',
+    'lsd': 'LSD',
+    'meth': 'Méthamphétamines',
+    'mushrooms': 'Champignons magiques',
+    'heroin': 'Héroïne',
+}

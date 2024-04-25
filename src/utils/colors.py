@@ -1,3 +1,17 @@
+"""
+This module defines color palettes for different categories and groups used in the application's visualizations.
+It includes ranges of neutral colors and specific colors for four distinct groups, allowing for visual differentiation
+of data according to their category.
+
+The `NEUTRAL`, `GROUP1`, `GROUP2`, `GROUP3`, and `GROUP4` palettes provide shades ranging from lightest to darkest.
+Each group has a set of seven shades used to represent various levels or states in graphs or user interfaces.
+
+`MAIN_COLORS` defines a main color for each group frequently used in graphs. `TRIADS` offers a selection of three
+colors per group for uses that require moderate distinction. `SHADES` contains complete lists of shades for each group.
+
+`STACKED_COLORS` specifies colors for selected and unselected elements in stacked visualizations, associating each drug
+consumption class with specific group and neutral colors.
+"""
 NEUTRAL_0 = '#f5f5f5'
 NEUTRAL_1 = '#e0e0e0'
 NEUTRAL_2 = '#bdbdbd'
@@ -94,3 +108,6 @@ STACKED_COLORS = {
         'unselected' : SHADES['neutral'][6],
     },
 }
+
+CHORD_PALETTE = ['#81d4fa', '#29b6f6', '#039be5',
+                  '#0288d1', '#0277bd', '#01579b', '#004ba0']

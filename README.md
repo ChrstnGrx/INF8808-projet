@@ -24,3 +24,4 @@ Le projet est fait en python et utilise plotly/dash.
   - sur Windows : `pip install -r requirements.windows.txt`
   - sur macOS et Linux : `pip install -r requirements.txt`
 - Lancer le projet : `python server.py`. Le serveur est accessible à travers `localhost:8050/`.
+* Il est aussi possible de lancer le projet via le script `./start.sh`

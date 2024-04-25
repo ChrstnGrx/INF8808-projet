@@ -1,3 +1,18 @@
+"""
+This module contains constants used in the application, including lists and dictionaries of drugs, personality traits,
+education levels, and consumption classes. It also includes mappings for the French translations of various terms used
+and paths to images for the user interface. The constants are used to populate dropdown menus and to decode data in
+visualizations.
+
+The `DRUGS` and `PERSONNALITY` lists contain English identifiers for drugs and personality traits. Dictionaries like
+`PERSONNALITY_INFO` and `DRUG_INFO` provide translations and groupings for these elements. Enumerations like
+`EducationLevel` offer a structure for education levels with detailed descriptions. Dictionaries `CONSUMPTION_CLASSES`,
+`AGE_CLASSES`, `GENDER_CLASSES`, and `EDUCATION_CLASSES` allow for translating encoded values into understandable
+descriptions.
+
+The paths in `AGE_IMAGE_PATHS`, `GENDER_IMAGE_PATHS`, and `EDUCATION_IMAGE_PATHS` are used to associate icons with
+different categories in the user interface.
+"""
 from enum import Enum
 
 DRUGS = [
