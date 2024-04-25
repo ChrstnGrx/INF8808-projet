@@ -7,14 +7,8 @@
 
     This file is the entry point for our dash app.
 '''
-
 import dash
 from dash import dcc, html
-import sys
-from pathlib import Path
-
-base_path = Path(__file__).resolve().parent.parent
-sys.path.append(str(base_path))
 
 app = dash.Dash(
     __name__,

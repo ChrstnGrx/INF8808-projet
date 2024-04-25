@@ -25,4 +25,4 @@ def create_app():
 server = create_app()
 
 if __name__ == "__main__":
-    server.run(port=8050, debug=True)
+    server.run(port=8050, debug=False)
