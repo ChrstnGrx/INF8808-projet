@@ -17,7 +17,7 @@ def cluster_by_age(df, colors):
                  labels={'drug': 'Drogue', 'value': 'Portion de consommateurs', 'variable': 'Groupe d\'âge'})
 
     fig.update_yaxes(tickformat=",.0%",
-                     title_text="Portion de consommateurs (%)")
+                     title_text="Proportion de consommateurs (%)")
 
     fig.update_layout(legend_title_text='Tranches d\'âge')
 
@@ -48,7 +48,7 @@ def cluster_by_education(df, colors):
                  labels={'drug': 'Drogue', 'value': 'Portion de consommateurs', 'variable': 'Niveau d\'éducation'})
 
     fig.update_yaxes(tickformat=",.0%",
-                     title_text="Portion de consommateurs (%)")
+                     title_text="Proportion de consommateurs (%)")
     fig.update_layout(legend_title_text='Niveau d\'éducation')
 
     for i, trace in enumerate(fig.data):

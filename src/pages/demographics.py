@@ -26,12 +26,11 @@ layout = html.Div(id='demographics-page', children=[
     html.Div(children=[
         html.P("Vous pouvez découvrir ici quelles drogues sont consommées par des personnes de votre profil en sélectionnant une option dans les listes déroulantes."),
         html.H3('Tranches d\'âge'),
-        html.P('Tu peux choisir la tranche d\'âge dans laquelle tu te trouves pour voir le pourcentage de personnes \
-                dans la même tranche d\'âge que toi qui consomment tel ou tel drogue.'),
-        html.P('On a regroupé tous les répondants dans une tranche d\'âge (par exemple entre 25 et 34 ans). Ensuite il y a les moins \
-                agés que ce groupe et les plus agés. Pour chacun des groupes, on calcule ensuite la portion de consommateurs de drogue.'),
+        html.P('Vous pouvez sélectionner la tranche d\'âge à laquelle vous appartenez pour consulter le pourcentage de personnes du même groupe d\'âge qui consomment certaines drogues.'),
+        html.P('Les répondants sont classifiés par tranche d\'âge (par exemple, de 25 à 34 ans). Nous comparons ensuite ce groupe avec les tranches d\'âge inférieures et supérieures. \
+               Pour chaque groupe, la proportion de consommateurs de drogue est calculée.'),
         html.P('Par exemple, 83.58% des personnes ayant entre 25 et 34 ans consomment de l\'alcool. 84.14% des personnes moins agées \
-                (18-24 ans) consomment de l\'alcool et 79.89% des personnes plus agés (plus de 34 ans) consomment de l\'alcool.'),
+                (18-24 ans) consomment de l\'alcool et 79.89% des personnes plus agées (plus de 34 ans) consomment de l\'alcool.'),
         html.Div(className='viz', children=[
             dcc.Dropdown(
                 id='dropdown-age',
@@ -54,7 +53,7 @@ layout = html.Div(id='demographics-page', children=[
     ]),
     html.Div(children=[
         html.H3('Sexe'),
-        html.P('Cette représentation permet une comparaison directe et efficace entre les deux catégories pour chaque drogue. Chaque barre représente la proportion de consommateurs de cette drogue parmi tous les consommateurs de son genre. Une personne est considérée comme consommatrice si elle a utilisé cette drogue au moins une fois dans le dernier mois. Les calculs suivent ce principe pour chaque catégorie de drogue.'),
+        html.P('Cette représentation permet une comparaison directe et efficace entre les deux catégories pour chaque drogue. Chaque barre représente la proportion de consommateurs de cette drogue parmi tous les consommateurs de son sexe. Une personne est considérée comme consommatrice si elle a utilisé cette drogue au moins une fois dans le dernier mois. Les calculs suivent ce principe pour chaque catégorie de drogue.'),
         html.P('Par exemple, 16.5% des hommes consomment de la nicotine parmi toutes les drogues consommées par les hommes. Sélectionne ton sexe pour voir la portion de consommateurs de drogues.'),
         html.Div(className='viz', children=[
             dcc.Dropdown(
@@ -68,19 +67,15 @@ layout = html.Div(id='demographics-page', children=[
                 placeholder="Sélectionnez un sexe...",
             ),
         ]),
-        html.H4('Portion de drogues les plus consommées selon le genre'),
+        html.H4('Portion de drogues les plus consommées selon le sexe'),
         dcc.Graph(id='gender-graph',
                   figure=b2bbarchart.draw_b2b_barchart(b2bbarchart_df, "MAN")),
     ]),
     html.Div(children=[
         html.H3('Niveau d\'éducation'),
-        html.P('Tu peux choisir le niveau d\'études qui correspond au tien pour voir le pourcentage de personnes avec le même niveau \
-                d\'études que toi qui consomment tel ou tel drogue.'),
-        html.P('On a regroupé tous les répondants ayant un niveau d\'éducation (par exemple baccalauréat) et on a calculé la portion \
-                de consommateurs parmi eux. On calcule également la portion de consommateurs pour les répondants ayant un niveau \
-                d\'éducation inférieur et la portion pour ceux ayant un niveau d\'éducation supérieur.'),
-        html.P('Ainsi, on a par exemple 28.96% des répondants ayant le baccalauréat qui consomment du cannabis. 55.28% des répondants \
-                ayant moins que le baccalauréat en consomment et 20.97% des répondant ayant plus que le baccalauréat en cosomment.'),
+        html.P('Vous pouvez sélectionner votre niveau d\'éducation pour afficher le pourcentage de personnes ayant le même niveau d\'éducation que vous qui consomment certaines drogues.'),
+        html.P('Les répondants sont regroupés par niveau d\'éducation (par exemple, le baccalauréat). Nous calculons ensuite le taux de consommation de drogues pour ce groupe, ainsi que pour les groupes ayant un niveau d\'éducation inférieur et supérieur.'),
+        html.P('Par exemple, 28,96 % des répondants possédant un baccalauréat consomment du cannabis. Ce taux s\'élève à 55,28 % parmi ceux ayant un niveau inférieur au baccalauréat et à 20,97 % chez ceux ayant un niveau supérieur.'),
         html.Div(className='viz', children=[
             dcc.Dropdown(
                 id='dropdown-education',
